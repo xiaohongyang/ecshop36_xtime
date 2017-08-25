@@ -1,0 +1,28 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  {if $auto_redirect}
+  <meta http-equiv="refresh" content="3;URL={$message.back_url}" />
+  {/if}
+  <title>{$page_title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="/themes/default/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/themes/default/css/new.css"/>
+</head>
+<body>
+  <div class="box">
+    <div class="content">
+      <h4 class="confirmhead">
+        <a href="/" class="backBtn backBtn1">
+          <img src="/themes/default/img/10.png" width="10px" style="padding-top:10px;"/></a>{$lang.system_info}
+        </h4>
+        <p style="text-align:center;color:red;font-size:14px;">{$message.content}</p>
+        <!-- {if $message.url_info} -->
+          <!--{foreach from=$message.url_info key=info item=url}-->
+          <p style="text-align:center;color:red;font-size:14px;"><a href="{$url}">{$info}</a></p>
+          <!--{/foreach}-->
+        <!--{/if}-->
+    </div><!--content-->
+  </div><!--box-->
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="box">
+    <div class="content" >
+        <!-- #BeginLibraryItem "/library/page_title.lbi" --><!-- #EndLibraryItem -->
+        <div class="wdzh">
+            <dl>
+                <dt><img src="img/16.png" /></dt>
+                <dd class="lvbei">SSR</dd>
+                <dd><a href="#">昵称昵称昵称</a></dd>
+                <dd><a href="#">会员ID:456789963852</a></dd>
+            </dl>
+        </div>
+        <ul class="memberindexull" style="margin-bottom:0;background-color:#E5E5E5;border-bottom:none">
+            <li>
+                <a href="#">兑换星辉会员等级:</a><br />
+                <a href="#" style="color:#949494;display:block;">当前:SR</a>
+            </li>
+            <li></li>
+        </ul>
+        <ul class="memberindexul">
+            <li><a href="#">N(365天)</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
+            <li><a href="#">R(365天)</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
+            <li><a href="#">SR(365天)</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
+        </ul>
+        <p class="djjs">查看会员等级特权介绍</p>
+    </div><!--content-->
+
+
+    <!--修改手机模态框-->
+    <div class="mengban">
+        <div class="modal-content">
+            <div class="xqmtk">
+                <p> <button type="button" class="close user-dealDone-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+                <div class="bang">
+                    <p onclick="javascrtpt:window.location.href='phone-modify1.html'">微信支付</p>
+                    <p style="border-bottom:0">支付宝支付</p>
+                </div>
+                <div class="butto">
+                    <p><a href="#" class="closee">取消</a></p>
+                </div>
+            </div><!-- /.modal-content -->
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $(".addCard").click(function() {
+                $(".mengban").toggle();
+            });
+            $(".close").click(function() {
+                $(".mengban").hide();
+
+            });
+            $(".closee").click(function() {
+                $(".mengban").hide();
+
+            });
+        });
+    </script>
+    <!--修改手机模态框-->
+
+
+
+</div><!--box-->
+        <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

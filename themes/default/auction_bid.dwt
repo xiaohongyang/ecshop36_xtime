@@ -1,0 +1,67 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="box">
+    <form method="post">
+    <div class="content" style="margin-bottom:100px;background-color:#f8f8f8;">
+        <h4 class="confirmhead"><a href="javascript:history.back();">
+            <img src="/themes/default/img/10.png" width="10px" /></a>输入叫价
+            <a href="javascript:;" class="right">提交</a></h4>
+        <div class="x-confirmmain-text x-confirmmain-text1">
+            <span>该商品当前叫价：{$auction.formated_current_price}</span>
+            <textarea name="price" id="" cols="46" rows="2"></textarea>
+            <p>
+                <span>单位：星辉币</span>
+                <span>你的星辉币余额：{$user.money}</span>
+            </p>
+            <p>
+                {if $last_price}
+                你的上回加价：{$last_price|price}
+                {else}
+                未出价
+                {/if}
+            </p>
+            <p>最低加价幅度：{$auction.formated_amplitude}</p>
+        </div>
+        <div class="x-confirmmain-textse x-confirmmain-textse1">
+            <span class="x-confirmmain-textseinfo">收货信息：</span>
+            <p>
+                <a href="user.php?act=address_list&mode=select">
+                    {if $address}
+                <span class="x-left">
+                    <span>{$address.consignee}  {$address.tel}</span>
+                    <span>收货地址：{$address.region} {$address.address}</span>
+                </span>
+                    <span class="x-right">
+                    <img src="/themes/default/img/yjt.png" alt="">
+                </span>
+                    {else}
+                    <span class="x-left">请点此设置收货信息</span>
+                    <span class="x-right">
+                        <img src="/themes/default/img/yjt.png" alt="">
+                    </span>
+                    {/if}
+                </a>
+            </p>
+        </div>
+    </div><!--content-->
+        <input type="hidden" name="address_id" value="{$address.address_id}"/>
+    </form>
+</div><!--box-->
+<script>
+    $(document).ready(function () {
+        var current_price = {$auction.current_price};
+        var amplitude = {$auction.amplitude};
+        $(".confirmhead .right").click(function () {
+            var bid = parseFloat($("textarea").val());
+            if (bid < current_price + amplitude) {
+                Dialog.tip('请输入比当前价加最低出价高的价格！');
+                return;
+            }
+            if (!$("[name=address_id]").val()) {
+                Dialog.tip('请选择地址');
+                return;
+            }
+            $('form').submit();
+        });
+    });
+</script>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

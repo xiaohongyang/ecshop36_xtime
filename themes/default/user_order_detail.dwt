@@ -1,0 +1,51 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="box">
+    <div class="content" >
+        <!-- #BeginLibraryItem "/library/page_title.lbi" --><!-- #EndLibraryItem -->
+        <ul class="orderdeul" style="margin-top:10px">
+            <h5 class="bor">订单详情
+            {if $order.order_status eq 1 && $order.pay_status eq 1}
+                <span class="right">剩余支付时间: 07:46</span>
+                {/if}
+            </h5>
+            <li><a href="#"><span>订单编号:</span>{$order.order_sn}</a></li>
+            <li><a href="#"><span>下单时间:</span>{$order.order_sn|datetime}</a></li>
+            <li><a href="#"><span>订单状态:</span><span class="green">{$order.format_status}</span></a></li>
+        </ul>
+        <div class="threedl">
+            {foreach from=$goods_list item=goods}
+            <dl>
+                <dt><img src="{$goods.goods_thumb}" /></dt>
+                <dd class="hang">{$goods.goods_name}<a href="#"></a></dd>
+                <dd><a href="#">{$goods.goods_attr}</a></dd>
+                <dd><a href="#">数量:{$goods.goods_number}</a></dd>
+            </dl>
+            {/foreach}
+        </div>
+        <ul class="orderdeul" style="margin-top:10px">
+            <h5 class="bor">配送方式-快递配送</h5>
+            <li><a href="#"><span>收货人:</span>{$order.consignee}</a></li>
+            <li><a href="#"><span>手机号:</span>{$order.tel}</a></li>
+            <li style="height:50px;line-height:20px"><a href="#"><span>收货地址:</span>
+                <span class="hang">{$order.region} {$order.address}</span></a></li>
+        </ul>
+        <ul class="orderdeul">
+            <h5 class="bor">订单明细</h5>
+            <li><a href="#"><span>商品金额</span></a><span class="you">{$order.goods_amount|price}</span></li>
+            <li class="sex"><a href="#"><span>快递费用</span></a><span class="you">+{$order.shipping_fee|price}</span></li>
+            <li><a href="#"><span>应付金额</span></a><span class="you">{$order.order_amount|price}</li>
+        </ul>
+        <div class="qvxiao">
+            {if $order.pay_online}
+            {$order.pay_online}
+            {/if}
+            {if $order.order_status eq 5 && $order.shipping_status eq 1}
+            <a class="cf_rv" href="user.php?act=affirm_received&order_id={$order.order_id}"
+               onclick="if (!confirm('确认收货！')) return false;">确认收货</a>
+            {/if}
+        </div>
+    </div><!--content-->
+
+
+</div><!--box-->
+        <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

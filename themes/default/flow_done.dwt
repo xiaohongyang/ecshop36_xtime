@@ -1,0 +1,11 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="box">
+    <div class="content" >
+        <div class="payforsucceed">
+            <h3 class="succeed">支付成功</h3>
+            <input type="button" value="查看订单" class="succeedin"
+                   onclick="javascrtpt:window.location.href='user.php?act=order_list'" />
+        </div>
+    </div><!--content-->
+</div><!--box-->
+        <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

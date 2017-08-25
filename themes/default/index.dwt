@@ -1,0 +1,148 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+  <div class="box">
+    <header class="navbar navbar-default navbar-header navbar-fixed-top">
+      <h1>
+        <span class="san"></span>
+        <form class="searchForm" action="search.php">
+          <span class="fang"></span>
+          <input type="text" name="keywords" class="radius" />
+        </form>
+      </h1>
+      <script>
+        $(document).ready(function () {
+            $(".searchForm [name=keywords]").keydown(function (e) {
+                if (e.keyCode == 13) {
+                    $(".searchForm").submit();
+                }
+            });
+            $(".searchForm img").click(function (e) {
+                $(".searchForm").submit();
+            });
+        });
+      </script>
+    </header>
+    <div class="banner">
+      {insert name='ads' id=1 num=6}
+    </div>
+    <ul class="nav navlist">
+      <!-- {if $sort eq "total"} -->
+      <li>
+        <a href="/index.php?sort=total&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
+        综合
+        <img src="/themes/default/img/top{if $order eq 'desc'}1{/if}.png" width="10px" class="top" />
+          <img src="/themes/default/img/bot{if $order eq 'asc'}1{/if}.png" width="10px" class="bot" />
+        </a>
+      </li>
+      <!-- {else}-->
+      <li>
+        <a href="/index.php?sort=total&order=asc">综合
+        <img src="/themes/default/img/top.png" width="10px" class="top" />
+          <img src="/themes/default/img/bot.png" width="10px" class="bot" /></a>
+      </li>
+      <!--{/if}-->
+      <!-- {if $sort eq "sale"} -->
+      <li>
+        <a href="/index.php?sort=sale&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
+        销量
+        <img src="/themes/default/img/top{if $order eq 'desc'}1{/if}.png" width="10px" class="top" />
+          <img src="/themes/default/img/bot{if $order eq 'asc'}1{/if}.png" width="10px" class="bot" />
+        </a>
+      </li>
+      <!-- {else}-->
+      <li>
+        <a href="/index.php?sort=sale&order=asc">销量
+        <img src="/themes/default/img/top.png" width="10px" class="top" />
+          <img src="/themes/default/img/bot.png" width="10px" class="bot" /></a>
+      </li>
+      <!--{/if}-->
+     <!-- {if $sort eq "price"} -->
+      <li>
+        <a href="/index.php?sort=price&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
+        价格
+        <img src="/themes/default/img/top{if $order neq 'desc'}1{/if}.png" width="10px" class="top" />
+          <img src="/themes/default/img/bot{if $order neq 'asc'}1{/if}.png" width="10px" class="bot" />
+        </a>
+      </li>
+      <!-- {else}-->
+      <li>
+        <a href="/index.php?sort=price&order=asc">价格
+        <img src="/themes/default/img/top.png" width="10px" class="top" />
+          <img src="/themes/default/img/bot.png" width="10px" class="bot" /></a>
+      </li>
+      <!--{/if}-->
+
+      <!-- {if $sort eq "time"} -->
+      <li>
+        <a href="/index.php?sort=time&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
+        上架时间
+        <img src="/themes/default/img/top{if $order eq 'desc'}1{/if}.png" width="10px" class="top" />
+          <img src="/themes/default/img/bot{if $order eq 'asc'}1{/if}.png" width="10px" class="bot" />
+        </a>
+      </li>
+      <!-- {else}-->
+      <li>
+        <a href="/index.php?sort=time&order=asc">上架时间
+        <img src="/themes/default/img/top.png" width="10px" class="top" />
+          <img src="/themes/default/img/bot.png" width="10px" class="bot" />
+        </a>
+      </li>
+      <!--{/if}-->
+
+    </ul>
+    <div class="content" style="margin-bottom:50px">
+      <!-- #BeginLibraryItem "/library/goods_list.lbi" --><!-- #EndLibraryItem -->
+    </div><!--content-->
+
+    <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
+  </div><!--box-->
+  <div class="zhekouzhe">
+    <ul class="zhekou">
+      <li><a href="/"{if !$filter} class="current"{/if}>全部商品</a></li>
+      <li><a href="javascript:replaceUri('filter', 'zk')"{if $filter eq 'zk'} class="current"{/if}>折扣商品</a></li>
+      <li><a href="javascript:replaceUri('filter', 'xg');"{if $filter eq 'xg'} class="current"{/if}>限购产品</a></li>
+      <li><a href="javascript:replaceUri('filter', 'hy');"{if $filter eq 'hy'} class="current"{/if}>会员特供</a></li>
+      <li><a href="javascript:replaceUri('filter', 'by');"{if $filter eq 'by'} class="current"{/if}>包邮商品</a></li>
+    </ul>
+  </div>
+  <script>
+  $(document).ready(function() {
+    $(".san").click(function() {
+      $(".zhekouzhe").toggle();
+    });
+    $(".zhekouzhe").click(function() {
+      $(".zhekouzhe").hide();  
+    });
+      var silder = $(".slider").slider({
+          width: 1,
+          height: 200
+      });
+  });
+  function replaceUri(key, val) {
+    var url = window.location.href;
+    if (url.indexOf('?') < 0) {
+      url += '?' + key + '=' + val;
+    } else {
+      url += '&' + key + '=' + val;
+    }
+    window.location.href = url;
+  }
+
+
+  $(function(){
+    $(window).scroll(function() {                                   
+      if ($(window).scrollTop() > 250) {
+        $("header").addClass("navbar-headertop");
+        $("ul.nav").addClass("nav-headertop");
+         $("header").removeClass(" navbar-fixed-top");
+      } else{
+        $("header").removeClass(" navbar-headertop");
+        $("ul.nav").removeClass("nav-headertop");
+        $("header").addClass(" navbar-fixed-top");
+      }
+    });
+  })
+
+  </script>
+        <!-- #BeginLibraryItem "/library/add_cart.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

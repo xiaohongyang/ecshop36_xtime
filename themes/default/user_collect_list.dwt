@@ -1,0 +1,44 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="box">
+    <div class="content" >
+        <!-- #BeginLibraryItem "/library/page_title.lbi" --><!-- #EndLibraryItem -->
+        <div class="collection-list">
+            {foreach from=$goods_list item=goods}
+            <div class="collection-thing"  data-id="{$goods.rec_id}">
+                <div class="collection-left collection-img">
+                    <a href="{$goods.url}">
+                         <img src="{$goods.goods_thumb}" alt="">
+                    </a>
+                   
+                </div>
+                <div class="collection-left collection-text">
+                    <a href="{$goods.url}">
+                        <p class="collection-left">{$goods.goods_name}</p>
+                    </a>
+                    
+                    <p class="collection-right del">
+                        <img src="themes/default/img/29.png" alt="" >
+                    </p>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+
+    </div><!--content-->
+
+
+</div><!--box-->
+<script>
+    $(document).ready(function() {
+        $(".del").click(function() {
+            var item = $(this).parents('.collection-thing');
+            $.getJSON('user.php?act=delete_collection&collection_id=' + item.attr('data-id'), function(data) {
+                if (data.code == 0) {
+                    item.remove();
+                    Dialog.tip('删除成功！');
+                }
+            });
+        });
+    });
+</script>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

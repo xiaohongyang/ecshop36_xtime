@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* CSS Document */
+
+.wrper{ max-width:1000px; margin:auto; left:0px; right:0px}
+.wrper_heard{ height:30px; text-align:center;}
+.content .zyliang{width:100%;overflow:hidden}
+.content .zyliang .orange{  margin-top: 20px;margin-bottom: 10px;}
+.content .zyliang dl{width:50%;float:left; background:#FFFFFF; border-bottom:solid 1px #d3d3d3; padding:4px 4px; margin:0px;border-right: solid 1px #CCCCCC;}
+.content .zyliang dl dt{text-align:center}
+.content .zyliang dl dd.zyyi{text-overflow:ellipsis; overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2; height:40px }
+.content .zyliang dl dd.orange img{float:right}
+.content .zyliang dl dd .money b{ color:#b62c79}
+.content .zyliang dl dd .shoop{ float:right; padding:5px 3px; border:solid 1px #65c1be; border-radius:3px; color:#65c1be; font-size:12px;}
+
+header.navbar-fixed-top{background-color:#000;opacity:0.5;line-height:5em;height:5em;width:100%;}
+header h1{width:90%;margin:0 auto;overflow:hidden;text-align:center;padding-top:0.5em}
+header .san{max-width:10%;float:left;margin-top:0.5em}
+header form{position:relative;width:74%;float:left;margin:0 3%;overflow:hidden}
+header .radius{border-radius:1.5em;font-size:16px;height:3em;width:100%;padding-left:3em;opacity:0.7}
+header .fang{position:absolute;left:3%;top:25%}
+header .sao{position:absolute;right:3%;top:25%}
+header .more{max-width:10%;float:left;margin-top:0.3em}
+
+footer{width:100%;height:6em;}
+footer dl{width:23%;float:left;margin:1em 1%;text-align:center}
+footer dl a{color:#666}
+footer dl dt{width:40%;margin:0 auto}
+footer dl dt img{max-width:100%}

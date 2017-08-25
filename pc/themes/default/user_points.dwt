@@ -1,0 +1,99 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
+        </div>
+<div class="box box1">
+    <div class="corder-main">
+        <!-- #BeginLibraryItem "/library/user_menu.lbi" --><!-- #EndLibraryItem -->
+            <div class="corder-main-main">
+                <div class="corder-main-mainheader corder-overflow">
+                    <div class="corder-left">
+                        <img src="/pc/themes/default/img/cimage67.png" alt="">
+                    </div>
+                </div>
+               <div class="cmy-points-main">
+                   <div class="cmy-points">
+                        <div class="corder-left">
+                            <p>当前积分余额：{$user_info.pay_points}</p>
+                            <p class="cmy-point-way"><a href="javascript:;">积分获得方式 + </a></p>
+                        </div>
+                        <div class="corder-right">
+                            <p><img src="/pc/themes/default/img/cimage89.png" alt=""></p>
+                            <p>
+                                <span>输入序列号</span>
+                                <input type="text" class="cmy-point-input">
+                            </p>
+                            <p>
+                                <span class="cmy-error">兑换码有误</span>
+                                <button class="corder-right cmy-btn">兑换</button>
+                            </p>
+                        </div>
+                    </div>
+               </div>
+            </div>
+
+
+            <div class="corder-main-main">
+                <div class="corder-main-mainheader corder-overflow">
+                    <div class="corder-left">
+                        <img src="/pc/themes/default/img/cimage68.png" alt="">
+                    </div>
+                  
+                </div>
+                <div class="corder-main-mainmain">
+                    <div class="corder-main-mains corder-main-mains2">
+                        <span>时间</span>
+                        <span>操作类型</span>
+                        <span class="corder-rel">项目 
+                            <img src="/pc/themes/default/img/cimage29.png" alt="" class="corder-pad">
+                            <div class="corder-manager">
+                                <ul>
+                                    <li><a href="javascript:;">订单号|Order No.</a></li>
+                                    <li><a href="javascript:;">竞拍号|AH No.</a></li>
+                                </ul>
+                            </div>
+                        </span>
+                        <span>积分</span>
+                        <span class="corder-status-releative">交易状态</span>
+                    </div>
+                    <table class="jiaoyi">
+                        {foreach from=$log_list item=log}
+                        <tr>
+                            <td>{$log.change_time|datetime}</td>
+                            <td>{$log.change_desc}</td>
+                            <td><span>订单号:</span>{$log.log_id}</td>
+                            <td class="active">{if $log.pay_points > 0} + {$log.pay_points} {else} {$log.pay_points} {/if}</td>
+                            <td>交易完成</td>
+                        </tr>
+                        {/foreach}
+                        
+                        <tr>
+                            <td colspan="5"></td>
+                        </tr>
+                    </table>
+
+
+
+                    {insert name="page" total=$total}
+
+
+
+
+                </div>
+            </div>
+
+
+
+
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $(".corder-rel").mouseenter(function(){
+            $(".corder-manager").show();
+        }).mouseleave(function(){
+            $(".corder-manager").hide();
+        });
+    });
+</script>
+        <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

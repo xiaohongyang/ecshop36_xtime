@@ -1,0 +1,47 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="box">
+    <div class="content" >
+        <!-- #BeginLibraryItem "/library/page_title.lbi" --><!-- #EndLibraryItem -->
+        <ul class="payfornav">
+            <li><a href="user.php?act=order_list"{if $type < 1} class="current"{/if}>全部</a></li>
+            <li><a href="user.php?act=order_list&type=1"{if $type eq 1} class="current"{/if}>待付款</a></li>
+            <li><a href="user.php?act=order_list&type=3"{if $type eq 3} class="current"{/if}>待收货</a></li>
+            <li class="kuan"><a href="user.php?act=order_list&type=4"{if $type eq 4} class="current"{/if}>已完成</a></li>
+        </ul>
+        <!--待发货-->
+        {foreach from=$order_list item=order}
+        <div class="payfordl">
+            <ul class="memberindexul" style="margin-top:10px">
+                <li><a href="user.php?act=order_detail&order_id={$order.order_id}">订单编号:{$order.order_sn}</a>
+                    <span class="you green">{$order.format_status}</span></li>
+            </ul>
+            <dl>
+                {if $order.goods_list|count eq 1}
+                <dt><a href="goods.php?id={$order.goods_list.0.goods_id}"><img src="{$order.goods_list.0.goods_thumb}" /></a></dt>
+                <dd class="hang">
+                    <a href="goods.php?id={$order.goods_list.0.goods_id}">{$order.goods_list.0.goods_name}</a></dd>
+                <dd><a href="javascript:;">{$order.goods_list.0.goods_attr}</a></dd>
+                <dd><a href="javascript:;">数量:<span>{$order.goods_list.0.goods_number}</span></a></dd>
+                {else}
+                {foreach from=$order.goods_list item=goods}
+                <dt><img src="{$goods.goods_thumb}" /></dt>
+                {/foreach}
+                <p class="gong">共{$order.goods_list|count}件</p>
+                {/if}
+            </dl>
+        </div>
+        <p class="qvxiao">
+            <a  class="collection-left"><span>{$order.total_fee}</span></a>
+           <span class="wait-pay collection-right wait-pay1"> {$order.handler}</span>
+        </p>
+        {/foreach}
+
+
+
+
+
+    </div><!--content-->
+
+
+</div><!--box-->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

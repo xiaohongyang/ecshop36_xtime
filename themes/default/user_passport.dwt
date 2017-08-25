@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{$page_title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="/themes/default/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/themes/default/css/new.css"/>
+  <script type="text/javascript" src="/js/transport.js"></script>
+  <script type="text/javascript" src="/themes/default/js/user.js"></script>
+</head>
+<body>
+<!--#登录界面 start-->
+<!-- {if $action eq 'login'} -->
+  <div class="box">
+    <div class="content" >
+      <h4 class="confirmhead">
+        <a href="javascript:history.go(-1);">
+          <img src="/themes/default/img/10.png" width="10px" /></a>登录
+        <a href="/user.php?act=register" class="right">注册</a>
+      </h4>
+      <form name="formLogin" action="user.php" method="post" onSubmit="return userLogin()">
+        <div class="onload">
+          <div>
+            <img src="/themes/default/img/26.png" /><input type="text" name="username" placeholder="手机号" />
+          </div>
+          <div>
+            <img src="/themes/default/img/27.png" /><input type="password" name="password" placeholder="密码" /><a href="#">忘记密码?</a>
+          </div>
+          <input type="hidden" value="1" name="remember" id="remember" />
+          <input type="hidden" name="act" value="act_login" />
+          <input type="hidden" name="back_act" value="{$back_act}" />
+          <input type="submit" name="submit" value="登录" class="dlonload" />
+          <input type="button" value="微信登录" class="dlonlnd" />
+        </div>
+      </form>
+    </div><!--content-->
+  </div><!--box-->
+<!--{/if}-->
+<!--#登录界面 end-->
+
+<!--*会员注册界面 start-->
+<!--{if $action eq 'register'}-->
+  <style type="text/css">
+ 
+  .greenbor{
+    border:2px solid #72C5C1;border-radius:5px;background-color:#fff;color:#72C5C1;width:70px;height:35px;line-height:30px;
+  }
+  </style>
+  <div class="box">
+    <form action="user.php" method="post" name="formUser">
+      <div class="content">
+        <h4 class="confirmhead">
+          <a href="javascript:history.go(-1);"><img src="/themes/default/img/10.png" width="10px" /></a>注册
+        </h4>
+        <ul class="memberindexul" style="margin-top:10px">
+          <li>
+            <span>手机号:</span>
+            <input type="text" name="username" class="shuru" style="width:65%;" onblur="is_registered(this.value);">
+            <input type="button" name="getcode" id="getcode" value="获取验证码" class="greenbor" onclick="get_mobile_code();"/></span>
+            <input name="send_code" type="hidden" value="{$send_code}" >
+          </li>
+        </ul>
+        <ul class="memberindexul" style="margin-bottom:0px">
+          <li>
+            <span>验证码:</span>
+            <input type="text" name="mobile_code" class="shuru" >
+          </li>
+        </ul>
+        <ul class="memberindexul huibg" style="margin-bottom:0px">
+          <p><a href="javascript:;">设置登录密码(8~16位数,同时包含数字和字母)</a></p>
+        </ul>
+        <ul class="memberindexul" style="margin-bottom:0px">
+          <li><input type="password" name="password" id="password" class="shuru" onblur="check_password(this.value);"></li>
+        </ul>
+        <ul class="memberindexul huibg" style="margin-bottom:0px">
+          <li><a href="#">再输入一次密码</a></li>
+        </ul>
+        <ul class="memberindexul">
+          <li><input type="password" name="confirm_password" class="shuru" onblur="check_conform_password(this.value);"></li>
+        </ul>
+        <input name="agreement" type="hidden" value="1"/>
+        <input name="act" type="hidden" value="act_register" >
+        <input type="hidden" name="back_act" value="{$back_act}" />
+        <input type="submit" value="提交" class="login" />
+      </div><!--content-->
+    </div><!--box-->
+  </form>
+<!--{/if}-->
+<!--#会员注册界面 end-->
+</body>
+</html>

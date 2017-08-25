@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>购物车</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="/themes/default/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/themes/default/css/new.css"/>
+  <script src="/themes/default/js/jquery-1.12.4.min.js"></script>
+  <style type="text/css">
+  .content{position:relative}
+  .shopcarrrrr{position:absolute;top:0px;left:0;}
+  .shopcarrrrrrr{position:absolute;top:270px;left:0;}
+  .shopcarrrrrrrrr{position:absolute;top:470px;left:0;}
+  </style>
+</head>
+<body style="background:#eee">
+  <div class="box">
+    <div class="content" style="margin-bottom:100px;background-color:#eee;border:1px solid #E5E5E5;border-bottom:none;">
+      <div class="shopcar" id="rrr">
+        <div class="cartop">
+          <div class="carin"><span class="selected"></span></div>
+          <h5>普通商品<a href="#" class="addCard">编辑</a></h5>
+        </div>
+        <!-- {foreach from=$goods_list item=goods} -->
+        <div class="carbot">
+          <div class="carin"><span></span></div>
+          <dl>
+            <dt><img src="{$goods.goods_thumb}" /></dt>
+            <dd><a href="goods.php?id={$goods.goods_id}">{$goods.goods_name|escape:html}</a></dd>
+            <dd class="hui"><a href="goods.php?id={$goods.goods_id}">{$goods.goods_attr|nl2br}</a></dd>
+            <dd class="san"><a href="goods.php?id={$goods.goods_id}"><span>{$goods.goods_price}</span></a><a href="goods.php?id={$goods.goods_id}" class="right">X1</a></dd>
+          </dl>
+        </div>
+        <!-- {/foreach} -->
+      </div><!--shopcar-->
+
+
+      <!--点击编辑出现效果-->
+      <div class="shopcar shopcarrrrr" style="display:none">
+        <div class="cartop">
+          <div class="carin"><span class="selected"></span></div>
+          <h5>普通商品<a href="#" class="complete">完成</a></h5>
+        </div>
+        <!-- {foreach from=$goods_list item=goods} -->
+        <div class="carbot">
+          <div class="carin"><span></span></div>
+          <dl class="jifen">
+            <dt><img src="{$goods.goods_thumb}" /></dt>
+            <dd class="hui"><a href="goods.php?id={$goods.goods_id}">{$goods.goods_name|escape:html}</a></dd>
+            <dd class="san"><input type="button" value="-"  class="jian"><input type="text" value="1"  class="txt"><input type="button" value="+"  class="jia"></dd>
+          </dl>
+          <input type="button" value="删除" class="del" />
+        </div>
+        <!-- {/foreach} -->
+      </div><!--shopcar-->
+      <script>
+      $(document).ready(function() {
+        $(".addCard").click(function() {
+          $(".shopcarrrrr").toggle();
+          document.getElementById("rrr").style.visibility="hidden";
+        });
+        $(".complete").click(function() {
+          $(".shopcarrrrr").hide();
+          document.getElementById("rrr").style.visibility="visible";
+        });
+      });
+      </script>
+      <!--点击编辑出现效果-->
+
+      <div class="botshopcar" style="position:fixed;bottom:49px">
+        <div class="cartop">
+          <div class="carin"><span></span></div>
+          <h5><span>{$shopping_money}</span></h5>
+          <input type="button"  value="结算(1)" onclick="javascrtpt:window.location.href='confirm.html'"
+           class="pay-money" />
+          </div>
+        </div>
+      </div><!--content-->
+
+      <footer class="navbar navbar-default navbar-fixed-bottom">
+        <dl>
+          <dt><a href="index.html"><img src="/themes/default/img/1-1.png"></a></dt>
+          <dd><a href="index.html">商城</a></dd>
+        </dl>
+        <dl>
+          <dt><a href="#"><img src="/themes/default/img/2.png"></a></dt>
+          <dd><a href="#">竞拍</a></dd>
+        </dl>
+        <dl class="current">
+          <dt><a href="shopcar.html"><img src="/themes/default/img/3-3.png"></a></dt>
+          <dd><a href="shopcar.html">购物车</a></dd>
+        </dl>
+        <dl>
+          <dt><a href="member-index.html"><img src="/themes/default/img/4.png"></a></dt>
+          <dd><a href="member-index.html">我的</a></dd>
+        </dl>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

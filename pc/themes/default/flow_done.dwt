@@ -1,0 +1,71 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+        </div>
+<div class="box">
+<div class="corder-main">
+
+            <div class="corder-confirm">
+                <div class="corder-confirm-first ">
+                    <span>1.确认订单</span>
+                </div>
+                <div class="corder-confirm-first">
+                    <img src="/pc/themes/default/img/cimage40.png" alt="">
+                </div>
+                <div class="corder-confirm-first corder-confirm-active">
+                    <span>2.支付订单</span>
+                </div>
+                <div class="corder-confirm-first">
+                    <img src="/pc/themes/default/img/cimage40.png" alt="">
+                </div>
+                 <div class="corder-confirm-first">
+                    <span>3.完成</span>
+                </div>
+            </div>
+            <div class="corder-main-main">
+                <div class="corder-main-mainheader corder-overflow">
+                    <div class="corder-left">
+                        <img src="/pc/themes/default/img/cimage43.png" alt="">
+                    </div>
+                </div>
+               <div class="cpayment-order">
+                   <div class="cpayment-order-header">
+                       <div class="corder-left cpayment-order-left">
+                           <p>
+                                <span class="caddress-circle caddress-active"></span>
+                                <img src="/pc/themes/default/img/cimage44.png" alt="" class="corder-pad">
+                                <span>我的星辉币余额：{$user_info.user_money}</span>
+                                {if $user_info.user_money < $order.order_amount}
+                                <span class="cpayment-red corder-padr">*余额不足</span>
+                                {/if}
+                           </p>
+                           <p>
+                                <span class="caddress-circle caddress-active"></span>
+                                <img src="/pc/themes/default/img/cimage45.png" alt="" class="corder-pad">
+                                <span>我的积分余额：{$user_info.pay_points}</span>
+                                {if $user_info.pay_points < $order.integral}
+                                <span class="cpayment-red corder-padr">*余额不足</span>
+                                {/if}
+                           </p>
+                       </div>
+                       <div class="corder-right cpayment-order-right">
+                           <div class="cpayment-recharge">
+                               <button>充值</button>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="cpayment-order-footer">
+                       <div class="corder-left cpayment-order-left">
+                           <p><span>实际支付余额：{$order.order_amount|price}</span><img src="/pc/themes/default/img/cimage46.png" alt="" class="corder-pad"></p>
+                           <p><span>+</span><span>{$order.integral}积分</span><img src="/pc/themes/default/img/cimage47.png" alt="" class="corder-pad"></p>
+                       </div>
+                       <div class="corder-right cpayment-order-right">
+                           <div class="cpayment-confirm">
+                               <button>确认支付</button>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+            </div>
+        
+        </div>
+</div>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

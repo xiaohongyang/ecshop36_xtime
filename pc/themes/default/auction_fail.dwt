@@ -1,0 +1,19 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+<!-- #BeginLibraryItem "/library/nav.lbi" --><!-- #EndLibraryItem -->
+</div>
+<div class="box">
+    <div class="corder-main corder-offer-success">
+        <h4 class="offer-fail">
+            叫价失败
+        </h4>
+        <p class="coffer-fail">
+            *失败原因：失败原因内容失败原因内容失败原因内容 失败原因内容失败原因内容失败原因内容失败原因内容
+        </p>
+        <p class="offer-textalign">
+            <code>&lt;</code>
+            <a href="javascript:;">回到商品页</a>
+        </p>
+    </div>
+</div>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

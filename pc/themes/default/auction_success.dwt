@@ -1,0 +1,22 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+<!-- #BeginLibraryItem "/library/nav.lbi" --><!-- #EndLibraryItem -->
+</div>
+<div class="box">
+    <div class="corder-main corder-offer-success">
+           <h4>
+               叫价成功
+           </h4>
+           <p class="corder-overflow ">
+               <span class="corder-left">
+                    <code>&lt;&lt;</code>
+                    <a href="javascript:;">回到商品页</a>
+               </span>
+               <span class="corder-right">
+                    <a href="javascript:;">查看订单</a>
+                     <code>&gt;&gt;</code>
+               </span>
+           </p>
+       </div>
+</div>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

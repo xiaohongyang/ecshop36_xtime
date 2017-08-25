@@ -1,0 +1,55 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+<!-- #BeginLibraryItem "/library/nav.lbi" --><!-- #EndLibraryItem -->
+</div>
+<div class="box box1 box-bordertop">
+    <div class="content">
+        <div class="contents">
+            <div class="screen">
+                <div>
+                    <a href="javascript:;">价格</a>
+                    <img src="/pc/themes/default/img/19.png">
+                    <img src="/pc/themes/default/img/20.png">
+                </div>
+                <div>
+                    <a href="javascript:;">销量</a>
+                    <img src="/pc/themes/default/img/19.png">
+                    <img src="/pc/themes/default/img/20.png">
+                </div>
+                <div>
+                    <a href="javascript:;">上架时间</a>
+                    <img src="/pc/themes/default/img/19.png">
+                    <img src="/pc/themes/default/img/20.png">
+                </div>
+                <p class="clear"></p>
+            </div>
+            <!--screen-->
+            <div class="pro">
+                {foreach from=$goods_list item=goods}
+                <div>
+                    <dl>
+                        <dt><img class="lazy" data-original="/{$goods.goods_thumb}" /></dt>
+                        <dd class="one"><a href="{$goods.url}">{$goods.goods_name}</a></dd>
+                        <dd class="two"><a href="{$goods.url}">{$goods.goods_brief}</a></dd>
+                        <dd class="three"><a href="{$goods.url}">原价:<span>{$goods.market_price|price}</span></a></dd>
+                        <dd class="four"><a href="{$goods.url}">现价:<span>{$goods.shop_price|price}</span></a></dd>
+                        <dd class="five"><a href="{$goods.url}"><img src="themes/default/img/16.png" />加入购物车</a></dd>
+                        <dd class="six"><a href="{$goods.url}">NEW</a></dd>
+                        <dd class="seven"><a href="{$goods.url}">会员特供</a></dd>
+                        <p class="clear"></p>
+                    </dl>
+                </div>
+                {/foreach}
+                <p class="clear"></p>
+            </div>
+            <!--pro-->
+
+            {insert name="page" total=$total}
+
+        </div>
+        <!--contents-->
+
+    </div>
+    <!--content-->
+</div>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

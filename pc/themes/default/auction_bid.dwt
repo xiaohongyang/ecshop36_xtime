@@ -1,0 +1,163 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+<!-- #BeginLibraryItem "/library/nav.lbi" --><!-- #EndLibraryItem -->
+</div>
+<div class="box">
+    <form action="" method="post" class="ajax-form">
+    <div class="corder-main">
+            <div class="coffer-all-main">
+                <div class="coffer-all-left">
+                    <div class="corder-offer-all corder-left">
+                        <img src="{$goods.goods_thumb}" alt="">
+                    </div>
+                    <div class="corder-left corder-pad corder-offerp">
+                        <p>商品名称：{$goods.goods_name}</p>
+                        <p>当前叫价：{$goods.formated_current_price}</p>
+                        <p>最低加价幅度：{$goods.formated_deposit}</p>
+                    </div>
+                </div>
+                <div class="coffer-all-sr corder-clear">
+                    <span>输入叫价：</span>
+                    <input type="text" name="bid" class="coffer-all-input" required>
+                    <span>星辉币</span>
+                </div>
+                <p class="corder-clear corder-clp">
+                    <span>上回叫价：{$last_price}星辉币</span>
+                    <span>当前余额：{$user_info.user_money}</span>
+                </p>
+            </div>
+        </div>
+        <div class="corder-main">
+            <div class="corder-main-main">
+                <div class="corder-main-mainheader corder-overflow">
+                    <div class="corder-left">
+                        <img src="/pc/themes/default/img/cimage48.png" alt="">
+                    </div>
+                    <div class="corder-right corder-confirm-address">
+                        <a href="user.php?act=address_list">管理收货地址</a>
+                    </div>
+                </div>
+                <div class="corder-confirm-addresslist">
+                    <div class="caddress-list corder-confirm-listover">
+                        <div class="caddress-list-main">
+                             {foreach from=$address_list item=address}
+                            <div class="caddress-list-details corder-confirm-details {if $address.address_id eq $auction_address.address_id} selected {/if}" data-id="{$address.address_id}">
+                            <div class="corder-left"></div>
+                            <div class="corder-confirm-addlist corder-undefind">
+                                <div class="corder-left corder-address-dede">
+                                    <span class="caddress-circle"></span>
+                                </div>
+                                <div class="corder-left corder-padr">
+                                    <p>
+                                        <span>收件人：{$address.consignee}</span>
+                                        <span>电话：{$address.tel}</span>
+                                        <span>所在地区：{$address.region}</span>
+                                    </p>
+                                    <p>
+                                        <span>详细地址：{$address.region} {$address.address}</span>
+                                        <span>邮编：{$address.zipcode}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="corder-right corder-confirm-edit hide corder-confirm-padttop">
+                                {if $address.address_id eq $default_address}
+                                <a href="javascript:;" class="caddress-morenadd corder-confirm-raduis">默认地址</a>
+                                {/if}
+                                <span class="corder-pad1 corder-open1">
+                                    <img src="/pc/themes/default/img/cimage24.png" alt="">
+                                </span>
+                                <span class="corder-pad1">
+                                    <img src="/pc/themes/default/img/cimage25.png" alt="">
+                                </span>
+                            </div>
+                        </div>
+                        {/foreach}
+                            <div class="caddress-modal1">
+                                <div class="caddress-modal-cystem">
+                                    <div class="corder-left caddress-modal-left">
+                                        <div class="caddress-modal-first">
+                                            <div class="caddress-modal-text">
+                                                <p>姓名 NAME</p>
+                                                <input type="text" class="caddress-input caddress-ccc" placeholder="请输入">
+                                            </div>
+                                            <div class="caddress-modal-text">
+                                                <p>电话 PHONE</p>
+                                                <input type="text" class="caddress-input caddress-ccc" placeholder="请输入">
+                                            </div>
+                                        </div>
+                                        <div class="caddress-modal-first">
+                                            <div class="caddress-modal-text1">
+                                                <p>国家 COUNTRY</p>
+                                                <select name="" id="" class="caddress-ccc">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                            <div class="caddress-modal-text1">
+                                                <p>省/市 STATE</p>
+                                                <select name="" id="" class="caddress-ccc">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                            <div class="caddress-modal-text1">
+                                                <p>城市 CITY</p>
+                                                <select name="" id="" class="caddress-ccc">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                            <div class="caddress-modal-text1">
+                                                <p>县/区 STATE</p>
+                                                <select name="" id="" class="caddress-ccc">
+                                                    <option value="">请选择</option>
+                                                </select>
+                                            </div>
+                                            <div class="caddress-modal-text1">
+                                                <p>邮编 ZIP CODE</p>
+                                                <input type="text" class="caddress-ccc caddress-input" placeholder="请输入">
+                                            </div>
+                                        </div>
+                                        <div class="caddress-modal-first">
+                                            <div class="caddress-modal-text caddress-modal-text2">
+                                                <p>详细地址 ADDRESS</p>
+                                                <input type="text" class=" caddress-ccc" placeholder="请输入详细地址">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="corder-right caddress-modal-right">
+                                        <button class="caddress-btnactive">&nbsp;+&nbsp;保&nbsp;存</button>
+                                        <button class="corder-close1">&nbsp;x&nbsp;取&nbsp;消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="coffer-all-btn">
+                    <button>确认提交</button>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="address_id" value="{$auction_address.address_id}" required>
+        <input type="hidden" name="id" value="{$auction.act_id}">
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".caddress-list-details").click(function () { 
+            $(this).addClass('selected').siblings().removeClass('selected');
+        });
+        $(".ajax-form").submit(function() {
+            $.post('auction.php?act=bid', $(this).serialize(), function(data) {
+                if (data.code != 0) {
+                    Dialog.tip(data.msg);
+                    return;
+                }
+                Dialog.tip('出价成功！');
+                setTimeout(function() {
+                    window.location.href = data.data.url;
+                }, 1000);
+            }, 'json');
+            return false;
+        });
+    });
+</script>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

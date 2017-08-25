@@ -1,0 +1,28 @@
+  <div class="slider">
+       <div class="slider-box">
+           <ul>
+           <!-- {foreach from=$pictures item=picture}-->
+               <li><a href="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}"><img src="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
+               <!--{/foreach}-->
+           </ul>
+       </div>
+   </div>
+   <script>
+       $(document).ready(function() {
+           var silder = $(".slider").slider({
+               width: 1,
+               height: 1,
+               auto: !1
+           });
+           $(".slider a").click(function (e) { 
+               e.preventDefault();
+               Dialog.create({
+                   type: 'box',
+                   title: '',
+                   content: '<img src="' + $(this).attr('href') + '">',
+                   hasYes: false,
+                   hasNo: false
+                }).show();
+            });
+       });
+   </script>

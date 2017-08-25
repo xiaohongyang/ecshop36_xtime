@@ -1,0 +1,15 @@
+<!-------------- 商品列表 ------------------------->
+<div class="zyliang goods-list">
+    {foreach from=$goods_list item=item}
+    <dl>
+      <dt><a href="{$item.url}">
+      <span class="citem-img" style="background:url({$item.goods_thumb});  background-position: center;
+    background-size: cover;"></span>
+     </a></dt>
+      <dd class="zyyi">{$item.goods_name}</dd>
+      <dd class="orange"><span class="cgoods-money">
+      <b>{$item.shop_price}</b></span>
+      <span class="shoop addCart" data-id="{$item.goods_id}">加入购物车</span></dd>
+    </dl>
+    {/foreach}
+</div>

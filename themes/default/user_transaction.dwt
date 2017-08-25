@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>我的--个人信息</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="/themes/default/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/themes/default/css/new.css"/>
+  <!--生日插件-->
+  <link rel="stylesheet" href="/themes/default/css/normalize3.0.2.min.css" />
+  <link rel="stylesheet" href="/themes/default/css/style.css?v=7" />
+  <link href="/themes/default/css/mobiscroll.css" rel="stylesheet" />
+  <link href="/themes/default/css/mobiscroll_date.css" rel="stylesheet" />
+  <!--生日插件-->
+  <script src="/themes/default/js/jquery-1.12.4.min.js"></script>
+  <script src="/themes/default/js/jquery.min.js"></script> 
+  <script src="/themes/default/js/mobiscroll_date.js" charset="gb2312"></script> 
+  <script src="/themes/default/js/mobiscroll.js"></script> 
+</head>
+<body>
+  <!--{if $action eq 'profile'}-->
+  <div class="box">
+    <div class="content" >
+      <h4 class="confirmhead"><a href="javascript:;" onclick="javascript:history.go(-1);"><img src="/themes/default/img/10.png" width="10px" /></a>个人信息<a href="javascript:;" class="right">退出登录</a></h4>
+      <dl class="memberindex">
+        <dt><img src="/themes/default/img/5.png" width="100%" /></dt>
+        <dd><img src="/themes/default/img/12.png" width="12px"></dd>
+      </dl>
+      <ul class="memberindexul">
+        <li><a href="/user.php?act=edit_nickname"><span>昵称:</span>昵称昵称昵称</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+        <li class="sex"><a href="javascript:;"><span>性别:</span>女</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+        <li><a href="javascript:;"><!--<span>生日:</span>1990-1-1--><input type="text" name="USER_AGE" id="USER_AGE" readonly class="input" placeholder="生日:1990-1-1" style="width:90%;border:0"></a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+        <li class="addCard"><a href="javascript:;"><span>手机:</span>158****00</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+        <li><a href="javascript:;"><span>微信:</span>昵****称</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+      </ul>
+      <ul class="memberindexul">
+        <li><a href="javascript:;">修改密码</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+      </ul>
+    </div><!--content-->
+  </div><!--box-->
+  <!--修改手机模态框-->
+  <div class="mengban">
+    <div class="modal-content">
+      <div class="xqmtk">
+        <p> <button type="button" class="close user-dealDone-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+        <div class="bang">
+          <p onclick="javascript:window.location.href='phone-modify1.html'">通过手机验证修改绑定手机</p>
+          <p style="border-bottom:0">通过登录密码修改绑定手机</p>
+        </div>
+        <div class="butto">
+          <p><a href="javascript:;" class="closee">取消</a></p>
+        </div>
+      </div><!-- /.modal-content -->
+    </div>
+  </div>
+  <script>
+  $(document).ready(function() {
+    $(".addCard").click(function() {
+      $(".mengban").toggle();
+    });
+    $(".close").click(function() {
+      $(".mengban").hide();
+
+    });
+    $(".closee").click(function() {
+      $(".mengban").hide();
+    });
+  });
+  </script>
+  <!--修改手机模态框-->
+
+  <!--修改性别模态框-->
+  <div class="mengbann">
+    <div class="modal-content">
+      <div class="xqmtk">
+        <p> <button type="button" class="close user-dealDone-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+        <div class="bang">
+          <p>男</p>
+          <p style="border-bottom:0">女</p>
+        </div>
+        <div class="butto">
+          <p><a href="javascript:;" class="closee">取消</a></p>
+        </div>
+      </div><!-- /.modal-content -->
+    </div>
+  </div>
+  <script>
+  $(document).ready(function() {
+    $(".sex").click(function() {
+      $(".mengbann").toggle();
+    });
+    $(".close").click(function() {
+      $(".mengbann").hide();
+    });
+    $(".closee").click(function() {
+      $(".mengbann").hide();
+    });
+  });
+  </script>
+  <!--修改性别模态框-->
+
+  <!--生日插件-->
+  <script type="text/javascript">
+  $(function () {
+    var currYear = (new Date()).getFullYear();	
+    var opt={};
+    opt.date = {preset : 'date'};
+    opt.datetime = {preset : 'datetime'};
+    opt.time = {preset : 'time'};
+    opt.default = {
+        theme: 'android-ics light', //皮肤样式
+        display: 'modal', //显示方式 
+        mode: 'scroller', //日期选择模式
+        dateFormat: 'yyyy-mm-dd',
+        lang: 'zh',
+        showNow: true,
+        nowText: "今天",
+        startYear: currYear - 50, //开始年份
+        endYear: currYear + 10 //结束年份
+    };
+
+    $("#USER_AGE").mobiscroll($.extend(opt['date'], opt['default']));
+
+  });
+  </script>
+  <!--生日插件-->
+  <!--{/if} -->
+  <!--{if $action eq 'edit_nickname'}-->
+
+  <div class="box">
+        <div class="content">
+            <h4 class="confirmhead"><a href="javascript:;" onclick="javascript:history.go(-1);"><img src="/themes/default/img/10.png" width="10px" /></a>修改昵称<a href="javascript:;" class="right">保存</a></h4>
+            <ul class="memberindexul" style="margin-top:5px">
+                <li><a href="javascript:;"><span>昵称:</span>昵称昵称昵称</a></li>
+            </ul>
+            <p class="liu">6/15</p>
+        </div><!--content-->
+    </div><!--box-->
+  <!--{/if} -->
+</body>
+</html>

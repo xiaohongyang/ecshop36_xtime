@@ -1,0 +1,48 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="box">
+    <div class="content" style="margin-bottom:100px;background-color:#E5E5E5;>
+        <h4 class="confirmhead"><a href="order-payfor.html"><img src="img/10.png" width="10px" /></a>竞拍订单</h4>
+        <ul class="orderdeul" style="margin-top:10px">
+            <h5 class="bor">订单详情 </h5>
+            <li><a href="#"><span>订单编号:</span>1313368641</a></li>
+            <li><a href="#"><span>竞拍截止时间:</span>2016-08-31 18:00</a></li>
+            <li><a href="#"><span>竞拍状态:</span><span style="color:#333;">竞拍已结束</span></a></li>
+        </ul>
+        <div class="threedl">
+            <dl>
+                <dt><img src="img/22.png" /></dt>
+                <dd class="hang">x-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-time<a href="#"></a></dd>
+                <dd>拍中用户：昵称昵称昵称</dd>
+                <dd>最终叫价：<span class="x-purple">9999 <em class="x-fontsmall">.00</em></span>星辉币</dd>
+            </dl>
+        </div>
+        <ul class="orderdeul" style="margin-top:10px">
+            <h5 class="bor">
+                <span class="x-left x-black">我的叫价</span>
+                <span class="x-right x-ccc"><a href="javascript:;">查看记录<img src="./img/yjt.png" style="width:15px;"></a></span>
+            </h5>
+            <li>
+                <span class="x-left x-ccc">我的当前出价</span>
+                <span class="x-right">9.00星辉</span>
+            </li>
+            <li>
+                <span class="x-left x-ccc">叫价状态</span>
+                <span class="x-right x-blue ">恭喜，拍中该商品</span>
+            </li>
+        </ul>
+        <ul class="orderdeul">
+            <h5 class="bor">
+                <span class="x-left x-black">收货信息</span>
+                <span class="x-right">收货信息可在每次加价时修改</span>
+            </h5>
+            <li><span class="x-ccc x-left">物流状态：</span><span class="x-left">订单关闭</span></li>
+            <li><span class="x-ccc x-left">快递状态：</span><span class="x-left">无</span></li>
+            <li ><span class="x-ccc x-left">收货人：</span><span class="x-left">顾大大</span></li>
+            <li><span class="x-ccc x-left">手机号：</span><span class="x-left">13645684779</span></li>
+            <li><span class="x-ccc x-left">收货地址：</span><span class="x-left x-widths">北京市朝阳区三里屯北路东侧88号5楼创意空间E6栋二楼</span></li>
+        </ul>
+    </div><!--content-->
+
+
+</div><!--box-->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

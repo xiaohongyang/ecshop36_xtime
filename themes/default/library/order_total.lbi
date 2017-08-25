@@ -1,0 +1,13 @@
+<div class="cartop">
+    
+    <h5 class="all">
+    <div class="cartop-left">
+        <p>运费:<span>{$total.shipping_fee_formated}</span></p>
+        合计:
+        <span>{$total.amount_formated}</span>
+        <span class="yellow">{$total.integral}</span>积分
+       
+    </div>
+    <input type="button"  value="去支付" class="pay cartop-right">
+    </h5>
+</div>

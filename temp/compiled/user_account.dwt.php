@@ -1,0 +1,55 @@
+<?php echo $this->fetch('library/page_header.lbi'); ?>
+<div class="box">
+    <div class="content" >
+        <?php echo $this->fetch('library/page_title.lbi'); ?>
+        <ul class="memberindexul" style="margin-bottom:0px;margin-top:10px">
+            <li><a href="#">星辉币:<span class="bold" style="font-size:20px;color:#68C3BC"><?php echo $this->_var['info']['user_money']; ?></span></a><span class="you"></span></li>
+        </ul>
+        <ul class="memberindexul" style="margin-bottom:0;background-color:#E5E5E5;border-bottom:none">
+            <li><a href="#">充值星辉币:</a><span class="you"></span></li>
+        </ul>
+        <ul class="memberindexul">
+            <li><a href="#">24星辉币</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;text-align:center;border-radius:3px;color:#68C3BC">¥24</span></span></li>
+            <li><a href="#">124星辉币</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;text-align:center;border-radius:3px;color:#68C3BC">¥124</span></span></li>
+            <li><a href="#">524星辉币</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;text-align:center;border-radius:3px;color:#68C3BC">¥524</span></span></li>
+            <li><a href="#">1024星辉币</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;text-align:center;border-radius:3px;color:#68C3BC">¥1024</span></span></li>
+            <li><a href="#">3024星辉币</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;text-align:center;border-radius:3px;color:#68C3BC">¥3024</span></span></li>
+        </ul>
+    </div>
+
+
+    
+    <div class="mengban">
+        <div class="modal-content">
+            <div class="xqmtk">
+                <div class="bang">
+                    <p onclick="javascrtpt:window.location.href='phone-modify1.html'">微信支付</p>
+                    <p style="border-bottom:0">支付宝支付</p>
+                </div>
+                <div class="butto">
+                    <p><a href="#" class="closee">取消</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $(".addCard").click(function() {
+                $(".mengban").toggle();
+            });
+            $(".close").click(function() {
+                $(".mengban").hide();
+
+            });
+            $(".closee").click(function() {
+                $(".mengban").hide();
+
+            });
+        });
+    </script>
+    
+
+
+
+</div>
+        <?php echo $this->fetch('library/page_footer.lbi'); ?>

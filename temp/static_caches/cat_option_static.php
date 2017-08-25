@@ -1,0 +1,68 @@
+<?php
+$data = array (
+  1 => 
+  array (
+    'cat_id' => '1',
+    'cat_name' => '1大类',
+    'measure_unit' => '',
+    'parent_id' => '0',
+    'is_show' => '1',
+    'show_in_nav' => '0',
+    'grade' => '0',
+    'sort_order' => '50',
+    'has_children' => '1',
+    'goods_num' => 0,
+    'level' => 0,
+    'id' => '1',
+    'name' => '1大类',
+  ),
+  2 => 
+  array (
+    'cat_id' => '2',
+    'cat_name' => '2小类',
+    'measure_unit' => '',
+    'parent_id' => '1',
+    'is_show' => '1',
+    'show_in_nav' => '0',
+    'grade' => '0',
+    'sort_order' => '50',
+    'has_children' => '1',
+    'goods_num' => 0,
+    'level' => 1,
+    'id' => '2',
+    'name' => '2小类',
+  ),
+  3 => 
+  array (
+    'cat_id' => '3',
+    'cat_name' => '3小分类',
+    'measure_unit' => '',
+    'parent_id' => '2',
+    'is_show' => '1',
+    'show_in_nav' => '0',
+    'grade' => '0',
+    'sort_order' => '50',
+    'has_children' => '1',
+    'goods_num' => 0,
+    'level' => 2,
+    'id' => '3',
+    'name' => '3小分类',
+  ),
+  4 => 
+  array (
+    'cat_id' => '4',
+    'cat_name' => '周边商品',
+    'measure_unit' => '',
+    'parent_id' => '3',
+    'is_show' => '1',
+    'show_in_nav' => '0',
+    'grade' => '0',
+    'sort_order' => '50',
+    'has_children' => '0',
+    'goods_num' => 13,
+    'level' => 3,
+    'id' => '4',
+    'name' => '周边商品',
+  ),
+);
+?>

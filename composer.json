@@ -1,0 +1,18 @@
+{
+    "require": {
+        "monolog/monolog": "~1.22",
+        "psr/log": "~1.0",
+        "zodream/zodream": "^2.7"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "zd\\": "includes/zd/"
+        }
+  },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}

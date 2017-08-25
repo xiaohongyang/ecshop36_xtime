@@ -1,0 +1,363 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{$page_title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="/themes/default/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/themes/default/css/new.css"/>
+  <script src="/themes/default/js/jquery-1.12.4.min.js"></script>
+</head>
+<body>
+  <!-- {if $action eq 'default'} -->
+  <div class="box">
+    <div class="content" >
+      <dl class="memberindex">
+        <dt><img src="/themes/default/img/5.png" width="100%" /></dt>
+        <dd onclick="javascript:window.location.href='/'"><a href="javascript:;">昵称昵称昵称</a><img src="/themes/default/img/12.png" width="12px"></dd>
+      </dl>
+      <ul class="memberindexul">
+        <li><img src="/themes/default/img/18.png" width="20px" /><a href="/user.php?act=my_card">我的会员卡</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+        <li><img src="/themes/default/img/17.png" width="20px" /><a href="/user.php?act=order_list">我的订单</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+        <li><img src="/themes/default/img/18.png" width="20px" /><a href="javascript:;">我的竞拍</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+        <li><img src="/themes/default/img/19.png" width="20px" /><a href="/user.php?act=my_account">我的账户(星辉币)</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+        <li><img src="/themes/default/img/20.png" width="20px" /><a href="/user.php?act=my_score">我的积分</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+        <li onclick="javascript:window.location.href='/user.php?act=address_choose'"><img src="/themes/default/img/21.png" width="20px" /><a href="javascript:;">地址管理</a><span class="you"><img src="/themes/default/img/12.png" width="10px" /></span></li>
+      </ul>
+    </div><!--content-->
+
+    <footer class="navbar navbar-default navbar-fixed-bottom">
+      <dl>
+        <dt><a href="index.html"><img src="/themes/default/img/1-1.png"></a></dt>
+        <dd><a href="index.html">商城</a></dd>
+      </dl>
+      <dl>
+        <dt><a href="javascript:;"><img src="/themes/default/img/2.png"></a></dt>
+        <dd><a href="javascript:;">竞拍</a></dd>
+      </dl>
+      <dl>
+        <dt><a href="shopcar.html"><img src="/themes/default/img/3.png"></a></dt>
+        <dd><a href="shopcar.html">购物车</a></dd>
+      </dl>
+      <dl class="current">
+        <dt><a href="member.html"><img src="/themes/default/img/4-4.png"></a></dt>
+        <dd><a href="member.html">我的</a></dd>
+      </dl>
+    </footer>
+  </div><!--box-->
+  <!--{/if} -->
+  <!-- {if $action eq 'address_choose'} -->
+  <div class="box">
+    <div class="content" >
+      <h4 class="confirmhead"><a href="javascript:;" onclick="javascript:history.go(-1);"><img src="/themes/default/img/10.png" width="10px" onclick="javascript:window.location.href='confirm.html'" /></a>收货地址<a href="javascript:;" class="right" onclick="javascript:window.location.href='/user.php?act=address_detail'"
+        >管理地址</a></h4>
+      <div class="choose currentt" onclick="javascript:window.location.href='/user.php?act=address_detail'" /></a>收货地址
+        <a href="javascript:;" class="right" onclick="javascript:window.location.href='/user.php?act=address_detail'">
+        <p><span>高晓松</span><span>158****07775</span><a href="javascript:;">[默认地址]</a></p>
+        <p>上海市杨浦区彭浦新村金沙江路金海路4555弄443栋1233号1201室</p>
+      </div>
+      <div class="choose" onclick="javascript:window.location.href='/user.php?act=address_detail'">
+        <p><span>高晓松</span><span>158****07775</span></p>
+        <p>上海市杨浦区彭浦新村金沙江路金海路4555弄443栋1233号1201室</p>
+      </div>
+      <div class="choose" onclick="javascript:window.location.href='/user.php?act=address_detail'">
+        <p><span>高晓松</span><span>158****07775</span></p>
+        <p>上海市杨浦区彭浦新村金沙江路金海路4555弄443栋1233号1201室</p>
+      </div>
+    </div><!--content-->
+  </div><!--box-->
+  <!--{/if} -->
+  <!-- {if $action eq 'address_detail'} -->
+  <div class="box">
+    <div class="content" >
+      <h4 class="confirmhead"><a href="javascript:;"><img src="/themes/default/img/10.png" width="10px" onclick="javascript:;" /></a>地址管理<a href="javascript:;" class="right" onclick="javascript:;">保存</a></h4>
+      <ul class="memberindexul" style="margin-top:5px">
+        <li><a href="javascript:;">收货人:高晓松</a></li>
+        <li><a href="javascript:;">联系电话:158****0775</a></li>
+        <li><a href="javascript:;">所在地区:北京 朝阳区 三环以内</a></li>
+        <li><a href="javascript:;">详细地址:大法辅导费</a></li>
+      </ul>
+      <ul class="memberindexul">
+        <li><a href="javascript:;" class="red">删除地址</a></li>
+      </ul>
+    </div><!--content-->
+  </div><!--box-->
+  <!--{/if} -->
+  <!-- {if $action eq 'my_card'} -->
+  <div class="box">
+    <div class="content" >
+      <h4 class="confirmhead"><a href="javascript:;"  onclick="javascript:window.location.href='address-new.html'"><img src="/themes/default/img/10.png" width="10px" /></a>我的会员卡</h4>
+      <div class="wdzh">
+        <dl>
+          <dt><img src="/themes/default/img/16.png" /></dt> 
+          <dd class="lvbei">SSR</dd>
+          <dd><a href="javascript:;">昵称昵称昵称</a></dd>
+          <dd><a href="javascript:;">会员ID:456789963852</a></dd>
+        </dl>
+      </div>
+      <ul class="memberindexull" style="margin-bottom:0;background-color:#E5E5E5;border-bottom:none">
+        <li>
+          <a href="javascript:;">兑换星辉会员等级:</a><br />
+          <a href="javascript:;" style="color:#949494;display:block;">当前:SR</a>
+        </li>
+        <li></li>
+      </ul>
+      <ul class="memberindexul">
+        <li><a href="javascript:;">N(365天)</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
+        <li><a href="javascript:;">R(365天)</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
+        <li><a href="javascript:;">SR(365天)</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
+      </ul>
+      <p class="djjs">查看会员等级特权介绍</p>
+    </div><!--content-->
+
+    <!--修改手机模态框-->
+    <div class="mengban">
+      <div class="modal-content">
+        <div class="xqmtk">
+          <p> <button type="button" class="close user-dealDone-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+          <div class="bang">
+            <p onclick="javascript:window.location.href='phone-modify1.html'">微信支付</p>
+            <p style="border-bottom:0">支付宝支付</p>
+          </div>
+          <div class="butto">
+            <p><a href="javascript:;" class="closee">取消</a></p>
+          </div>
+        </div><!-- /.modal-content -->
+      </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+      $(".addCard").click(function() {
+        $(".mengban").toggle();
+      });
+      $(".close").click(function() {
+        $(".mengban").hide();
+
+      });
+      $(".closee").click(function() {
+        $(".mengban").hide();
+
+      });
+    });
+    </script>
+    <!--修改手机模态框-->
+  </div><!--box-->
+  <!--{/if} -->
+  <!-- {if $action eq 'my_score'} -->
+  <div class="box">
+    <div class="content" >
+      <h4 class="confirmhead"><a href="javascript:;"  onclick="javascript:window.location.href='address-new.html'"><img src="/themes/default/img/10.png" width="10px" /></a>我的积分</h4>
+      <ul class="memberindexul" style="margin-bottom:0px;margin-top:10px">
+        <li><a href="javascript:;">星辉币:<span class="bold" style="font-size:20px;color:#68C3BC">39810</span></a><span class="you"></span></li>
+      </ul>
+      <ul class="memberindexull" style="margin-bottom:0;background-color:#E5E5E5;border-bottom:none">
+        <li>
+          <a href="javascript:;">兑换星辉会员等级:</a><br />
+          <a href="javascript:;" style="color:#949494;display:block;">当前:SR</a>
+        </li>
+        <li></li>
+      </ul>
+      <ul class="memberindexul">
+        <li><a href="javascript:;">N(365天)</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
+        <li><a href="javascript:;">R(365天)</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
+        <li><a href="javascript:;">SR(365天)</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
+      </ul>
+      <p class="djjs">查看会员等级特权介绍</p>
+    </div><!--content-->
+
+    <!--修改手机模态框-->
+    <div class="mengban">
+      <div class="modal-content">
+        <div class="xqmtk">
+          <p> <button type="button" class="close user-dealDone-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+          <div class="bang">
+            <p onclick="javascript:window.location.href='phone-modify1.html'">微信支付</p>
+            <p style="border-bottom:0">支付宝支付</p>
+          </div>
+          <div class="butto">
+            <p><a href="javascript:;" class="closee">取消</a></p>
+          </div>
+        </div><!-- /.modal-content -->
+      </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+      $(".addCard").click(function() {
+        $(".mengban").toggle();
+      });
+      $(".close").click(function() {
+        $(".mengban").hide();
+
+      });
+      $(".closee").click(function() {
+        $(".mengban").hide();
+
+      });
+    });
+    </script>
+    <!--修改手机模态框-->
+  </div><!--box-->
+  <!--{/if} -->
+  <!-- {if $action eq 'my_account'} -->
+  <div class="box">
+    <div class="content" >
+      <h4 class="confirmhead"><a href="javascript:;"  onclick="javascript:history.go(-1);"><img src="/themes/default/img/10.png" width="10px" /></a>我的账户</h4>
+      <ul class="memberindexul" style="margin-bottom:0px;margin-top:10px">
+        <li><a href="javascript:;">星辉币:<span class="bold" style="font-size:20px;color:#68C3BC">39810</span></a><span class="you"></span></li>
+      </ul>
+      <ul class="memberindexul" style="margin-bottom:0;background-color:#E5E5E5;border-bottom:none">
+        <li><a href="javascript:;">充值星辉币:</a><span class="you"></span></li>
+      </ul>
+      <ul class="memberindexul">
+        <li><a href="javascript:;">50星辉币</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">￥50</span></span></li>
+        <li><a href="javascript:;">100星辉币</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">￥100</span></span></li>
+        <li><a href="javascript:;">200星辉币</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">￥200</span></span></li>
+        <li><a href="javascript:;">500星辉币</a><span class="you"><span class="bord addCard" style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;margin-top:10px;text-align:center;border-radius:3px;color:#68C3BC">￥500</span></span></li>
+      </ul>
+    </div><!--content-->
+    <!--修改手机模态框-->
+    <div class="mengban">
+      <div class="modal-content">
+        <div class="xqmtk">
+          <p> <button type="button" class="close user-dealDone-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></p>
+          <div class="bang">
+            <p onclick="javascript:window.location.href='phone-modify1.html'">微信支付</p>
+            <p style="border-bottom:0">支付宝支付</p>
+          </div>
+          <div class="butto">
+            <p><a href="javascript:;" class="closee">取消</a></p>
+          </div>
+        </div><!-- /.modal-content -->
+      </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+      $(".addCard").click(function() {
+        $(".mengban").toggle();
+      });
+      $(".close").click(function() {
+        $(".mengban").hide();
+
+      });
+      $(".closee").click(function() {
+        $(".mengban").hide();
+
+      });
+    });
+    </script>
+    <!--修改手机模态框-->
+  </div><!--box-->
+  <!--{/if} -->
+  <!-- {if $action eq 'order_list'} -->
+  <div class="box">
+    <div class="content" >
+      <h4 class="confirmhead"><a href="/user.php"><img src="/themes/default/img/10.png" width="10px" /></a>我的订单</h4>
+      <ul class="payfornav">
+        <li><a href="javascript:;" class="current">全部</a></li>
+        <li><a href="javascript:;">待付款</a></li>
+        <li><a href="javascript:;">待收货</a></li>
+        <li class="kuan"><a href="javascript:;">已完成</a></li>
+      </ul>
+      <!--待发货-->
+      <div class="payfordl">
+        <ul class="memberindexul" style="margin-top:10px">
+          <li><a href="javascript:;">订单编号:101336864</a><span class="you green">待付款</span></li>
+        </ul>
+        <dl>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <dd class="hang">x-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-time<a href="javascript:;"></a></dd>
+          <dd><a href="javascript:;">牛皮 豹纹</a></dd>
+          <dd><a href="javascript:;">数量:<span>1</span></a></dd>
+        </dl>
+      </div>
+      <p class="qvxiao">
+        <a><span>680.00</span>星辉</a>
+        <input type="button" value="立即支付" class="liji" onclick="javascript:window.location.href='confirm.html'" />
+        <input type="button" value="取消订单" class="qxdd" />
+      </p>
+      <div class="payfordl">
+        <ul class="memberindexul" style="margin-top:10px">
+          <li><a href="javascript:;">订单编号:101336864</a><span class="you green">待付款</span></li>
+        </ul>
+        <dl>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <p class="gong">共5件</p>
+        </dl>
+      </div>
+      <p class="qvxiao">
+        <a><span>680.00</span>星辉</a>
+        <input type="button" value="立即支付" class="liji" onclick="javascript:window.location.href='confirm.html'" />
+        <input type="button" value="取消订单" class="qxdd" />
+      </p>
+      <!--待发货-->
+      <!--待收货-->
+      <div class="payfordl">
+        <ul class="memberindexul" style="margin-top:10px">
+          <li><a href="javascript:;">订单编号:101336864</a><span class="you green">等待确认</span></li>
+        </ul>
+        <dl>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <dd class="hang">x-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-time<a href="javascript:;"></a></dd>
+          <dd><a href="javascript:;">牛皮 豹纹</a></dd>
+          <dd><a href="javascript:;">数量:<span>1</span></a></dd>
+        </dl>
+      </div>
+      <p class="qvxiao">
+        <a><span>680.00</span>星辉</a>
+      </p>
+      <div class="payfordl">
+        <ul class="memberindexul" style="margin-top:10px">
+          <li><a href="javascript:;">订单编号:101336864</a><span class="you green">已打包，准备配送</span></li>
+        </ul>
+        <dl>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <p class="gong">共5件</p>
+        </dl>
+      </div>
+      <p class="qvxiao">
+        <a><span>680.00</span>星辉</a>
+        <input type="button" value="确认收货" class="liji" />
+        <input type="button" value="查看物流" class="qxdd" />
+      </p>
+      <!--待收货-->
+      <!--已完成-->
+      <div class="payfordl">
+        <ul class="memberindexul" style="margin-top:10px">
+          <li><a href="javascript:;">订单编号:101336864</a><span class="you green">交易成功</span></li>
+        </ul>
+        <dl>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <dd class="hang">x-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-timex-time<a href="javascript:;"></a></dd>
+          <dd><a href="javascript:;">牛皮 豹纹</a></dd>
+          <dd><a href="javascript:;">数量:<span>1</span></a></dd>
+        </dl>
+      </div>
+      <p class="qvxiao">
+        <a><span>680.00</span>星辉</a>
+        <input type="button" value="删除订单" class="qxdd"  style="margin-right:10px" />
+      </p>
+      <div class="payfordl">
+        <ul class="memberindexul" style="margin-top:10px">
+          <li><a href="javascript:;">订单编号:101336864</a><span class="you">订单关闭</span></li>
+        </ul>
+        <dl>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <dt><img src="/themes/default/img/22.png" /></dt>
+          <p class="gong">共5件</p>
+        </dl>
+      </div>
+      <p class="qvxiao">
+        <a><span>680.00</span>星辉</a>
+        <input type="button" value="删除订单" class="qxdd" style="margin-right:10px" />
+      </p>
+      <!--已完成-->
+    </div><!--content-->
+  </div><!--box-->
+  <!--{/if} -->
+</body>
+</html>

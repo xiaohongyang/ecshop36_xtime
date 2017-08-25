@@ -1,0 +1,23 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+        </div>
+       {if $auto_redirect}
+<meta http-equiv="refresh" content="3;URL={$message.back_url}" />
+        {/if}
+<div class="box">
+<div class="corder-main">
+            <div class="cpayment-success">
+                <h2>消息提示</h2>
+                <p>{$message.content}</p>
+                <p class="corder-overflow">
+                <!-- {if $message.url_info} -->
+                <!--{foreach from=$message.url_info key=info item=url}-->
+                <a href="{$url}">{$info}</a>
+                <!--{/foreach}-->
+                <!--{/if}-->
+                </p>
+            </div>
+        
+        </div>
+</div>
+
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

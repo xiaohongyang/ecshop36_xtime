@@ -1,0 +1,160 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+
+<!-- #BeginLibraryItem "/library/nav.lbi" --><!-- #EndLibraryItem -->
+        </div>
+        <!--banner -->
+<div class="main_visual">
+<div class="box">
+    <div class="posi ">
+        <h3>全部主题周边</h3>
+        <ul class="all">
+            {foreach from=$categories item=cat}
+            <li><a href="{$cat.url}">{$cat.name}</a></li>
+            {/foreach}
+        </ul>
+    </div><!--posi-->
+</div>
+
+<div class="flicking_con">
+    <a href="#">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+    <a href="#">4</a>
+    <a href="#">5</a>
+</div><!--数字-->
+<div class="main_image">
+    <ul>
+        <li><img src="themes/default/img/8.png" width="100%"></li>
+        <li><img src="themes/default/img/img_main_2.jpg" width="100%"></li>
+        <li><img src="themes/default/img/img_main_3.jpg" width="100%"></li>
+        <li><img src="themes/default/img/img_main_4.jpg" width="100%"></li>
+        <li><img src="themes/default/img/img_main_5.jpg" width="100%"></li>
+    </ul>
+    <a href="javascript:;" id="btn_prev"></a>
+    <a href="javascript:;" id="btn_next"></a>
+</div>
+</div>
+        <!--banner-->
+
+<div class="box box1">
+<div class="content">
+    <div class="contents">
+        <h1 class="title"><img src="themes/default/img/9.png" /></h1>
+        <div class="screen">
+            <div class="sort-btn 
+            {if $sort eq 'price' && $order eq 'asc'} sort-asc {/if}
+            {if $sort eq 'price' && $order eq 'desc'} sort-desc {/if}
+            ">
+                <a href="javascript:;">价格</a>
+                <i class="asc-btn"></i>
+                <i class="desc-btn"></i>
+            </div>
+            <div class="sort-btn 
+            {if $sort eq 'sales' && $order eq 'asc'} sort-asc {/if}
+            {if $sort eq 'sales' && $order eq 'desc'} sort-desc {/if}
+            ">
+                <a href="javascript:;">销量</a>
+                <i class="asc-btn"></i>
+                <i class="desc-btn"></i>
+            </div>
+            <div class="sort-btn 
+            {if $sort eq 'add_time' && $order eq 'asc'} sort-asc {/if}
+            {if $sort eq 'add_time' && $order eq 'desc'} sort-desc {/if}
+            ">
+                <a href="javascript:;">上架时间</a>
+                <i class="asc-btn"></i>
+                <i class="desc-btn"></i>
+            </div>
+            <p class="clear"></p>
+        </div><!--screen-->
+        <div class="pro">
+            {foreach from=$goods_list item=goods}
+            <div>
+                <dl>
+                    <dt><img class="lazy" data-original="/{$goods.goods_thumb}" /></dt>
+                    <dd class="one"><a href="{$goods.url}">{$goods.goods_name}</a></dd>
+                    <dd class="two"><a href="{$goods.url}">{$goods.goods_brief}</a></dd>
+                    <dd class="three"><a href="{$goods.url}">原价:<span>{$goods.market_price|price}</span></a></dd>
+                    <dd class="four"><a href="{$goods.url}">现价:<span>{$goods.shop_price|price}</span></a></dd>
+                    <dd class="five"><a href="{$goods.url}"><img src="themes/default/img/16.png" />加入购物车</a></dd>
+                    {if $goods.has_new_tag}
+                    <dd class="six"><a href="{$goods.url}">NEW</a></dd>
+                    {/if}
+                    {if $goods.is_vip}
+                    <dd class="seven"><a href="{$goods.url}">会员特供</a></dd>
+                    {/if}
+                    <p class="clear"></p>
+                </dl>
+            </div>
+            {/foreach}
+            <p class="clear"></p>
+        </div><!--pro-->
+
+        {insert name="page" total=$total}
+
+    </div><!--contents-->
+
+</div><!--content-->
+</div><!--box-->
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        $(".main_visual").hover(function(){
+            $("#btn_prev,#btn_next").fadeIn()
+        },function(){
+            $("#btn_prev,#btn_next").fadeOut()
+        });
+
+        $dragBln = false;
+
+        $(".main_image").touchSlider({
+            flexible : true,
+            speed : 200,
+            btn_prev : $("#btn_prev"),
+            btn_next : $("#btn_next"),
+            paging : $(".flicking_con a"),
+            counter : function (e){
+                $(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
+            }
+        });
+
+        $(".main_image").bind("mousedown", function() {
+            $dragBln = false;
+        });
+
+        $(".main_image").bind("dragstart", function() {
+            $dragBln = true;
+        });
+
+        $(".main_image a").click(function(){
+            if($dragBln) {
+                return false;
+            }
+        });
+
+        timer = setInterval(function(){
+            $("#btn_next").click();
+        }, 5000);
+
+        $(".main_visual").hover(function(){
+            clearInterval(timer);
+        },function(){
+            timer = setInterval(function(){
+                $("#btn_next").click();
+            },5000);
+        });
+
+        $(".main_image").bind("touchstart",function(){
+            clearInterval(timer);
+        }).bind("touchend", function(){
+            timer = setInterval(function(){
+                $("#btn_next").click();
+            }, 5000);
+        });
+
+    });
+</script>
+<!--banner-->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

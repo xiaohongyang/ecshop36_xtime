@@ -1,0 +1,12 @@
+<!-------------- 通用标题栏 ------------------------->
+<header class="page-title">
+{if !$noBack}
+<a class="backBtn" href="{if $backUrl}{$backUrl}{else}javascript:history.go(-1);{/if}">
+<img src="themes/default/img/10.png"/>
+</a>
+{/if}
+<span>{$page_title}</span>
+{if $rightBtn}
+<a class="rightBtn" href="{if $rightBtn.url}{$rightBtn.url}{else}javascript:;{/if}">{$rightBtn.label}</a>
+{/if}
+</header>

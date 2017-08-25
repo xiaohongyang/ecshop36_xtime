@@ -1,0 +1,19 @@
+<!-------------- 底部导航 ------------------------->
+<footer class="navbar navbar-default navbar-fixed-bottom" style="z-index:1">
+  <dl{if $menuIndex < 1} class="current"{/if}>
+    <dt><a href="/"><img src="themes/default/img/1{if $menuIndex < 1}-1{/if}.png"></a></dt>
+    <dd><a href="/">商城</a></dd>
+  </dl>
+  <dl{if $menuIndex eq 1} class="current"{/if}>
+    <dt><a href="auction.php"><img src="themes/default/img/2{if $menuIndex eq 1}-2{/if}.png"></a></dt>
+    <dd><a href="auction.php">竞拍</a></dd>
+  </dl>
+  <dl{if $menuIndex eq 2} class="current"{/if}>
+    <dt><a href="flow.php"><img src="themes/default/img/3{if $menuIndex eq 2}-3{/if}.png"></a></dt>
+    <dd><a href="flow.php">购物车</a></dd>
+  </dl>
+  <dl{if $menuIndex eq 3} class="current"{/if}>
+    <dt><a href="user.php"><img src="themes/default/img/4{if $menuIndex eq 3}-4{/if}.png"></a></dt>
+    <dd><a href="user.php">我的</a></dd>
+  </dl>
+</footer>

@@ -1,0 +1,93 @@
+<?php echo $this->fetch('library/page_header.lbi'); ?>
+<div class="box">
+    <div class="content" >
+        <?php echo $this->fetch('library/page_title.lbi'); ?>
+        <form action="user.php?act=act_edit_phone" method="post">
+        <div class="step1">
+            <ul class="memberindexul" style="margin-top:10px">
+                <li><a href="#"><span>原密码:</span><input type="text" name="password" required="required" class="user-input"></a></li>
+            </ul>
+        </div>
+
+        <div class="step2" style="display: none">
+            <ul class="memberindexul" style="margin-top:10px">
+                <li><a href="#"><span>新手机号:</span><input type="text" name="phone" class="user-input phone"></a>
+                    <span class="you"><input type="button" value="获取验证码" class="greenbor sendCode" style="border:2px solid #72C5C1;border-radius:5px;background-color:#fff;color:#72C5C1;height:35px;line-height:30px"></span></li>
+            </ul>
+            <ul class="memberindexul" style="margin-bottom:0px">
+                <li><a href="#"><span>验证码:</span><input type="text" name="code" class="user-input"></a></li>
+            </ul>
+        </div>
+
+        </form>
+    </div>
+
+</div>
+<script>
+$(document).ready(function () {
+    $(".rightBtn").click(function () {
+        if ($(this).text() == '下一步') {
+            if ($("[name=password]").val()) {
+                cheackPassword();
+            } else {
+                Dialog.tip('请输入密码！');
+            }
+            return;
+        }
+        if (!$('[name=phone]').val() || !$('[name=code]').val()) {
+            Dialog.tip('请输入手机和验证码！');
+            return;
+        }
+        $('form').submit();
+    });
+    var cheackPassword = function() {
+        $.post('user.php?act=check_pwd', {
+            password: $("[name=password]").val()
+        }, function(data) {
+            if (data.code == 0) {
+                $('.step1').hide();
+                $('.step2').show();
+                $('.rightBtn').text('保存');
+                return;
+            }
+            Dialog.tip(data.msg);
+        }, 'json');
+    };
+    $(".sendCode").click(function() {
+        var $this = $(this);
+        if ($this.hasClass('disable')) {
+            return;
+        }
+        var phone = $(".phone").val();
+        if (!phone || phone.length < 11) {
+            Dialog.tip('请输入有效的手机号码！');
+            return;
+        }
+        $.post('/zd.php?act=sms', {
+            phone: phone,
+            send_code: '<?php echo $this->_var['send_code']; ?>'
+        }, function(data) {
+            if (data.code == 0) {
+                Dialog.tip(data.data);
+                $this.addClass('disable');
+                time = 60;
+                refreshTime();
+                return;
+            }
+            Dialog.tip(data.msg);
+        }, 'json');
+    });
+
+    var time = 60;
+    var refreshTime = function() {
+        time --;
+        if (time < 1) {
+            $(".sendCode").val('重新发送验证码').removeClass('disable');
+            return;
+        }
+        $(".sendCode").val(time);
+        setTimeout(refreshTime, 1000);
+    };
+});
+</script>
+        <?php echo $this->fetch('library/page_footer.lbi'); ?>

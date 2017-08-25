@@ -1,0 +1,54 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="box">
+    <div class="content" style="margin-bottom:100px;background-color:#f8f8f8;">
+        <h4 class="confirmhead"><a href="javascript:history.back();"><img src="/themes/default/img/10.png" width="10px" /></a>商品竞拍记录<a href="javascript:;" class="right fenlei"><img src="/themes/default/img/fenlei1.png" alt=""></a></h4>
+        <div class="x-recoredmian">
+            <div class="x-left">
+                <img src="/themes/default/img/22.png" alt="">
+            </div>
+            <div class="x-right">
+                <p>{$goods.goods_name}</p>
+                <p class="x-ccc">最低加价幅度：{$auction.formated_amplitude}</p>
+                <p>当前叫价：<span class="x-purple">{$auction.formated_current_price}</span></p>
+            </div>
+        </div>
+        <div class="x-recoredbody">
+            {foreach from=$auction_log item=log}
+            <div class="x-recoredtext">
+                <div class="x-left">
+                    <div class="x-left x-recoredimg">
+                        <img src="/themes/default/img/16.png" alt="">
+                    </div>
+                    <div class="x-left">
+                        <p>{$log.user_name}
+                        {if $user_id eq $log.bid_user}<span class="x-blue">(我)</span>{/if}
+                        </p>
+                        <p class="x-ccc">{$log.bid_time}</p>
+                    </div>
+                </div>
+                <div class="x-right">
+                    <span>{$log.formated_bid_price}</span>
+                </div>
+            </div>
+            {/foreach}
+        </div>
+    </div><!--content-->
+    <div class="zhekouzhe zhekou1">
+        <ul class="zhekou ">
+            <li><a href="auction.php?act=log&id={$auction.act_id}"{if !$isMine} class="current"{/if}>全部记录</a></li>
+            <li><a href="auction.php?act=log&id={$auction.act_id}&my=1"{if $isMine} class="current"{/if}>仅看我的</a></li>
+        </ul>
+    </div>
+
+</div><!--box-->
+<script>
+$(document).ready(function() {
+    $(".fenlei").click(function() {
+        $(".zhekouzhe").toggle();
+    });
+    $(".zhekouzhe").click(function() {
+        $(".zhekouzhe").hide();
+    });
+});
+</script>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

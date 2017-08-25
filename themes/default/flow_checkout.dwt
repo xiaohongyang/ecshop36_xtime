@@ -1,0 +1,92 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="box">
+    <div class="content">
+        <!-- #BeginLibraryItem "/library/page_title.lbi" --><!-- #EndLibraryItem -->
+        <form action="flow.php" method="post" id="checkout-form">
+        <div class="confirmxin" onclick="window.location.href='user.php?act=address_list&mode=select'">
+            <h4 class="xinxi">收货信息</h4>
+            {if $consignee.consignee}
+            <h4 class="name">{$consignee.consignee}<span>{$consignee.tel}</span></h4>
+            {else}
+            <h4 class="name">请添加收货信息</h4>
+            {/if}
+            <div class="shouhuo">
+                <p class="add">收货地址:</p>
+                <p class="address">{$consignee.region} {$consignee.address}</p>
+            </div>
+            <h3 class="jiantou"><img src="themes/default/img/12.png" width="12px" /></h3>
+        </div><!--confirmxin-->
+        <h4 class="confirmpayfor">请选择支付方式</h4>
+        <div class="confirmway payment-list">
+            {foreach from=$payment_list item=item}
+            <dl data-id="{$item.pay_id}" class="{if $item.pay_code eq 'balance' && $item.has_money}selected{/if}">
+                <dt><img src="{$item.ico}" width="30px" /></dt>
+                <dd><a href="#">{$item.pay_name}</a><span ></span>{if $item.pay_code eq 'balance' && !$item.has_money}<span class="red">余额不足</span>{/if}</dd>
+            </dl>
+            {/foreach}
+        </div>
+        <div class="botshopcar" style="margin-top:10px;margin-bottom:0">
+            <div class="cartop">
+                <h5 class="all">{$order_max_integral}积分抵扣{$order_max_integral_money|price}
+                    <div class="shopcar-button checkbox">
+                         <input type="button" class="anniu" /><span class="bai"></span>
+                         <!--<input type="button" class="anniuhui" /><span class="hui"></span>-->
+                    </div>
+                   
+                </h5>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="botshopcar" style="position:fixed;bottom:0">
+            <!-- #BeginLibraryItem "/library/order_total.lbi" --><!-- #EndLibraryItem -->
+        </div>
+        <input type="hidden" name="need_sms" value="0"/>
+<input type="hidden" name="shipping" value="1"/>
+<input type="hidden" name="payment" value="1"/>
+<input type="hidden" name="bonus" value="{$order.bonus_id}"/>
+<input type="hidden" name="bonus_sn" value=""/>
+<input type="hidden" name="address_id" value="{$consignee.address_id}"/>
+<input type="hidden" name="step" value="done"/>
+        </form>
+    </div><!--content-->
+
+</div><!--box-->
+   <!--去支付模态框-->
+<div class="mengban">
+    <div class="modal-content1">
+            <div class="xqmtk" style="padding-bottom:0px;">
+               <div class="xqmtk-head cseafood-border">
+                   <span>去支付订单？？</span>
+               </div>
+               <div class="xqmtk-footer">
+                   <a href="#" class="closed">取消</a>
+                   <a href="#" class="yes">确定</a>
+               </div>
+            </div>
+    </div><!-- /.modal-content -->
+</div>
+<script>
+    $(document).ready(function() {
+        $(".payment-list dl").click(function() {
+            $(this).addClass('selected').siblings().removeClass('selected');
+            $('[name=payment]').val($(this).attr('data-id'));
+        });
+        $(".checkbox").click(function() {
+            $(this).toggleClass('checked');
+        });
+        $("#checkout-form").on('click', '.pay', function() {
+            $(".mengban").show();
+        });
+        $(".mengban .closed").click(function() {
+                $(".mengban").hide();
+        });
+        $(".mengban .yes").click(function() {
+            $("#checkout-form").submit();
+        });
+    });
+</script>
+        <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

@@ -1,0 +1,115 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<div class="x-around">
+    <div class="x-head" style="background:#FEFFFF">
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <div class="x-headjt" onclick="javascrpt:window.location.href='/'">
+                <img src="themes/default/img/jt.png" alt="">
+            </div>
+            <div class="x-headax x-headaxhui addCollect" data-goods="{$goods.goods_id}">
+            </div>
+            <div class="goods-gallery">
+                <!-- #BeginLibraryItem "/library/goods_gallery.lbi" --><!-- #EndLibraryItem -->
+            </div>
+            <div class="x-shopname">
+                <span>{$goods.goods_name}
+                    <span class="x-shopcolor">{$goods.goods_brief}</span>
+                </span>
+            </div>
+            <div class="x-shopother">
+                <div class="x-left">
+                    <span>{if $goods.is_shipping}运费：包邮{else}{/if}</span>
+                    <span>售出：{$goods.cum_sales}</span>
+                     <span class="cpadding-left">
+                        <!-- {if $goods.goods_number neq "" and $cfg.show_goodsnumber} 商品库存-->
+                        <!-- {if $goods.goods_number eq 0} -->
+                        <em>{$lang.goods_number}</em> <font color='red'>{$lang.stock_up}</font>
+                        <!-- {else} -->
+                        <em>{$lang.goods_number}</em> {$goods.goods_number} {$goods.measure_unit}
+                        <!-- {/if} -->
+                        <!-- {/if} -->
+                    </span>
+                </div>
+               
+            </div>
+            <div class="x-shopprice">
+                <span class="x-shopuser">会员价：<em class="x-xinghuibi">{$s_price[0]}</em>.{$s_price[1]}星辉币</span>
+                <span class="x-shopoprice">原价：{$goods.market_price}</span>
+            </div>
+            <div class="x-shopzk">
+                <!-- {foreach from=$tag_words item=words} -->
+                <button class="btn x-btn1">{$words}</button>
+                <!-- {/foreach} -->
+            </div>
+        </div>
+        <div class="x-main">
+            {if $goods.promote_end_date}
+            <div class="x-qgtime">
+                <span>抢购截止时间：{$goods.promote_end_date|datetime}</span>
+            </div>
+            {/if}
+            <div class="x-gouxuan">
+                <div class="x-gxshop addCart" data-id="{$goods.goods_id}" data-for=".selected-attr">
+                    <div class="x-left " >
+                        <span class="x-gxyx">已选</span>
+                        <span class="selected-attr"></span>
+                    </div>
+                    <div class="x-right">
+                        <img src="themes/default/img/yjt.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="x-shopproduce">
+                <h4>商品简介</h4>
+                <div class="x-produdename">
+                    {$goods.goods_desc}
+                </div>
+            </div>
+            <div class="x-hotsale">
+                <div class="x-hothead">
+                    <div class="x-graytext">
+                        <span class="x-graylayout">
+                        <span class="x-grayimg">近期热卖</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content" style="margin-bottom:50px">
+            {insert name='sales'}
+        </div><!--content-->
+        <div class="x-footer row x-row">
+            <div class="col-xs-2 x-paddr" onclick="javascrtpt:window.location.href='flow.php'">
+                <img src="themes/default/img/shopcar.png" alt="">
+                <span class="x-cshop">购物车</span>
+                <span class="x-number">{insert name='cart_info'}</span>
+            </div>
+            <div class="col-xs-5 x-addshop">
+                <a href="javascript:;" class="addCart" data-id="{$goods.goods_id}" data-for=".selected-attr">加入购物车</a>
+            </div>
+            <div class="col-xs-5 x-addbuy">
+                <a href="javascript:;" class="addCart" data-id="{$goods.goods_id}" data-buy="true" data-for=".selected-attr">立即购买</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- #BeginLibraryItem "/library/add_cart.lbi" --><!-- #EndLibraryItem -->
+<script>
+    $(document).ready(function () {
+        $(".addCollect").click(function () {
+            var ele = $(this);
+            $.getJSON('user.php?act=collect&id=' + ele.attr('data-goods'), function (data) {
+                if (data.code == 0) {
+                    Dialog.tip(data.data);
+                    ele.removeClass('x-headaxhui');
+                    return;
+                }
+                Dialog.tip(data.msg);
+            });
+        });
+        $.getJSON('user.php?act=has_collect&id={$goods.goods_id}', function (data) {
+            if (data.code == 0) {
+                $(".addCollect").removeClass('x-headaxhui');
+            }
+        });
+    });
+</script>
+        <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

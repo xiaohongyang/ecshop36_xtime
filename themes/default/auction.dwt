@@ -26,7 +26,7 @@
                     <span class="x-shopuser">当前叫价：{$auction.formated_current_price}</span>
                 </div>
                 <div class="x-right">
-                    <span class="x-rightspan">{$auction.order_count}人叫价<img src="/themes/default/img/jiantou1.png" alt=""></span>
+                    <span class="x-rightspan">{$auction.bid_user_count}人叫价<img src="/themes/default/img/jiantou1.png" alt=""></span>
                 </div>
 
             </div>
@@ -60,7 +60,7 @@
         <div class="content" style="margin-bottom:50px">
         </div><!--content-->
         <div class="x-footer row x-row">
-            {insert name="auction_btn" auction=$auction}
+            {insert name="auction_btn" auction=$auction user_id=$user_id }
         </div>
     </div>
 <script>

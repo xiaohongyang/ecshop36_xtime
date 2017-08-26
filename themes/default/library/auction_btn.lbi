@@ -1,3 +1,5 @@
+
+
 {if $status eq 1 && !$price}
 <div class="col-xs-7 x-paddr x-paddr1">
    <span>您还没参与本次竞拍</span>
@@ -21,9 +23,17 @@
        <span>你的当前叫价：</span>
        <span>{$price|price}</span>
     </div>
-    <div class="col-xs-5 x-nobuy">
-        <a href="javascript:;" class="">暂不可叫价</a>
-    </div>
+
+    {if $auction.last_bid.bid_user neq $user_id}
+        <div class="col-xs-5 x-addbuy">
+            <a href="auction.php?act=bid&id={$auction.act_id}" class="">参与竞拍</a>
+        </div>
+    {else}
+        <div class="col-xs-5 x-nobuy">
+            <a href="javascript:;" class="">暂不可叫价</a>
+        </div>
+    {/if}
+
 </div>
 {/if}
 {if $status eq 5}

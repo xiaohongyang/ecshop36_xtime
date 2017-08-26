@@ -276,6 +276,8 @@ elseif ($_REQUEST['act'] == 'view')
         $smarty->assign('helps',      get_shop_help());       // 网店帮助
         $smarty->assign('top_goods',  get_top10());           // 销售排行
         $smarty->assign('promotion_info', get_promotion_info());
+        $smarty->assign('user_id', $_SESSION['user_id']);
+
 
         assign_dynamic('auction');
     }

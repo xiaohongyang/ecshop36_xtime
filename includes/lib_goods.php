@@ -1203,6 +1203,11 @@ function auction_info($act_id, $config = false)
     $sql = "SELECT COUNT(DISTINCT bid_user) FROM " . $GLOBALS['ecs']->table('auction_log') .
             " WHERE act_id = '$act_id'";
     $auction['bid_user_count'] = $GLOBALS['db']->getOne($sql);
+
+    /* 查询出价次数 */
+    $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('auction_log') .
+            " WHERE act_id = '$act_id'";
+    $auction['bid_times'] = $GLOBALS['db']->getOne($sql);
     if ($auction['bid_user_count'] > 0)
     {
         $sql = "SELECT a.*, u.user_name " .

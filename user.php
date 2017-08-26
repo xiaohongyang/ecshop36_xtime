@@ -1454,7 +1454,7 @@ elseif ($action == 'user_auction')
     $smarty->assign('page_title', '我的竞拍');
     $smarty->assign('lang_list',  $lang_list);
     $smarty->assign('user_id',  $user_id);
-    $smarty->display('user_auction_list.dwt');
+    $smarty->display('user_auction.dwt');
 }
 
 /* 删除收藏的商品 */

@@ -1714,7 +1714,10 @@ function build_uri($app, $params, $append = '', $page = 0, $keywords = '', $size
 
             break;
         case 'auction':
-            if (empty($auid))
+
+            if(key_exists('act', $params) && $params['act']=='auction_detail'){
+                $uri = 'auction.php?act=view&amp;id=' . $params['act_id'];
+            } else if (empty($auid))
             {
                 return false;
             }

@@ -68,6 +68,70 @@ function get_collection_goods($user_id, $num = 10, $start = 0)
 }
 
 /**
+ *  获取指定用户的竞拍商品列表
+ *
+ * @access  public
+ * @param   int     $user_id        用户ID
+ * @param   int     $num            列表最大数量
+ * @param   int     $start          列表其实位置
+ *
+ * @return  array   $arr
+ */
+function get_auction_goods($user_id, $num = 10, $start = 0)
+{
+    $sql = <<<STD
+                SELECT
+                    distinct(log.act_id), 
+                    g.goods_id,
+                    g.goods_name,
+                    g.goods_thumb,
+                    g.market_price,
+                    g.shop_price AS org_price,
+                    g.promote_price,
+                    g.promote_start_date,
+                    g.promote_end_date
+                     
+                FROM
+                    {$GLOBALS['ecs']->table('auction_log')} AS log
+                join {$GLOBALS['ecs']->table('goods_activity')} AS act on log.act_id = act.act_id
+                JOIN {$GLOBALS['ecs']->table('goods')} AS g ON g.goods_id = act.goods_id
+                
+                WHERE
+                    log.bid_user = '{$user_id}'
+                
+                ORDER BY
+                    log.act_id desc
+STD;
+
+    $res = $GLOBALS['db'] -> selectLimit($sql, $num, $start);
+
+    $goods_list = array();
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        if ($row['promote_price'] > 0)
+        {
+            $promote_price = bargain_price($row['promote_price'], $row['promote_start_date'], $row['promote_end_date']);
+        }
+        else
+        {
+            $promote_price = 0;
+        }
+
+        $goods_list[$row['goods_id']]['rec_id']        = $row['rec_id'];
+        $goods_list[$row['goods_id']]['is_attention']  = $row['is_attention'];
+        $goods_list[$row['goods_id']]['goods_id']      = $row['goods_id'];
+        $goods_list[$row['goods_id']]['goods_thumb']      = $row['goods_thumb'];
+        $goods_list[$row['goods_id']]['goods_name']    = $row['goods_name'];
+        $goods_list[$row['goods_id']]['market_price']  = price_format($row['market_price']);
+        $goods_list[$row['goods_id']]['shop_price']    = price_format($row['shop_price']);
+        $goods_list[$row['goods_id']]['promote_price'] = ($promote_price > 0) ? price_format($promote_price) : '';
+        $goods_list[$row['goods_id']]['url']           = build_uri('auction', array('act_id'=>$row['act_id'],'act'=>'auction_detail'), $row['goods_name']);
+    }
+
+    return $goods_list;
+}
+
+/**
  *  查看此商品是否已进行过缺货登记
  *
  * @access  public

@@ -1,5 +1,5 @@
 <?php
-// database host
+/*// database host
 $db_host   = "localhost:3306";
 
 // database name
@@ -9,7 +9,18 @@ $db_name   = "sqlxtime";
 $db_user   = "xtime";
 
 // database password
-$db_pass   = "xtime999";
+$db_pass   = "xtime999";*/
+
+$db_host   = "127.0.0.1:3106";
+
+// database name
+$db_name   = "ecshop_36_sqlxtime";
+
+// database username
+$db_user   = "jack";
+
+// database password
+$db_pass   = "123456";
 
 // table prefix
 $prefix    = "ecs_";

@@ -1662,6 +1662,9 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
         {
             $row['package_goods_list'] = get_package_goods($row['goods_id']);
         }
+        /*xhy_增加是否已下架*/
+        $goodsIsSale = $GLOBALS['db']->getOne("SELECT `is_on_sale` FROM " . $GLOBALS['ecs']->table('goods') . " WHERE `goods_id`='{$row['goods_id']}'");
+        $row['is_on_sale'] = $goodsIsSale;
         $goods_list[] = $row;
     }
     $total['goods_amount'] = $total['goods_price'];

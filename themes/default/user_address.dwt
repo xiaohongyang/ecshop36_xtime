@@ -23,6 +23,7 @@
 </div><!--box-->
 <script src="/js/jquery.city.js"></script>
 <script>
+var referer = '{$referer}'
 $(document).ready(function () {
     var data = [
         {$consignee.country},
@@ -69,7 +70,12 @@ $(document).ready(function () {
         }
         $.post('user.php?act=act_edit_address', consignee, function (data) {
             if (data.code == 0) {
-                window.location.href = 'user.php?act=address_list';
+
+                if(referer.match(/(goods.php\?id=[\d]*)/) != null){
+                    window.location.href = referer
+                } else {
+                    window.location.href = 'user.php?act=address_list';
+                }
                 return;
             }
             Dialog.tip(data.msg);

@@ -1335,6 +1335,7 @@ elseif ($action == 'address') {
     $smarty->assign('rightBtn', [
         'label' => '保存'
     ]);
+    $smarty->assign('referer', $_SERVER['HTTP_REFERER']);
     $smarty->display('user_address.dwt');
 }
 

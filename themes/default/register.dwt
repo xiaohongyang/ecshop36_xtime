@@ -89,7 +89,7 @@ $(document).ready(function () {
             $(".sendCode").val('重新发送验证码').removeClass('disable');
             return;
         }
-        $(".sendCode").val(time);
+        $(".sendCode").val(time + 'S');
         setTimeout(refreshTime, 1000);
     }
 });

@@ -17,7 +17,7 @@
             </div>
             <div class="x-shopother">
                 <div class="x-left">
-                    <span>{if $goods.is_shipping}运费：包邮{else}{/if}</span>
+                    <span>{if $goods.is_shipping}运费：免运费&nbsp;{else}{/if}</span>
                     <span>售出：{$goods.cum_sales}</span>
                      <span class="cpadding-left">
                         <!-- {if $goods.goods_number neq "" and $cfg.show_goodsnumber} 商品库存-->

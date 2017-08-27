@@ -92,6 +92,13 @@
             attr.join(',') + '&number=' + qty, function (data) {
                 if (data.err_msg == '') {
                     $(".cartGoods .price").html(data.result);
+                    var sku = data.product_number;
+                    $(".cartGoods .stock").html(sku);
+                    if (sku < 2) {
+                        $(".cartGoods .kucun").addClass('disable');
+                    } else {
+                        $(".cartGoods .kucun").removeClass('disable');
+                    }
                     return;
                 }
                 Dialog.tip(data.err_msg);

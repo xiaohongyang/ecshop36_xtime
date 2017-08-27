@@ -327,6 +327,12 @@ elseif ($_REQUEST['act'] == 'bid')
         show_message($_LANG['au_bid_after_login']);
     }
     $user = user_info($user_id);
+
+    if ($auction['last_bid']['bid_user'] == $user_id )
+    {
+        show_message($_LANG['au_bid_repeat_user'], '', '', 'error');
+    }
+
     if (!\Zodream\Infrastructure\Http\Request::isPost()) {
         $smarty->assign('auction', $auction);
         $smarty->assign('user', $user);

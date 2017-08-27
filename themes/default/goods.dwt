@@ -24,7 +24,7 @@
                         <!-- {if $goods.goods_number eq 0} -->
                         <em>{$lang.goods_number}</em> <font color='red'>{$lang.stock_up}</font>
                         <!-- {else} -->
-                        <em>{$lang.goods_number}</em> {$goods.goods_number} {$goods.measure_unit}
+                        <em>{$lang.goods_number}</em> <span id="product-number">{$goods.goods_number}</span> {$goods.measure_unit}
                         <!-- {/if} -->
                         <!-- {/if} -->
                     </span>

@@ -2330,7 +2330,7 @@ function flow_update_cart($arr)
             " WHERE rec_id='$key' AND session_id='" . SESS_ID . "'";
         $goods = $GLOBALS['db']->getRow($sql);
 
-        $sql = "SELECT g.goods_name, g.goods_number ".
+        $sql = "SELECT g.goods_name, g.goods_number, g.warn_number ".
             "FROM " .$GLOBALS['ecs']->table('goods'). " AS g, ".
             $GLOBALS['ecs']->table('cart'). " AS c ".
             "WHERE g.goods_id = c.goods_id AND c.rec_id = '$key'";
@@ -2342,17 +2342,17 @@ function flow_update_cart($arr)
             if ($row['goods_number'] < $val)
             {
                 Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
-                    $row['goods_number'], $row['goods_number']));
+                    $row['goods_number'], $row['goods_number'] - $row['warn_number']));
                 exit;
             }
             if ($val >= 99) {
                 Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
-                    $row['goods_number'], $row['goods_number']));
+                    $row['goods_number'], $row['goods_number'] - $row['warn_number']));
                 exit;
             }
             if ($val < 1) {
                 Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
-                    $row['goods_number'], $row['goods_number']));
+                    $row['goods_number'], $row['goods_number'] - $row['warn_number']));
                 exit;
             }
             /* 是货品 */

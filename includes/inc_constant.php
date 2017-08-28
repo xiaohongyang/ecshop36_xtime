@@ -63,6 +63,7 @@ define('CART_AUCTION_GOODS',        2); // 拍卖商品
 define('CART_SNATCH_GOODS',         3); // 夺宝奇兵
 define('CART_EXCHANGE_GOODS',       4); // 积分商城
 define('CART_REPURCHASE',           5); // 再次购买
+define('CART_BUY_NOW',           6);    // 立即购买
 
 /* 订单状态 */
 define('OS_UNCONFIRMED',            0); // 未确认

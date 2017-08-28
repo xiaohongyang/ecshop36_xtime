@@ -126,7 +126,9 @@
             }
             var isBuy = $(this).val() == '立即购买';
             $(".cartGoods").hide();
-            $.getJSON("flow.php?step=add_goods&goods_id=" + goods_id + "&num=" + num + "&spec="+ spec, function(data) {
+            var step = isBuy ? 'buy_now' : 'add_goods'
+            var url = "flow.php?step="+ step +"&goods_id=" + goods_id + "&num=" + num + "&spec="+ spec
+            $.getJSON(url, function(data) {
                 if (data.code == 0) {
                     if (isBuy) {
                         window.location.href = "flow.php?step=checkout&cart_value=" + data.data;

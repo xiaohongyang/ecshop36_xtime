@@ -1914,6 +1914,18 @@ elseif ($_REQUEST['step'] == 'add_goods') {
     $msg = $err->last_message();
     Helper::failure(is_array($msg) ? current($msg) : $msg);
 }
+//立即购买
+elseif ($_REQUEST['step'] == 'buy_now') {
+    $goods_id = intval($_GET['goods_id']);
+    $num = intval(Helper::get('num', 1));
+    $spec = explode(',', Helper::get('spec', ''));
+    $rec_id = Cart::addToCart($goods_id, $num, $spec,0,CART_BUY_NOW);
+    if (!empty($rec_id)) {
+        Helper::success($rec_id);
+    }
+    $msg = $err->last_message();
+    Helper::failure(is_array($msg) ? current($msg) : $msg);
+}
 
 /*------------------------------------------------------ */
 //-- 删除购物车中的商品

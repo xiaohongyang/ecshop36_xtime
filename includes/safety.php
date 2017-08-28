@@ -39,8 +39,8 @@ function filter($str,$filterarr){
         if (preg_match("/".$value."/is",$str)==1||preg_match("/".$value."/is",urlencode($str))==1)
         {
             header("Content-type: text/html; charset=utf-8"); 
-            print "您的提交带有不合法参数,谢谢合作";
-            exit();
+//            print "您的提交带有不合法参数,谢谢合作";
+//            exit();
         }
     }
     return $str;

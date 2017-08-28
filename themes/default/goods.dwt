@@ -17,14 +17,14 @@
             </div>
             <div class="x-shopother">
                 <div class="x-left">
-                    <span>{if $goods.is_shipping}运费：包邮{else}{/if}</span>
+                    <span>{if $goods.is_shipping}运费：免运费&nbsp;{else}{/if}</span>
                     <span>售出：{$goods.cum_sales}</span>
                      <span class="cpadding-left">
                         <!-- {if $goods.goods_number neq "" and $cfg.show_goodsnumber} 商品库存-->
                         <!-- {if $goods.goods_number eq 0} -->
                         <em>{$lang.goods_number}</em> <font color='red'>{$lang.stock_up}</font>
                         <!-- {else} -->
-                        <em>{$lang.goods_number}</em> {$goods.goods_number} {$goods.measure_unit}
+                        <em>{$lang.goods_number}</em> <span id="product-number">{$goods.goods_number}</span> {$goods.measure_unit}
                         <!-- {/if} -->
                         <!-- {/if} -->
                     </span>

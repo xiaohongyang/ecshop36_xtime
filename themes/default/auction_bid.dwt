@@ -10,7 +10,7 @@
             <textarea name="price" id="" cols="46" rows="2"></textarea>
             <p>
                 <span>单位：星辉币</span>
-                <span>你的星辉币余额：{$user.money}</span>
+                <span>你的星辉币余额：{$user.user_money}</span>
             </p>
             <p>
                 {if $last_price}

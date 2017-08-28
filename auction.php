@@ -276,6 +276,8 @@ elseif ($_REQUEST['act'] == 'view')
         $smarty->assign('helps',      get_shop_help());       // 网店帮助
         $smarty->assign('top_goods',  get_top10());           // 销售排行
         $smarty->assign('promotion_info', get_promotion_info());
+        $smarty->assign('user_id', $_SESSION['user_id']);
+
 
         assign_dynamic('auction');
     }
@@ -325,6 +327,12 @@ elseif ($_REQUEST['act'] == 'bid')
         show_message($_LANG['au_bid_after_login']);
     }
     $user = user_info($user_id);
+
+    if ($auction['last_bid']['bid_user'] == $user_id )
+    {
+        show_message($_LANG['au_bid_repeat_user'], '', '', 'error');
+    }
+
     if (!\Zodream\Infrastructure\Http\Request::isPost()) {
         $smarty->assign('auction', $auction);
         $smarty->assign('user', $user);

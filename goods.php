@@ -64,6 +64,9 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'price')
 
         $shop_price  = get_final_price($goods_id, $number, true, $attr_id);
         $res['result'] = price_format($shop_price * $number, false);
+
+        $goodsInfo = get_products_info($goods_id, $attr_id);
+        $res['product_number'] = is_null($goodsInfo['product_number']) ? 0 : $goodsInfo['product_number'];
     }
 
     die($json->encode($res));

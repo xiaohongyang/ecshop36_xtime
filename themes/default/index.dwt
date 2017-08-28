@@ -120,10 +120,15 @@
   });
   function replaceUri(key, val) {
     var url = window.location.href;
-    if (url.indexOf('?') < 0) {
+    if (url.indexOf('?') == -1) {
       url += '?' + key + '=' + val;
     } else {
-      url += '&' + key + '=' + val;
+        var newFilter = 'filter=' + val
+        if(url.match(new RegExp('(filter=[^&]+)')) != null) {
+            url = url.replace(new RegExp('(filter=[^&]+)'), newFilter)
+        } else {
+            url += '&' + key + '=' + val;
+        }
     }
     window.location.href = url;
   }

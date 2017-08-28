@@ -108,7 +108,6 @@ if (!in_array($order, ['desc', 'asc'])) {
     $sort = 'asc';
 }
 $cache_id = sprintf('%X', crc32($_SESSION['user_rank'] . '-' . $_CFG['lang'] .'-'.$filter. '-' .$sort.'-' .$order));
-
 if (!$smarty->is_cached('index.dwt', $cache_id))
 {
     assign_template();
@@ -194,6 +193,8 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
                     "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
             'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND '.
                 'g.is_delete = 0 AND (' . $children . 'OR ' . get_extension_goods($children) . ') ';
+
+    $sql .= "  $where ";
 
     if ($num > 0)
     {

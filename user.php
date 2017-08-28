@@ -1335,6 +1335,7 @@ elseif ($action == 'address') {
     $smarty->assign('rightBtn', [
         'label' => '保存'
     ]);
+    $smarty->assign('referer', $_SERVER['HTTP_REFERER']);
     $smarty->display('user_address.dwt');
 }
 
@@ -1412,8 +1413,9 @@ elseif ($action == 'collection_list')
 
     $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
 
-    $record_count = $db->getOne("SELECT COUNT(*) FROM " .$ecs->table('collect_goods').
-                                " WHERE user_id='$user_id' ORDER BY add_time DESC");
+    $sql = "SELECT COUNT(*) FROM " .$ecs->table('collect_goods').
+        " WHERE user_id='$user_id' ORDER BY add_time DESC";
+    $record_count = $db->getOne($sql);
 
     $pager = get_pager('user.php', array('act' => $action), $record_count, $page);
     $smarty->assign('pager', $pager);
@@ -1428,6 +1430,32 @@ elseif ($action == 'collection_list')
     $smarty->assign('lang_list',  $lang_list);
     $smarty->assign('user_id',  $user_id);
     $smarty->display('user_collect_list.dwt');
+}
+
+/* 显示拍卖列表 */
+elseif ($action == 'user_auction')
+{
+    include_once(ROOT_PATH . 'includes/lib_clips.php');
+
+    $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+
+    $sql = "SELECT COUNT(*) FROM " .$ecs->table('collect_goods').
+        " WHERE user_id='$user_id' ORDER BY add_time DESC";
+    $record_count = $db->getOne($sql);
+
+    $pager = get_pager('user.php', array('act' => $action), $record_count, $page);
+    $smarty->assign('pager', $pager);
+    $smarty->assign('goods_list', get_auction_goods($user_id, $pager['size'], $pager['start']));
+    $smarty->assign('url',        $ecs->url());
+    $lang_list = array(
+        'UTF8'   => $_LANG['charset']['utf8'],
+        'GB2312' => $_LANG['charset']['zh_cn'],
+        'BIG5'   => $_LANG['charset']['zh_tw'],
+    );
+    $smarty->assign('page_title', '我的竞拍');
+    $smarty->assign('lang_list',  $lang_list);
+    $smarty->assign('user_id',  $user_id);
+    $smarty->display('user_auction.dwt');
 }
 
 /* 删除收藏的商品 */

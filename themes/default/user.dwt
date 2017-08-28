@@ -30,7 +30,7 @@
                  </a>
             </li>
             <li>
-                <a href="javascript:;">
+                <a href="/user.php?act=user_auction">
                     <img src="/themes/default/img/jp.png" width="20px" />
                    <span>我的竞拍</span>
                     <span class="you">

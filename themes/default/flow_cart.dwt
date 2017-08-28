@@ -14,25 +14,57 @@
                 <h5>普通商品<a href="#" class="changMode">编辑</a></h5>
             </div>
             <!-- {foreach from=$goods_list item=goods} -->
-            <div class="carbot goods-item" data-rec="{$goods.rec_id}">
-                <div class="carin"><span></span></div>
-                <dl>
-                    <dt><a href="goods.php?id={$goods.goods_id}"><img src="{$goods.goods_thumb}" /></a></dt>
-                    <dd><a href="goods.php?id={$goods.goods_id}">{$goods.goods_name|escape:html}</a></dd>
-                    <dd class="hui goods-attr">
-                        <a href="goods.php?id={$goods.goods_id}">
-                            {$goods.goods_attr|nl2br}</a></dd>
-                    <dd class="san goods-price"><a href="goods.php?id={$goods.goods_id}">
-                        <span class="price">{$goods.goods_price}</span></a>
-                        <a href="goods.php?id={$goods.goods_id}" class="right number-label">X{$goods.goods_number}</a></dd>
-                    <dd class="san number-group">
-                        <input type="button" value="-"  class="jian number-minus" style="width:30px;height:30px;line-height:30px;border:1px solid #ccc;background-color:#fff;float:left" />
-                        <input type="text" value="{$goods.goods_number}"  class="txt number" style="width:60px;height:30px;line-height:30px;border:1px solid #ccc;background-color:#fff;text-align:center;float:left" />
-                        <input type="button" value="+"  class="jia number-plus" style="width:30px;height:30px;line-height:30px;border:1px solid #ccc;background-color:#fff;float:left"></dd>
-                <div style="clear:both"></div>
-                </dl>
-                <input type="button" value="删除" class="del" />
+                    <!-- {if $goods.is_on_sale==1} -->
+                    <div class="carbot goods-item" data-rec="{$goods.rec_id}">
+                        <div class="carin"><span></span></div>
+                        <dl>
+                            <dt><a href="goods.php?id={$goods.goods_id}"><img src="{$goods.goods_thumb}" /></a></dt>
+                            <dd><a href="goods.php?id={$goods.goods_id}">{$goods.goods_name|escape:html}</a></dd>
+                            <dd class="hui goods-attr">
+                                <a href="goods.php?id={$goods.goods_id}">
+                                    {$goods.goods_attr|nl2br}</a></dd>
+                            <dd class="san goods-price"><a href="goods.php?id={$goods.goods_id}">
+                                <span class="price">{$goods.goods_price}</span></a>
+                                <a href="goods.php?id={$goods.goods_id}" class="right number-label">X{$goods.goods_number}</a></dd>
+                            <dd class="san number-group">
+                                <input type="button" value="-"  class="jian number-minus" style="width:30px;height:30px;line-height:30px;border:1px solid #ccc;background-color:#fff;float:left" />
+                                <input type="text" value="{$goods.goods_number}"  class="txt number" style="width:60px;height:30px;line-height:30px;border:1px solid #ccc;background-color:#fff;text-align:center;float:left" />
+                                <input type="button" value="+"  class="jia number-plus" style="width:30px;height:30px;line-height:30px;border:1px solid #ccc;background-color:#fff;float:left"></dd>
+                        <div style="clear:both"></div>
+                        </dl>
+                        <input type="button" value="删除" class="del" />
+                    </div>
+                <!-- {/if} -->
+            <!-- {/foreach} -->
+
+
+
+            <div class="cartop">
+                <div class="carin"><span class="check-all"></span></div>
+                <h5>已失效商品<a href="#" class="changMode">编辑</a></h5>
             </div>
+            <!-- {foreach from=$goods_list item=goods} -->
+                <!-- {if $goods.is_on_sale==0} -->
+                <div class="carbot goods-item" data-rec="{$goods.rec_id}">
+                    <div class="carin"><span></span></div>
+                    <dl>
+                        <dt><a href="goods.php?id={$goods.goods_id}"><img src="{$goods.goods_thumb}" /></a></dt>
+                        <dd><a href="goods.php?id={$goods.goods_id}">{$goods.goods_name|escape:html}</a></dd>
+                        <dd class="hui goods-attr">
+                            <a href="goods.php?id={$goods.goods_id}">
+                                {$goods.goods_attr|nl2br}</a></dd>
+                        <dd class="san goods-price"><a href="goods.php?id={$goods.goods_id}">
+                            <span class="price">{$goods.goods_price}</span></a>
+                            <a href="goods.php?id={$goods.goods_id}" class="right number-label">X{$goods.goods_number}</a></dd>
+                        <dd class="san number-group">
+                            <input type="button" value="-"  class="jian number-minus" style="width:30px;height:30px;line-height:30px;border:1px solid #ccc;background-color:#fff;float:left" />
+                            <input type="text" value="{$goods.goods_number}"  class="txt number" style="width:60px;height:30px;line-height:30px;border:1px solid #ccc;background-color:#fff;text-align:center;float:left" />
+                            <input type="button" value="+"  class="jia number-plus" style="width:30px;height:30px;line-height:30px;border:1px solid #ccc;background-color:#fff;float:left"></dd>
+                        <div style="clear:both"></div>
+                    </dl>
+                    <input type="button" value="删除" class="del" />
+                </div>
+                <!-- {/if} -->
             <!-- {/foreach} -->
         </div><!--shopcar-->
 

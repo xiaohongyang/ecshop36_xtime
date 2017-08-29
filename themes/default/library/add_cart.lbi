@@ -126,12 +126,13 @@
             }
             var isBuy = $(this).val() == '立即购买';
             $(".cartGoods").hide();
-            var step = isBuy ? 'buy_now' : 'add_goods'
+            var step = 'add_goods'
+            step = isBuy ? step + '&flow_type=buy_now' : step
             var url = "flow.php?step="+ step +"&goods_id=" + goods_id + "&num=" + num + "&spec="+ spec
             $.getJSON(url, function(data) {
                 if (data.code == 0) {
                     if (isBuy) {
-                        window.location.href = "flow.php?step=checkout&cart_value=" + data.data;
+                        window.location.href = "flow.php?step=checkout&cart_value=" + data.data + "&flow_type=buy_now";
                         return;
                     }
                     data.msg = '添加成功！';

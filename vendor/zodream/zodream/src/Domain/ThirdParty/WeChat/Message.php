@@ -4,7 +4,7 @@ namespace Zodream\Domain\ThirdParty\WeChat;
 use Zodream\Infrastructure\Base\MagicObject;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
 use Zodream\Infrastructure\ObjectExpand\XmlExpand;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Traits\EventTrait;
 use Zodream\Service\Config;
 use Zodream\Service\Factory;
@@ -68,7 +68,7 @@ class Message extends MagicObject {
         $this->token = $config['token'];
         $this->aesKey = $config['aesKey'];
         $this->appId = $config['appId'];
-        $this->encryptType = Request::get('encrypt_type');
+        $this->encryptType = RequestFinal::get('encrypt_type');
         $this->get();
     }
 
@@ -81,7 +81,7 @@ class Message extends MagicObject {
 
     public function setData() {
         if (empty($this->xml)) {
-            $this->xml = Request::input();
+            $this->xml = RequestFinal::input();
         }
         if (!empty($this->xml)) {
             $args = $this->getData();
@@ -159,8 +159,8 @@ class Message extends MagicObject {
      * @return bool
      */
     public function isValid() {
-        return Request::get()->has('signature')
-            || Request::get()->has('msg_signature');
+        return RequestFinal::get()->has('signature')
+            || RequestFinal::get()->has('msg_signature');
     }
 
     /**
@@ -169,10 +169,10 @@ class Message extends MagicObject {
      * @return bool
      */
     protected function checkSignature($str = '') {
-        $signature = Request::get('signature');
-        $signature = Request::get('msg_signature', $signature); //如果存在加密验证则用加密验证段
-        $timestamp = Request::get('timestamp');
-        $nonce = Request::get('nonce');
+        $signature = RequestFinal::get('signature');
+        $signature = RequestFinal::get('msg_signature', $signature); //如果存在加密验证则用加密验证段
+        $timestamp = RequestFinal::get('timestamp');
+        $nonce = RequestFinal::get('nonce');
 
         $token = $this->token;
         $tmpArr = array($token, $timestamp, $nonce, $str);
@@ -186,7 +186,7 @@ class Message extends MagicObject {
      * 验证
      */
     public function valid() {
-        $echoStr = Request::get('echostr');
+        $echoStr = RequestFinal::get('echostr');
         if (!is_null($echoStr)) {
             if ($this->checkSignature()) {
                 exit($echoStr);
@@ -194,7 +194,7 @@ class Message extends MagicObject {
             throw new \Exception('no access');
         }
         $encryptStr = '';
-        if (Request::isPost()) {
+        if (RequestFinal::isPost()) {
             $data = (array)XmlExpand::decode($this->xml, false);
             if ($this->encryptType != 'aes') {
                 return $data;

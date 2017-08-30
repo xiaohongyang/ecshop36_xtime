@@ -1,7 +1,7 @@
 <?php
 namespace Zodream\Module\OAuth\Service;
 use Zodream\Infrastructure\Http\Component\Uri;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
 
 /**

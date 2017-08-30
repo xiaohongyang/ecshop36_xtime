@@ -5,7 +5,7 @@ namespace Zodream\Domain\Access;
  *
  * @author Jason
  */
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Interfaces\AuthObject;
 use Zodream\Infrastructure\Interfaces\UserObject;
 use Zodream\Service\Config;
@@ -34,17 +34,17 @@ class Token extends Auth implements AuthObject {
      */
 	protected static function getTokenForRequest() {
 	    $inputKey = Config::auth('api_token', 'api_token');
-        $token = Request::get($inputKey);
+        $token = RequestFinal::get($inputKey);
         if (empty($token)) {
-            $token = Request::request($inputKey);
+            $token = RequestFinal::request($inputKey);
         }
 
         if (empty($token)) {
-            $token = Request::bearerToken();
+            $token = RequestFinal::bearerToken();
         }
 
         if (empty($token)) {
-            list(, $token) = Request::auth();
+            list(, $token) = RequestFinal::auth();
         }
 
         return $token;

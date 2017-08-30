@@ -8,7 +8,7 @@ use Zodream\Domain\Validation\ValidationException;
 use Zodream\Domain\Access\AuthenticationException;
 use Zodream\Infrastructure\Error\NotFoundHttpException;
 use Zodream\Infrastructure\Http\HttpResponseException;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Http\Response;
 use Zodream\Infrastructure\Interfaces\ExceptionHandler;
 use Zodream\Service\Factory;
@@ -111,7 +111,7 @@ class Handler implements ExceptionHandler {
 
         $errors = $e->validator->errors()->getMessages();
 
-        if (Request::expectsJson()) {
+        if (RequestFinal::expectsJson()) {
             return Factory::response()->setStatusCode(422)
                 ->json($errors);
         }

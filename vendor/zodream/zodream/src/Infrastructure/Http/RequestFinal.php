@@ -17,7 +17,7 @@ use Zodream\Service\Config;
 
 defined('APP_SAFE') || define('APP_SAFE', Config::app('safe', true));
 
-final class Request {
+final class RequestFinal {
 
 	private static $_instances = array(
 		'cookie' => null,

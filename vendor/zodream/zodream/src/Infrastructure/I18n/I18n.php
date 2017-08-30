@@ -9,7 +9,7 @@ namespace Zodream\Infrastructure\I18n;
 use Zodream\Service\Config;
 use Zodream\Infrastructure\Disk\Directory;
 use Zodream\Infrastructure\Base\MagicObject;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Service\Factory;
 
 abstract class I18n extends MagicObject {
@@ -60,7 +60,7 @@ abstract class I18n extends MagicObject {
      */
     public function setLanguage($arg = null) {
         if (empty($arg)) {
-            $language = Request::server('HTTP_ACCEPT_LANGUAGE', 'ZH-CN');
+            $language = RequestFinal::server('HTTP_ACCEPT_LANGUAGE', 'ZH-CN');
             preg_match('/[\w-]+/', $language, $match);
             $arg = $match[0];
         }

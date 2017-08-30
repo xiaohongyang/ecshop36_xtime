@@ -19,7 +19,7 @@ use Zodream\Infrastructure\Caching\Cache;
 use Zodream\Infrastructure\Caching\FileCache;
 use Zodream\Infrastructure\Disk\Directory;
 use Zodream\Infrastructure\Exceptions\Handler;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Http\Requests\Header;
 use Zodream\Infrastructure\Http\Response;
 use Zodream\Infrastructure\I18n\I18n;
@@ -140,7 +140,7 @@ class Factory {
      */
     public static function root() {
         if (!array_key_exists('root', static::$_instance)) {
-            static::$_instance['root'] = new Directory(defined('APP_DIR') ? APP_DIR : Request::server('DOCUMENT_ROOT'));
+            static::$_instance['root'] = new Directory(defined('APP_DIR') ? APP_DIR : RequestFinal::server('DOCUMENT_ROOT'));
         }
         return static::$_instance['root'];
     }

@@ -1,7 +1,7 @@
 <?php
 namespace Zodream\Service\Controller;
 
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 abstract class ModuleController extends Controller {
 
@@ -52,7 +52,7 @@ abstract class ModuleController extends Controller {
     }
 
     protected function getActionName($action) {
-        if (Request::expectsJson()) {
+        if (RequestFinal::expectsJson()) {
             return $this->getAjaxActionName($action);
         }
         return parent::getActionName($action);

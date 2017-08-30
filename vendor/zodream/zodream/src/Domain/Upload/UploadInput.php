@@ -6,12 +6,12 @@ namespace Zodream\Domain\Upload;
  * Date: 2016/6/28
  * Time: 18:48
  */
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 class UploadInput extends BaseUpload {
 
     public function __construct() {
-        $this->name = Request::server('HTTP_X_FILENAME');
+        $this->name = RequestFinal::server('HTTP_X_FILENAME');
         $this->setType();
     }
 

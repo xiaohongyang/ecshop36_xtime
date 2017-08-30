@@ -9,17 +9,17 @@ namespace Zodream\Service\Rest\OAuth\Grant;
  * Time: 15:46
  */
 use Zodream\Service\Rest\OAuth\Exception\OAuthServerException;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 class PasswordGrant extends BaseGrant {
 
     protected function validateUser() {
-        $username = Request::request('username');
+        $username = RequestFinal::request('username');
         if (is_null($username)) {
             throw OAuthServerException::invalidRequest('username');
         }
 
-        $password = Request::request('password');
+        $password = RequestFinal::request('password');
         if (is_null($password)) {
             throw OAuthServerException::invalidRequest('password');
         }

@@ -12,7 +12,7 @@ use Zodream\Service\Controller\BaseController;
 use Zodream\Service\Controller\Module;
 use Zodream\Service\Factory;
 use Zodream\Infrastructure\ObjectExpand\ArrayExpand;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Http\Response;
 use Zodream\Service\Rest\OAuth\Grant\RefreshTokenGrant;
 
@@ -105,7 +105,7 @@ class Route {
         if (!preg_match('#'.$this->uri.'#', $url, $match)) {
             return false;
         }
-        Request::get(true)->set($match);
+        RequestFinal::get(true)->set($match);
         return true;
     }
 
@@ -123,7 +123,7 @@ class Route {
 	}
 
 	protected function runFilter() {
-	    if (!DataFilter::validate(Request::get(), $this->rules)) {
+	    if (!DataFilter::validate(RequestFinal::get(), $this->rules)) {
 	        throw new \InvalidArgumentException('URL ERROR');
         }
     }
@@ -178,7 +178,7 @@ class Route {
 		$parameters = $method->getParameters();
 		$arguments = array();
 		foreach ($parameters as $param) {
-			$arguments[] = Request::get($param->getName());
+			$arguments[] = RequestFinal::get($param->getName());
 		}
 		return call_user_func_array(array(new $class, $action), $arguments);
 	}

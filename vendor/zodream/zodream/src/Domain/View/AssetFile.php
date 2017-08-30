@@ -8,7 +8,7 @@ namespace Zodream\Domain\View;
  * Time: 10:28
  */
 use Zodream\Infrastructure\Disk\File;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 class AssetFile extends File {
 
@@ -22,8 +22,8 @@ class AssetFile extends File {
     }
 
     protected function getRealFile(){
-        $root = Request::server('DOCUMENT_ROOT');
-        $script = dirname(Request::server('SCRIPT_FILENAME'));
+        $root = RequestFinal::server('DOCUMENT_ROOT');
+        $script = dirname(RequestFinal::server('SCRIPT_FILENAME'));
         if (strpos($this->directory, $root) != false) {
             $this->realFile = $this->fullName;
             $this->url = $this->getRelative($script);

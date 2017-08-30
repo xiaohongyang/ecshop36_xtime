@@ -4,7 +4,7 @@ namespace Zodream\Domain\ThirdParty\WeChat\Platform;
 
 use Zodream\Domain\ThirdParty\WeChat\Aes;
 use Zodream\Infrastructure\Base\MagicObject;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\ObjectExpand\XmlExpand;
 use Zodream\Infrastructure\Traits\EventTrait;
 use Zodream\Service\Config;
@@ -57,7 +57,7 @@ class Notify extends MagicObject {
 
     public function setData() {
         if (empty($this->xml)) {
-            $this->xml = Request::input();
+            $this->xml = RequestFinal::input();
         }
         if (!empty($this->xml)) {
             $args = $this->getData();

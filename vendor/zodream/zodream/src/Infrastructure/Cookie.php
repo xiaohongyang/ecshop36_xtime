@@ -6,7 +6,7 @@ namespace Zodream\Infrastructure;
 * 
 * @author Jason
 */
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Service\Factory;
 
 class Cookie {
@@ -29,7 +29,7 @@ class Cookie {
 	 * @return array|string
 	 */
 	public static function get($key, $default = NULL) {
-		 return Request::cookie($key, $default);
+		 return RequestFinal::cookie($key, $default);
 	}
 
 	/**

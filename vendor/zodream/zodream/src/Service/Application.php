@@ -8,11 +8,11 @@ namespace Zodream\Service;
 */
 use Zodream\Domain\Autoload;
 use Zodream\Infrastructure\Event\EventManger;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Service\Routing\Url;
 
 defined('VERSION') || define('VERSION', 'v3');
-defined('APP_DIR') || define('APP_DIR', Request::server('DOCUMENT_ROOT'));
+defined('APP_DIR') || define('APP_DIR', RequestFinal::server('DOCUMENT_ROOT'));
 defined('APP_CONTROLLER') || define('APP_CONTROLLER', Config::app('controller'));
 defined('APP_ACTION') || define('APP_ACTION', Config::app('action'));
 defined('APP_MODEL') || define('APP_MODEL', Config::app('model'));

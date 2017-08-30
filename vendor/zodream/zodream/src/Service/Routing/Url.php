@@ -5,7 +5,7 @@ namespace Zodream\Service\Routing;
  * url生成
  */
 use Zodream\Infrastructure\Http\Component\Uri;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Service\Config;
 
 defined('APP_URL') || define('APP_URL', Url::getRoot());
@@ -25,7 +25,7 @@ class Url {
     public static function getHost() {
         if (empty(self::$_host)) {
             // 出现配置循环 bug
-            static::setHost(Config::app('host') ?: Request::host());
+            static::setHost(Config::app('host') ?: RequestFinal::host());
         }
         return self::$_host;
     }
@@ -36,7 +36,7 @@ class Url {
 	 * @return string|bool 网址
 	 */
 	public static function referrer() {
-		return Request::server('HTTP_REFERER');
+		return RequestFinal::server('HTTP_REFERER');
 	}
 
     /**
@@ -113,7 +113,7 @@ class Url {
             || strpos($path, '/') === 0) {
 	        return $path;
         }
-        $name = Request::server('script_name');
+        $name = RequestFinal::server('script_name');
         if ($name === '/index.php') {
             return '/'.$path;
         }
@@ -128,7 +128,7 @@ class Url {
 	 */
 	public static function getRoot($withScript = TRUE) {
 		$root = (static::isSsl() ? 'https' : 'http'). '://'.static::getHost() . '/';
-		$self = Request::server('script_name');
+		$self = RequestFinal::server('script_name');
 		if ($self !== '/index.php' && $withScript) {
 			$root .= ltrim($self, '/');
 		}
@@ -172,17 +172,17 @@ class Url {
 	 * @return string 真实显示的网址
 	 */
 	public static function getUri() {
-		$uri = Request::server('REQUEST_URI');
+		$uri = RequestFinal::server('REQUEST_URI');
 		if (!is_null($uri)) {
 			return $uri;
 		}
-		$argv = Request::server('argv');
-		$self = Request::server('PHP_SELF');
+		$argv = RequestFinal::server('argv');
+		$self = RequestFinal::server('PHP_SELF');
 		if (!is_null($argv)) {
 			unset($argv[0]);
 			return $self .'?'.implode('&', $argv);
 		}
-		return $self .'?'. Request::server('QUERY_STRING');
+		return $self .'?'. RequestFinal::server('QUERY_STRING');
 	}
 
     /**
@@ -198,11 +198,11 @@ class Url {
 	 * @return boolean
 	 */
 	public static function isSsl() {
-		$https = Request::server('HTTPS');
+		$https = RequestFinal::server('HTTPS');
 		if ('1' == $https || 'on' == strtolower($https)) {
 			return true;
 		}
-		return Request::server('SERVER_PORT') == 443;
+		return RequestFinal::server('SERVER_PORT') == 443;
 	}
 	
 	/**
@@ -210,7 +210,7 @@ class Url {
      * @return string
 	 */
 	public static function getScript() {
-		return Request::server('SCRIPT_NAME');
+		return RequestFinal::server('SCRIPT_NAME');
 	}
 
     /**
@@ -218,7 +218,7 @@ class Url {
      * @return string
      */
 	public static function getVirtualUri() {
-	    $path = Request::server('PATH_INFO');
+	    $path = RequestFinal::server('PATH_INFO');
 	    if (!is_null($path)) {
 	        return $path;
         }

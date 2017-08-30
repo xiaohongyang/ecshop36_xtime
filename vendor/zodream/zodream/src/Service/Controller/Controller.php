@@ -8,7 +8,7 @@ namespace Zodream\Service\Controller;
  */
 use Zodream\Domain\Html\VerifyCsrfToken;
 use Zodream\Infrastructure\Event\EventManger;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Http\Response;
 use Zodream\Service\Config;
 use Zodream\Service\Factory;
@@ -41,12 +41,12 @@ abstract class Controller extends BaseController {
 
 	public function runMethod($action, array $vars = array()) {
         if ($this->canCSRFValidate
-            && Request::isPost()
+            && RequestFinal::isPost()
             && !VerifyCsrfToken::verify()) {
             throw new \HttpRequestException('BAD POST REQUEST!');
         }
         if ($this->canCSRFValidate
-            && Request::isGet()) {
+            && RequestFinal::isGet()) {
             VerifyCsrfToken::create();
         }
         return parent::runMethod($action, $vars);
@@ -54,7 +54,7 @@ abstract class Controller extends BaseController {
 
     protected function runActionMethod($action, $vars = array()) {
         $arguments = $this->getActionArguments($action, $vars);
-        if ($this->canCache && Request::isGet() &&
+        if ($this->canCache && RequestFinal::isGet() &&
             (($cache = $this->runCache(get_called_class().
                     $this->action.serialize($arguments))) !== false)) {
             return $this->showContent($cache);
@@ -71,7 +71,7 @@ abstract class Controller extends BaseController {
         if (DEBUG) {
             return false;
         }
-        $update = Request::get('cache', false);
+        $update = RequestFinal::get('cache', false);
         if (!Auth::guest() && empty($update)) {
             return false;
         }
@@ -155,7 +155,7 @@ abstract class Controller extends BaseController {
             return $this->checkUser() ?: $this->redirect([Config::auth('home'), 'redirect_uri' => Url::to()]);
         }
         if ($role === 'p' || $role === 'post') {
-            return Request::isPost() ?: $this->redirectWithMessage('/', '您不能直接访问此页面！', 4,'400');
+            return RequestFinal::isPost() ?: $this->redirectWithMessage('/', '您不能直接访问此页面！', 4,'400');
         }
         if ($role === '!') {
             return $this->redirectWithMessage('/', '您访问的页面暂未开放！', 4, '413');

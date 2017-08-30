@@ -2,7 +2,7 @@
 namespace Zodream\Domain\ThirdParty\WeChat\Platform;
 
 use Zodream\Infrastructure\Http\Component\Uri;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Service\Factory;
 
 /**
@@ -164,7 +164,7 @@ class Manage extends BasePlatform {
     }
 
     public function callback() {
-        $code = Request::get('auth_code');
+        $code = RequestFinal::get('auth_code');
         if (empty($code)) {
             throw new \Exception('AUTH CODE ERROR!');
         }

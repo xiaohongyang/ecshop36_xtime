@@ -12,7 +12,7 @@ use Zodream\Domain\Image\QrCode;
 use Zodream\Infrastructure\Disk\File;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
 use Zodream\Infrastructure\ObjectExpand\XmlExpand;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Http\Component\Uri;
 use Zodream\Service\Factory;
 
@@ -419,9 +419,9 @@ class WeChat extends BasePay {
      * @throws \ErrorException
      */
     public function callback() {
-        $args = XmlExpand::specialDecode(Request::input());
+        $args = XmlExpand::specialDecode(RequestFinal::input());
         Factory::log()
-            ->info('WECHAT PAY CALLBACK: '.Request::input());
+            ->info('WECHAT PAY CALLBACK: '.RequestFinal::input());
         if (!is_array($args)) {
             throw new \InvalidArgumentException('非法数据');
         }

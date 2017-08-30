@@ -1,7 +1,7 @@
 <?php
 namespace Zodream\Domain\Model\Concerns;
 
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
 
 /**
@@ -25,8 +25,8 @@ trait AutoModel {
             $key = $data;
             $data = null;
         }
-        if (Request::isPost()) {
-            $data = Request::post($key);
+        if (RequestFinal::isPost()) {
+            $data = RequestFinal::post($key);
         }
         if (empty($data)) {
             return false;

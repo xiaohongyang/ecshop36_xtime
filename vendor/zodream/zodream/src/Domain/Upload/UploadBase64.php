@@ -1,7 +1,7 @@
 <?php
 namespace Zodream\Domain\Upload;
 
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 /**
  * Created by PhpStorm.
@@ -16,7 +16,7 @@ class UploadBase64 extends BaseUpload {
     }
 
     public function load($key = null) {
-        $this->name = base64_decode(Request::request($key));
+        $this->name = base64_decode(RequestFinal::request($key));
         $this->size = strlen($this->name);
     }
 

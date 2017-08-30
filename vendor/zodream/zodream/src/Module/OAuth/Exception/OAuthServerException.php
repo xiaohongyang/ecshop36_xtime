@@ -9,7 +9,7 @@ namespace Zodream\Service\Rest\OAuth\Exception;
  */
 use Zodream\Infrastructure\Http\Response;
 use Zodream\Service\Factory;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Http\Component\Uri;
 
 class OAuthServerException extends \Exception {
@@ -237,7 +237,7 @@ class OAuthServerException extends \Exception {
         // @codeCoverageIgnoreStart
         if ($this->errorType === 'invalid_client') {
             $authScheme = 'Basic';
-            if (strpos(Request::server('HTTP_AUTHORIZATION'), 'Bearer') === 0
+            if (strpos(RequestFinal::server('HTTP_AUTHORIZATION'), 'Bearer') === 0
             ) {
                 $authScheme = 'Bearer';
             }

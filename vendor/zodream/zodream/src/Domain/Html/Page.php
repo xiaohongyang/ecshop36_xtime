@@ -3,7 +3,7 @@ namespace Zodream\Domain\Html;
 
 use Zodream\Infrastructure\Base\MagicObject;
 use Zodream\Infrastructure\Database\Query\Query;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Interfaces\ArrayAble;
 use Zodream\Infrastructure\Interfaces\JsonAble;
 use Zodream\Infrastructure\ObjectExpand\JsonExpand;
@@ -20,7 +20,7 @@ class Page extends MagicObject implements JsonAble, ArrayAble {
 	public function __construct($total, $pageSize = 20, $key = 'page') {
 		$this->setTotal($total);
 		$this->_key = $key;
-		$this->_index = max(1, Request::get($key, 1));
+		$this->_index = max(1, RequestFinal::get($key, 1));
 		$this->_pageSize = $pageSize;
 	}
 

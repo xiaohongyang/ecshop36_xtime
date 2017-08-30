@@ -2,7 +2,7 @@
 namespace zd;
 
 use Zodream\Domain\ThirdParty\API\Common;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 /**
  * Created by PhpStorm.
@@ -36,7 +36,7 @@ class Helper {
     }
 
     public static function success($data = null) {
-        if (!Request::isAjax()) {
+        if (!RequestFinal::isAjax()) {
             show_message($data);
             exit();
         }
@@ -56,7 +56,7 @@ class Helper {
     }
 
     public static function failure($message = '', $code = 1) {
-        if (!Request::isAjax()) {
+        if (!RequestFinal::isAjax()) {
             show_message($message);
             exit();
         }
@@ -68,7 +68,7 @@ class Helper {
     }
 
     public static function redirect($url, $time = 0) {
-        if (Request::isAjax()) {
+        if (RequestFinal::isAjax()) {
             static::success([
                'url' => $url
             ]);
@@ -269,7 +269,7 @@ class Helper {
         return Page::show([
             'total' => $total, //总条数
             'pageSize' => $size,
-            'page' => max(1, Request::get('page', 1)),
+            'page' => max(1, RequestFinal::get('page', 1)),
 
         ]);
     }

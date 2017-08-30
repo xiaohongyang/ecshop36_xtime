@@ -7,7 +7,7 @@ namespace Zodream\Domain\ThirdParty\OAuth;
  * Date: 2016/9/7
  * Time: 9:19
  */
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 class WeiMoB extends BaseOAuth {
 
@@ -47,7 +47,7 @@ class WeiMoB extends BaseOAuth {
     ];
 
     public function callback() {
-        $state = Request::get('state', '');
+        $state = RequestFinal::get('state', '');
         if (strpos($state, 'sign:') !== 0) {
             return parent::callback();
         }
@@ -64,7 +64,7 @@ class WeiMoB extends BaseOAuth {
         if ($data['sign'] != md5($this->get('client_secret').$data['endTime'].$data['versionName'])) {
             return false;
         }
-        $code = Request::get('code');
+        $code = RequestFinal::get('code');
         if (empty($code)) {
             return false;
         }

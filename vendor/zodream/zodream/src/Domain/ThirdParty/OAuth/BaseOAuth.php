@@ -9,7 +9,7 @@ namespace Zodream\Domain\ThirdParty\OAuth;
 use Zodream\Domain\ThirdParty\ThirdParty;
 use Zodream\Service\Factory;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 /**
  * Class BaseOAuth
@@ -45,11 +45,11 @@ abstract class BaseOAuth extends ThirdParty  {
     public function callback() {
         Factory::log()
             ->info(strtoupper($this->configKey).' CALLBACK: '.var_export($_GET, true));
-        $state = Request::get('state');
+        $state = RequestFinal::get('state');
         if (empty($state) || $state != Factory::session()->get('state')) {
             return false;
         }
-        $code = Request::get('code');
+        $code = RequestFinal::get('code');
         if (empty($code)) {
             return false;
         }

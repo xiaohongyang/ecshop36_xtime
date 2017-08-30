@@ -7,12 +7,12 @@ namespace Zodream\Service\Rest\OAuth\Grant;
  * Date: 2016/11/29
  * Time: 15:46
  */
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 class RefreshTokenGrant extends BaseGrant {
 
     public function refreshToken() {
-        $refresh_token = Request::post('refresh_token');
+        $refresh_token = RequestFinal::post('refresh_token');
 
         return [
             'access_token',

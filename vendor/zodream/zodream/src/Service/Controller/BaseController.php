@@ -8,7 +8,7 @@ namespace Zodream\Service\Controller;
  */
 use Exception;
 use Zodream\Service\Factory;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\Event\EventManger;
 use Zodream\Infrastructure\Http\Response;
 
@@ -135,7 +135,7 @@ abstract class BaseController extends Action {
      * @return array|string  返回null时取默认值
      */
     protected function setActionArguments($name) {
-        return Request::get($name);
+        return RequestFinal::get($name);
     }
 
 	/**

@@ -1,7 +1,7 @@
 <?php
 namespace Zodream\Service;
 
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Service\Routing\Url;
 
 class Web extends Application {
@@ -15,7 +15,7 @@ class Web extends Application {
 
     protected function getRealPath($path) {
         list($routes, $args) = $this->spiltArrayByNumber(explode('/', trim($path, '/')));
-        Request::get(true)->set($args);
+        RequestFinal::get(true)->set($args);
         return implode('/', $routes);
     }
 

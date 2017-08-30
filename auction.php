@@ -333,7 +333,7 @@ elseif ($_REQUEST['act'] == 'bid')
         show_message($_LANG['au_bid_repeat_user'], '', '', 'error');
     }
 
-    if (!\Zodream\Infrastructure\Http\Request::isPost()) {
+    if (!\Zodream\Infrastructure\Http\RequestFinal::isPost()) {
         $smarty->assign('auction', $auction);
         $smarty->assign('user', $user);
         $last_log = \zd\Sql::create()->select('MAX(bid_price) as price, address_id')

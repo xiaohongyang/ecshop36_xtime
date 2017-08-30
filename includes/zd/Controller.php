@@ -2,7 +2,7 @@
 namespace zd;
 
 use Zodream\Infrastructure\Base\MagicObject;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
 use Zodream\Service\Factory;
 
@@ -39,7 +39,7 @@ abstract class Controller extends MagicObject {
     private $_cacheKey = '';
 
     public function __construct() {
-        $this->_data = Request::request();
+        $this->_data = RequestFinal::request();
     }
 
     /**
@@ -116,7 +116,7 @@ abstract class Controller extends MagicObject {
     public function invokeAction($action) {
         static::$action = $action;
         $action = lcfirst(StringExpand::studly(static::$action)).'Action';
-        if (Request::isPost() && method_exists($this, $action . 'Post')) {
+        if (RequestFinal::isPost() && method_exists($this, $action . 'Post')) {
             $action .= 'Post';
         }
         if (!method_exists($this, $action)) {

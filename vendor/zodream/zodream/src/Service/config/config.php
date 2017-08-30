@@ -1,5 +1,5 @@
 <?php
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 /**
  * 配置文件模板
  *
@@ -100,7 +100,7 @@ $configs = array(
 	),
 	'alias'  => array(
 		'Config' => Zodream\Infrastructure\Config::class,
-		'Requests' => Zodream\Infrastructure\Http\Request::class,
+		'Requests' => Zodream\Infrastructure\Http\RequestFinal::class,
 		'Cookie' => Zodream\Infrastructure\Cookie::class
 	),
 	// 注册事件
@@ -127,7 +127,7 @@ if (defined('APP_MODULE')) {
 		'suffix' => '.php',
 	);
 }
-if (in_array(Request::ip(), ['unknown', '::1', '127.0.0.1'])){
+if (in_array(RequestFinal::ip(), ['unknown', '::1', '127.0.0.1'])){
     $configs['modules'] = array(   //模块
         'gzo' => 'Zodream\Module\Gzo'
     );

@@ -6,17 +6,17 @@ namespace Zodream\Infrastructure\Http\Requests;
  * Date: 2016/4/3
  * Time: 9:29
  */
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
 
 class Get extends BaseRequest {
     public function __construct() {
-        if (!Request::isCli()) {
+        if (!RequestFinal::isCli()) {
             $this->setValues($_GET);
             return;
         }
         // SET ARGV TO GET PARAM, IF NO '=' , VALUE IS '', YOU CAN USE IS_NULL JUDGE
-        $args = Request::server('argv');
+        $args = RequestFinal::server('argv');
         if (empty($args)) {
             return;
         }

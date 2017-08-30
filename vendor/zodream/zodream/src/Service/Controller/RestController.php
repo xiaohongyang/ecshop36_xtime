@@ -8,7 +8,7 @@ namespace Zodream\Service\Controller;
  */
 use Zodream\Infrastructure\Http\Response;
 use Zodream\Service\Factory;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 abstract class RestController extends BaseController  {
 
@@ -35,7 +35,7 @@ abstract class RestController extends BaseController  {
         if (!array_key_exists($action, $rules)) {
             return true;
         }
-        if (in_array(Request::method(), $rules[$action])) {
+        if (in_array(RequestFinal::method(), $rules[$action])) {
             return true;
         }
         return $this->ajaxFailure('ERROE REQUEST METHOD!');

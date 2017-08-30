@@ -8,7 +8,7 @@ namespace Zodream\Service\Rest\OAuth\Grant;
  * Time: 15:47
  */
 use Zodream\Service\Rest\OAuth\Exception\OAuthServerException;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 abstract class BaseGrant {
 

@@ -3,7 +3,7 @@ namespace Zodream\Module\Gzo\Service;
 
 use Zodream\Infrastructure\Database\Schema\Schema;
 use Zodream\Infrastructure\Disk\Directory;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
 use Zodream\Module\Gzo\Domain\GenerateModel;
 use Zodream\Service\Factory;
@@ -253,7 +253,7 @@ class TemplateController extends Controller {
     }
 
     protected function setActionArguments($name) {
-        return Request::request($name);
+        return RequestFinal::request($name);
     }
 
 }

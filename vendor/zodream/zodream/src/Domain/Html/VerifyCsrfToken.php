@@ -3,7 +3,7 @@ namespace Zodream\Domain\Html;
 
 use Zodream\Service\Factory;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 class VerifyCsrfToken {
 	/**
@@ -30,9 +30,9 @@ class VerifyCsrfToken {
 	}
 
     protected static function getTokenFromRequest() {
-        $token = Request::request('_token') ?: Request::header('X-CSRF-TOKEN');
+        $token = RequestFinal::request('_token') ?: RequestFinal::header('X-CSRF-TOKEN');
 
-        if (! $token && $header = Request::header('X-XSRF-TOKEN')) {
+        if (! $token && $header = RequestFinal::header('X-XSRF-TOKEN')) {
             $token = $header;
         }
 

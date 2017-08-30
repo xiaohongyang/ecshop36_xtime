@@ -5,7 +5,7 @@ namespace Zodream\Domain\ThirdParty\WeChat\Platform;
 use Zodream\Infrastructure\Http\Component\Uri;
 use Zodream\Service\Factory;
 use Zodream\Infrastructure\ObjectExpand\StringExpand;
-use Zodream\Infrastructure\Http\Request;
+use Zodream\Infrastructure\Http\RequestFinal;
 
 /**
  * 网页授权
@@ -72,11 +72,11 @@ class OAuth extends BasePlatform {
     public function callback() {
         Factory::log()
             ->info('WECHAT CALLBACK: '.var_export($_GET, true));
-        $state = Request::get('state');
+        $state = RequestFinal::get('state');
         if (empty($state) || $state != Factory::session()->get('state')) {
             return false;
         }
-        $code = Request::get('code');
+        $code = RequestFinal::get('code');
         if (empty($code)) {
             return false;
         }

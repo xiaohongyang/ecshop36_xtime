@@ -48,7 +48,7 @@
             {if $sort eq 'price' && $order eq 'asc'} sort-asc {/if}
             {if $sort eq 'price' && $order eq 'desc'} sort-desc {/if}
             ">
-                <a href="javascript:;">价格</a>
+                <a href="javascript:;" data-sort-column="price">价格</a>
                 <i class="asc-btn"></i>
                 <i class="desc-btn"></i>
             </div>
@@ -56,7 +56,7 @@
             {if $sort eq 'sales' && $order eq 'asc'} sort-asc {/if}
             {if $sort eq 'sales' && $order eq 'desc'} sort-desc {/if}
             ">
-                <a href="javascript:;">销量</a>
+                <a href="javascript:;" data-sort-column="sales">销量</a>
                 <i class="asc-btn"></i>
                 <i class="desc-btn"></i>
             </div>
@@ -64,7 +64,7 @@
             {if $sort eq 'add_time' && $order eq 'asc'} sort-asc {/if}
             {if $sort eq 'add_time' && $order eq 'desc'} sort-desc {/if}
             ">
-                <a href="javascript:;">上架时间</a>
+                <a href="javascript:;" data-sort-column="add_time">上架时间</a>
                 <i class="asc-btn"></i>
                 <i class="desc-btn"></i>
             </div>
@@ -105,7 +105,65 @@
 
 
 <script type="text/javascript">
+
+    var sort='{$sort}'
+    var order='{$order}'
+    function replaceFilterUrl(key, val) {
+        var url = window.location.href;
+        if (url.indexOf('?') == -1) {
+            url += '?' + key + '=' + val;
+        } else {
+            var newFilter = 'filter=' + val
+            if(url.match(new RegExp('(filter=[^&]+)')) != null) {
+                url = url.replace(new RegExp('(filter=[^&]+)'), newFilter)
+            } else {
+                url += '&' + key + '=' + val;
+            }
+        }
+        window.location.href = url;
+    }
+    function replaceSortUrl(sort, order) {
+        var url = window.location.href;
+        if (url.indexOf('?') == -1) {
+            url += '?' + 'sort=' + sort + '&order=' + order;
+        } else {
+            var newSort = 'sort=' + sort;
+            var newOrder = 'order=' + order;
+            if(url.match(new RegExp('(sort=[^&]+)')) != null) {
+                url = url.replace(new RegExp('(sort=[^&]+)'), newSort)
+            } else {
+                url += '&' + newSort;
+            }
+            if(url.match(new RegExp('(order=[^&]+)')) != null) {
+                url = url.replace(new RegExp('(order=[^&]+)'), newOrder)
+            } else {
+                url += '&' + newOrder;
+            }
+        }
+        window.location.href = url;
+    }
+
+    var sort = function (column, method) {
+        if(typeof column=='undefined' || typeof method=='undefined'){
+            return;
+        }
+
+        var url = 'sort=price&order=desc'
+    }
+
     $(document).ready(function(){
+
+        //排序
+        var listenSort = function(){
+            $('.sort-btn').find('a').click(function(){
+                var parent = $(this).closest('.sort-btn')
+                console.log(parent.index())
+                var method = parent.hasClass('sort-asc') ? 'desc' : 'asc'
+                var column = $(this).attr('data-sort-column')
+                replaceSortUrl(column, method)
+            })
+        }
+        listenSort();
 
         $(".main_visual").hover(function(){
             $("#btn_prev,#btn_next").fadeIn()

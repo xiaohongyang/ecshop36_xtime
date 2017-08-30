@@ -83,7 +83,9 @@ $(document).ready(function () {
         addCart(getGoodsAttr($("#goods-box"), $this.attr('data-goods'), 1), function (data) {
             dialog.close();
             if (data.code == 0) {
-                data.msg = data.data;
+                if(typeof data.msg == 'undefined'){
+                    data.msg = '您尚未登录，请先登录!'; 
+                }
                 $('.x-footer .x-number').text(parseInt($('.x-footer .x-number').text()) + 1);
             }
             Dialog.tip(data.msg);

@@ -51,6 +51,11 @@
 <input type="hidden" name="bonus_sn" value=""/>
 <input type="hidden" name="address_id" value="{$consignee.address_id}"/>
 <input type="hidden" name="step" value="done"/>
+
+            {if $flow_type }
+                <input type="hidden" name="flow_type" value="{$flow_type}"/>
+            {/if}
+
         </form>
     </div><!--content-->
 

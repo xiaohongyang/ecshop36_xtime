@@ -361,6 +361,9 @@ class Cart {
      * @return  boolean|integer
      */
     public static function addToCart($goods_id, $num = 1, $spec = array(), $parent = 0, $rec_type = CART_GENERAL_GOODS) {
+
+        $rec_type = $_REQUEST['flow_type'] == 'buy_now' ? CART_BUY_NOW : $rec_type;
+
         $GLOBALS['err']->clean();
         $_parent_id = $parent;
 
@@ -567,12 +570,13 @@ class Cart {
         /* 如果数量不为0，作为基本件插入 */
         if ($num > 0)
         {
+            $tmpRecType = $rec_type == CART_BUY_NOW ? CART_BUY_NOW : CART_GENERAL_GOODS;
             /* 检查该商品是否已经存在在购物车中 */
             $sql = "SELECT goods_number, rec_id FROM " .$GLOBALS['ecs']->table('cart').
                 " WHERE session_id = '" .SESS_ID. "' AND goods_id = '$goods_id' ".
                 " AND parent_id = 0 AND goods_attr = '" .get_goods_attr_info($spec). "' " .
                 " AND extension_code <> 'package_buy' " .
-                " AND rec_type = 'CART_GENERAL_GOODS'";
+                " AND rec_type = '{$tmpRecType}'";
 
             $row = $GLOBALS['db']->getRow($sql);
 

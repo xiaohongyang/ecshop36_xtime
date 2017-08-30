@@ -444,6 +444,10 @@ elseif ($_REQUEST['step'] == 'checkout')
     //-- 订单确认
     /*------------------------------------------------------ */
 
+    if ($_REQUEST['flow_type'] == 'buy_now'){
+        $smarty->assign('flow_type', $_REQUEST['flow_type']);
+    }
+
     /* 取得购物类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
     $_SESSION['cart_value'] = Helper::get('cart_value');
@@ -463,6 +467,7 @@ elseif ($_REQUEST['step'] == 'checkout')
         //正常购物流程  清空其他购物流程情况
         $_SESSION['flow_order']['extension_code'] = '';
     }
+
 
     /* 检查购物车中是否有商品 */
     // $sql = "SELECT * FROM " . $ecs->table('cart') .
@@ -518,6 +523,10 @@ elseif ($_REQUEST['step'] == 'checkout')
     $smarty->assign('consignee', \zd\UserAddress::getRegion($consignee['address_id']));
 
     /* 对商品信息赋值 */
+    if($_REQUEST['flow_type'] == 'buy_now') {
+
+        $flow_type= CART_BUY_NOW;
+    }
     $cart_goods = Cart::getSelected($flow_type); // 取得商品列表，计算合计
 
     if (empty($cart_goods)) {
@@ -1380,7 +1389,12 @@ elseif ($_REQUEST['step'] == 'done')
     include_once('includes/lib_payment.php');
 
     /* 取得购物类型 */
-    $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
+    if($_REQUEST['flow_type'] == 'buy_now'){
+        $flow_type = CART_BUY_NOW;
+    } else {
+
+        $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
+    }
 
     /* 检查购物车中是否有商品 */
     $sql = "SELECT COUNT(*) FROM " . $ecs->table('cart') .
@@ -1903,6 +1917,19 @@ elseif ($_REQUEST['step'] == 'update_cart')
     Helper::failure('更新失败！');
 
 }
+//立即购买
+elseif ($_REQUEST['step'] == 'add_goods' && $_REQUEST['flow_type'] == 'buy_now') {
+    $goods_id = intval($_GET['goods_id']);
+    $num = intval(Helper::get('num', 1));
+    $spec = explode(',', Helper::get('spec', ''));
+    $flowType = CART_GENERAL_GOODS;
+    $rec_id = Cart::addToCart($goods_id, $num, $spec,0,$flow_type);
+    if (!empty($rec_id)) {
+        Helper::success($rec_id);
+    }
+    $msg = $err->last_message();
+    Helper::failure(is_array($msg) ? current($msg) : $msg);
+}
 elseif ($_REQUEST['step'] == 'add_goods') {
     $goods_id = intval($_GET['goods_id']);
     $num = intval(Helper::get('num', 1));
@@ -1914,18 +1941,7 @@ elseif ($_REQUEST['step'] == 'add_goods') {
     $msg = $err->last_message();
     Helper::failure(is_array($msg) ? current($msg) : $msg);
 }
-//立即购买
-elseif ($_REQUEST['step'] == 'buy_now') {
-    $goods_id = intval($_GET['goods_id']);
-    $num = intval(Helper::get('num', 1));
-    $spec = explode(',', Helper::get('spec', ''));
-    $rec_id = Cart::addToCart($goods_id, $num, $spec,0,CART_BUY_NOW);
-    if (!empty($rec_id)) {
-        Helper::success($rec_id);
-    }
-    $msg = $err->last_message();
-    Helper::failure(is_array($msg) ? current($msg) : $msg);
-}
+
 
 /*------------------------------------------------------ */
 //-- 删除购物车中的商品

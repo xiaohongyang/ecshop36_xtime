@@ -1,0 +1,18 @@
+.member-introduce{max-width: 1000px;margin: 0 auto;font-size: 14px;font-family: "微软雅黑";line-height: 28px;}
+.member-introduce-head{position:relative;text-align:center;margin:10px auto;}
+.backbtnl{position: absolute;left:10px;}
+.backbtnl img{width:15px;}
+.member-introduce-head span img{width:85%;}
+.member-dg{width:85%;margin:0 auto;}
+.member-dg img{width:100%;}
+.cmember-footer{width:85%;margin:0 auto;}
+.cmember-footer img{width:100%;}
+.member-text{width:85%;margin:10px auto;text-align:center}
+.member-text p{margin:0;text-indent:2em;}
+.member-red{color:#c16060;font-size:12px;}
+.member-text1{width:60%;margin:10px auto;text-align:center;}
+.member-text1 p{text-indent:2em;}
+.member-text2{width:75%;margin:10px auto;text-align:center;}
+p.member-textlieb{font-style:italic;}
+p{margin:0;}
+.cmember-footer{margin-top:30px;}

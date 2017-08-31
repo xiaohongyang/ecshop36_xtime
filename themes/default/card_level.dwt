@@ -1,0 +1,87 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+<link rel="stylesheet" href="/themes/default/css/card_level.css"/>
+ <div class="box" style="background:#fff">
+    <div class="content">
+      <!-- #BeginLibraryItem "/library/page_title.lbi" --><!-- #EndLibraryItem -->
+
+
+
+        <div class="member-introduce">
+            <div class="member-introduce-head">
+                <!--<a class="backbtnl">
+                    <img src="img/member-zuo.png">
+                </a>-->
+                <span><img src="img/member2.png" alt=""></span>
+            </div>
+            <div class="member-dg">
+                <img src="img/member1.png" alt="">
+            </div>
+            <div class="member-text">
+                <p>1. 会员等级是通过使用积分兑换获得， 会员可通过已有积分兑换对应的会员等级一年<span class="member-red">（365天）</span>。
+                </p>
+                <p>
+                    兑换后,等级有效期间，可兑换更高会员等级，但不可兑换和当前等级一样或低于当前等级的会员等级。
+                </p>
+                <p>一年时限到后，会员等级自动更新为普通的注册会员。</p>
+            </div>
+            <div class="member-text1">
+                <p>2.单向进行会员等级升级时，所花费积分为所需的全部积分，不按积分差价进行计算。</p>
+
+            </div>
+            <p class="member-red member-text">(*注：积分通过消费星辉币获得，每消费星辉币获得100积分。)</p>
+            <div class="member-text2">
+                <p class="member-textlieb">*会员用户等级越高，将会享有更多商品折扣。</p>
+                <p>最终解释权归本公司所有。</p>
+            </div>
+            <div class="cmember-footer">
+                <img src="./img/footer-logo.png" alt="">
+                        <br/>
+                        <br/>
+            </div>
+        </div>
+    </div><!--content-->
+
+    <!--修改手机模态框-->
+    <div class="mengban">
+        <div class="modal-content1">
+            <div class="mengban-delete1">
+                <h4>是否兑换？</h4>
+                <div class="mengban-right1">
+                    <a href="javascript:;" class="mengban-confirm">是</a>
+                    <a href="javascript:;" class=" mengban-close">否</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $(document).ready(function() {
+      var rank = 0;
+      $(".addCard").click(function() {
+          rank = $(this).attr('data-id');
+          $(".mengban").toggle();
+      });
+      $(".mengban-close").click(function() {
+          $(".mengban").hide();
+      });
+      $(".mengban-confirm").click(function() {
+          $(".mengban").hide();
+          $.getJSON('user.php?act=buy_rank&rank=' + rank, function (data) {
+              if (data.code == 0) {
+                  Dialog.tip('兑换成功！');
+                  setTimeout(function() {
+                      window.location.reload();
+                  }, 500);
+                  return;
+              }
+              Dialog.tip(data.msg);
+          });
+      });
+      $(".closee").click(function() {
+        $(".mengban").hide();
+
+      });
+    });
+    </script>
+    <!--修改手机模态框-->
+  </div><!--box-->
+        <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

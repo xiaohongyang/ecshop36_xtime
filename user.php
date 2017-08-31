@@ -150,6 +150,13 @@ if ($action == 'my_card') {
     $smarty->display('user_card.dwt');
 }
 
+if ($action == 'card_level') {
+    $smarty->assign('info', User::profile());
+    $smarty->assign('rank_list', UserRank::specialRank());
+    $smarty->assign('page_title', '会员等级');
+    $smarty->display('card_level.dwt');
+}
+
 if ($action == 'my_score') {
     // var_dump($action);exit;
     $smarty->assign('info', User::profile());

@@ -97,12 +97,12 @@
 	<!-- {/foreach} -->
                 <div>
                     <span>性别:</span>
-                    <a style="float:left;padding-top:10px">男</a><input type="radio" name="sex" value="1" style="width:34px; vertical-align: middle">
+                    <a style="float:left;padding-top:10px">男</a><input checked=checked type="radio" name="sex" value="1" style="width:34px; vertical-align: middle">
                     <a style="float:left;padding-top:10px">女</a><input type="radio" name="sex"  value="2" style="width:34px; vertical-align: middle">
                     <div class="clear"></div>
                 </div>
                 <div class="dis">
-                    <input type="checkbox" class="check" name="agreement" value="1"><a>已经阅读并且同意《星辉俱乐部注册协议》</a>
+                    <input type="checkbox" class="check" name="agreement" value="1" checked=checked><a>已经阅读并且同意《星辉俱乐部注册协议》</a>
                     <input type="submit" value="立即注册" class="onloadin">
                     <p class="lvgr">已有账号？请<span>
                     <a href="user.php">登录</a>    
@@ -133,7 +133,7 @@ $(document).ready(function () {
         if ($this.hasClass('disable')) {
             return;
         }
-        var phone = $(".phone").val();
+        var phone = $("input[name=username]").val();
         if (!phone || phone.length < 11) {
             Dialog.tip('请输入有效的手机号码！');
             return;

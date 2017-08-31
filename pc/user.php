@@ -30,7 +30,7 @@ class User extends \zd\Controller {
      * 不需要登录的action
      * @var array
      */
-    protected $notLogin = ['login', 'register'];
+    protected $notLogin = ['login', 'register','getPassword'];
 
     public function loginAction() {
         $page_title = '登录';
@@ -61,8 +61,16 @@ class User extends \zd\Controller {
     public function registerAction() {
         global $_LANG;
         $page_title = '注册';
+        $send_code = $this->random(6,1);
+
+        //开启SESSION
+        session_start();
+
+        $_SESSION['send_code'] = $send_code;
+
         /* 密码提示问题 */
         $this->assign('passwd_questions', $_LANG['passwd_questions']);
+        $this->assign('send_code', $send_code);
         $this->show('/register', compact('page_title'));
     }
 
@@ -73,6 +81,7 @@ class User extends \zd\Controller {
         }
         include_once(ROOT_PATH . 'includes/lib_passport.php');
 
+        session_start();
         $username = $this->get('username');
         $password = $this->get('password');
         $email    = $username.'@xtime.com';//isset($_POST['email']) ? trim($_POST['email']) : '';
@@ -350,6 +359,12 @@ class User extends \zd\Controller {
         $this->show(compact('page_title'));
     }
 
+    public function getPasswordAction(){
+        $page_title = '找加密码';
+
+        $this->show('user_password.dwt', compact('page_title'));
+    }
+
     public function auctionListAction() {
         $page_title = '我的竞拍';
         list($total, $auction_list) = Auction::getUserList();
@@ -439,6 +454,23 @@ class User extends \zd\Controller {
             return false;
         }
         return true;
+    }
+
+
+    // 验证码生成
+    public function random($length = 6 , $numeric = 0) {
+        PHP_VERSION < '4.2.0' && mt_srand((double)microtime() * 1000000);
+        if($numeric) {
+            $hash = sprintf('%0'.$length.'d', mt_rand(0, pow(10, $length) - 1));
+        } else {
+            $hash = '';
+            $chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789abcdefghjkmnpqrstuvwxyz';
+            $max = strlen($chars) - 1;
+            for($i = 0; $i < $length; $i++) {
+                $hash .= $chars[mt_rand(0, $max)];
+            }
+        }
+        return $hash;
     }
 }
 User::invoke();

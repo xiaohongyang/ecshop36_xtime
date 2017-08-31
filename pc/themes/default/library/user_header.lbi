@@ -1,8 +1,9 @@
 <div class="corder-head ">
-            <div class="corder-header corder-overflow">
+             <div class="corder-header corder-overflow">
                 <div class="corder-left corder-overflow">
                     <div class="corder-left corder-member-img">
-                        <img src="{$user_info.avatar}" class="avatar" alt="">
+
+                        <img src="{$user_info.avatar|picsrc}" class="avatar" alt="">
                         <span class="corder-ssr">SSR</span>
                     </div>
                     <div class="corder-left corder-member-info">

@@ -1296,4 +1296,15 @@ function write_static_cache($cache_name, $caches)
     file_put_contents($cache_file_path, $content, LOCK_EX);
 }
 
+function picsrc($str)
+{
+    if(strpos($str,'http') !== false){
+        return $str;
+    } else if(strpos($str,'/')===0){
+        return $str;
+    } else {
+        return '/' . $str;
+    }
+}
+
 ?>

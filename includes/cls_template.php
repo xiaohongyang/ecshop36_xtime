@@ -652,6 +652,9 @@ class cls_template
                     case 'strip_tags':
                         $p = 'strip_tags(' . $p . ')';
                         break;
+                    case 'picsrc':
+                        $p = 'picsrc(' . $p . ")";
+                        break;
                     case 'price':
                         $p = 'price_format(' . $p . ', false)';
                         break;

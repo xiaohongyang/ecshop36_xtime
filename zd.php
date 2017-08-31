@@ -58,6 +58,18 @@ function smsAction() {
         Helper::failure('请求超时，请刷新页面后重试');
     }
     $phone = Helper::post('phone');
+
+    if(strpos($_SERVER['HTTP_REFERER'], 'register') !== false) {
+
+        $u = \zd\Sql::create()
+            ->selectCount()->from('users')
+            ->where('user_name=')->addValue($phone)
+            ->scalar();
+        if ($u > 0) {
+            Helper::failure('手机号已存在！');
+        }
+    }
+
     if(empty($phone) || !Helper::validateMobile($phone)){
         Helper::failure('请输入正确的手机号');
     }

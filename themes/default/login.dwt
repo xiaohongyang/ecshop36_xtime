@@ -31,11 +31,7 @@
                     window.location.href = data.data.url;
                     return;
                 }
-                Dialog.create({
-                    type: 'content',
-                    content: data.msg,
-                    hasNo: false
-                });
+                Dialog.tip(data.msg);
             }, 'json');
             return false;
         });

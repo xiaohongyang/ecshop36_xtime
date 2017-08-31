@@ -1,5 +1,6 @@
 {if $user_info}
-<img src="{$user_info.avatar}"  class="avatar"/>{$user_info.nick_name}
+<img src="{$user_info.avatar}"  class="avatar"/>{$user_info.user_name}
+
 <div class="nicheng">
     <dl>
         <dt><img src="{$user_info.avatar}" class="avatar"  /></dt>

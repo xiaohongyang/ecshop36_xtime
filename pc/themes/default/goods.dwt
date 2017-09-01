@@ -1,7 +1,7 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
         </div>
 <div class="box">
-    <div id="goods-box" class="product" data-goods="{$goods.goods_id}">
+    <div id="goods-box" class="product cartGoods" data-goods="{$goods.goods_id}">
         <div class="pro-nav">
             <p>
                 <a href="index.php">HOME</a>
@@ -41,21 +41,21 @@
 
             <div class="huibg">
                 <p class="hui">原价:<span>{$goods.market_price|price}</span></p>
-                <p class="hei">会员折扣价:<span>
+                <p class="hei">会员折扣价:<span class='price'>
                     {if $s_price[0]}
                     {$s_price[0]}.{$s_price[1]}
                     {else}
                     {$goods.shop_price|price}
-                    {/if}    
+                    {/if}
                 </span></p>
             </div>
             <!-- {* 开始循环所有可选属性 *} -->
             <!-- {foreach from=$specification item=spec key=spec_key} -->
-            <div class="guige">
+            <div class="guige spec_li">
                 <p>{$spec.name}</p>
                 <!-- {foreach from=$spec.values item=value key=key} -->
                 <label for="spec_value_{$value.id}">
-                    <input type="radio" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if}/>
+                    <input type="radio" class="spec" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if}/>
                     {$value.label} </label>
                 <!-- {/foreach} -->
                 <div class="clear"></div>
@@ -64,16 +64,16 @@
             <div class="yunfei">
                 <div class="shang">
                     <p>{if $goods.is_shipping}运费：包邮{/if}</p>
-                    <div>
+                    <div class="number-group>
                         <span style="float:left">数量</span>
                         <div class="num number-box">
                             <span class="number-minus">-</span>
-                            <input type="text" value="1" min="1" class="number-input" max="{$goods.goods_number}" placeholder="1" />
+                            <input type="text" value="1" min="1" class="number-input number" max="{$goods.goods_number}" placeholder="1" />
                             <span class="number-plus">+</span>
                             <div class="clear"></div>
                         </div>
                     </div>
-                    <p>库存:{$goods.goods_number}</p>
+                    <p>库存:<span class='stock'>{$goods.goods_number}</span></p>
                     <span class="clear" style="display: block"></span>
                 </div>
                 <div class="xia">
@@ -96,7 +96,7 @@
                     <p style="margin-top:20px">{$goods.goods_name}</p>
                     <p class="hui">{$goods.shop_price|price}</p>
                 </dd>
-                
+
                 <div class="clear"></div>
             </dl>
             {/foreach}
@@ -110,6 +110,18 @@
 <script src="/pc/themes/default/js/flow.js"></script>
 <script>
     $(document).ready(function () {
+
+        var goods_id = {$goods.goods_id};
+        var is_buy = false;
+        var showAttrEle = null;
+        var sku = 1;
+        var goodsInfo = {
+            goods_id : goods_id,
+            sku_number : {$goods.goods_number},
+            sku_price : {$goods.shop_price}
+        }
+
+
         var getCollect = function() {
             $.getJSON('goods.php?act=collect_count&id={$id}', function(data) {
                 if (data.code != 0) {
@@ -118,7 +130,52 @@
                 $(".collecting span").text(data.data.count);
             });
         };
+
+        var getSelectedAttr = function() {
+            var data = [];
+            var attr = '';
+            $(".cartGoods .spec:checked").each(function(i, item) {
+                 data.push($(this).val());
+                 //attr += ',' + $(item).text();
+            });
+            //attr = attr.substr(1);
+            //$(".cartGoods .selected-spec").text(attr);
+            //showAttrEle && $(showAttrEle).text(attr);
+            return data;
+        };
+
+        $(".cartGoods .spec").on("click",  function() {
+            var $this = $(this);
+            //$this.addClass("current").siblings().removeClass("current");
+            var attr = getSelectedAttr();
+            var qty = $('.cartGoods  .number').val();
+            $.getJSON('/pc/goods.php?act=price&id=' + goods_id +'&attr=' +
+            attr.join(',') + '&number=' + qty, function (data) {
+                if (data.err_msg == '') {
+                    $(".cartGoods .price").html(data.result);
+                    var sku = data.product_number;
+                    $(".cartGoods .stock").html(sku);
+                    $(".number-box .number").attr('max', sku);
+                    if (sku < 2) {
+                        $(".cartGoods .kucun").addClass('disable');
+                    } else {
+                        $(".cartGoods .kucun").removeClass('disable');
+                    }
+                    return;
+                }
+                Dialog.tip(data.err_msg);
+            });
+        });
+
+        if($(".cartGoods .spec").length>0){
+            $(".cartGoods .spec:eq(0)").trigger('click')
+        }
+
         getCollect();
+
     });
+
+
+
 </script>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

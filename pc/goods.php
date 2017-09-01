@@ -70,5 +70,39 @@ class Goods extends \zd\Controller {
             'collected' => $hasCollect
         ]);
     }
+
+    public function priceAction(){
+
+        $res    = array('err_msg' => '', 'result' => '', 'qty' => 1);
+
+        $attr_id    = isset($_REQUEST['attr']) ? explode(',', $_REQUEST['attr']) : array();
+        $number     = (isset($_REQUEST['number'])) ? intval($_REQUEST['number']) : 1;
+        $goods_id = isset($_REQUEST['id'])  ? intval($_REQUEST['id']) : 0;
+        if ($goods_id == 0)
+        {
+            $res['err_msg'] = $_LANG['err_change_attr'];
+            $res['err_no']  = 1;
+        }
+        else
+        {
+            if ($number == 0)
+            {
+                $res['qty'] = $number = 1;
+            }
+            else
+            {
+                $res['qty'] = $number;
+            }
+
+            $shop_price  = get_final_price($goods_id, $number, true, $attr_id);
+            $res['result'] = price_format($shop_price * $number, false);
+
+            $goodsInfo = get_products_info($goods_id, $attr_id);
+            $res['product_number'] = is_null($goodsInfo['product_number']) ? 0 : $goodsInfo['product_number'];
+            $res['product_price'] = $shop_price;
+        }
+
+        die( json_encode($res));
+    }
 }
 Goods::invoke();

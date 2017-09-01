@@ -1,21 +1,14 @@
 function getSelectedAttributes(ele) {
-    var data = {
-        'spec': [],
-        'input': {}
-    };
-    ele.find(".spec_li .spec").each(function (i, item) {
+    var result = []
+    ele.find(".spec_li .spec:checked").each(function (i, item) {
         var spec = $(item).val();
         if (!spec) {
             return;
         }
-        if ($(this).hasClass('spec_input')) {
-            var spec_id = $(item).attr('name').substr(5);
-            data.input[spec_id] = spec;
-            return;
-        }
-        data.spec.push(spec);
+
+        result.push(spec);
     });
-    return data;
+    return result.length > 0 ? result.join(',') : '';
 };
 
 $(document).ready(function () {
@@ -210,6 +203,7 @@ $(document).ready(function () {
                 Dialog.tip('不能大于库存数');
             }
             num = Math.min(num, parseInt(max));
+            num = num == 0 ? 1 : num;
         }
         numberEle.val(num);
         numberEle.trigger('change');

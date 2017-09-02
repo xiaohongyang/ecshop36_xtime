@@ -9,12 +9,14 @@
                 <div class="corder-left">
                     <img src="themes/default/img/cimage4.png" alt="">
                 </div>
+                <form name="form-order-search" action="user.php?act=order_list" method="post">
                 <div class="corder-right corder-search-group">
-                    <input type="text" class="corder-search" value="Search">
-                    <span class="corder-search-icon">
+                    <input type="text" class="corder-search" name="search" value="{$search}">
+                    <span class="corder-search-icon" onclick="$('form[name=form-order-search]').trigger('submit')">
                             <img src="themes/default/img/cimage5.png" alt="">
                         </span>
                 </div>
+                </form>
             </div>
             <div class="corder-main-mainmain">
                 <div class="corder-main-mains">

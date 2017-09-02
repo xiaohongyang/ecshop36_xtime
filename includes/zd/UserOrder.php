@@ -8,11 +8,21 @@ class UserOrder {
      * @param integer $userId
      * @return Page
      */
-    public static function getPage($userId) {
-        $count = Sql::create()->select('COUNT(*) AS count')
-            ->from('order_info')->where('is_delete = 0 and user_id =')->addInt($userId);
-        $sql = Sql::create()->select('*')
-            ->from('order_info')->where('is_delete = 0 and user_id =')->addInt($userId);
+    public static function getPage($userId, $search=null) {
+        $searchWhere = '';
+        if(!is_null($search)){
+            $searchWhere = " and og.goods_name like '%{$search}%'";
+        }
+        $count = Sql::create()->select('COUNT(distinct(oi.order_id)) AS count')
+            ->from('order_info oi')
+            ->inner('order_goods og', 'oi.order_id=og.order_id')
+            ->where('oi.is_delete = 0 '. $searchWhere .' and oi.user_id =')
+            ->addInt($userId);
+        $sql = Sql::create()->select('distinct(oi.order_id),oi.*')
+            ->from('order_info oi')
+            ->inner('order_goods og', 'oi.order_id=og.order_id')
+            ->where('oi.is_delete = 0 '. $searchWhere .' and oi.user_id =')->addInt($userId);
+
         $page = new Page(static::addWhere($count)->scalar());
         $page->setPage(static::addWhere($sql)
             ->order('order_id desc')->limit($page->getLimit())->all());

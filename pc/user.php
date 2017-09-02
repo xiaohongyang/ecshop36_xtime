@@ -233,11 +233,12 @@ class User extends \zd\Controller {
 
     public function orderListAction() {
         $page_title = '我的订单';
+        $search = $this->get('search');
         $helps = get_shop_help();       // 网店帮助
-        $pager = UserOrder::getPage($_SESSION['user_id']);
+        $pager = UserOrder::getPage($_SESSION['user_id'], $search);
         $order_list = $pager->getPage();
         $total = $pager->getTotal();
-        $this->show(compact('page_title', 'helps', 'order_list', 'total'));
+        $this->show(compact('page_title', 'helps', 'order_list', 'total', 'search'));
     }
 
     public function cancelOrderAction() {

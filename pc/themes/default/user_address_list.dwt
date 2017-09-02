@@ -20,7 +20,7 @@
                         {foreach from=$address_list item=address}
                         <div class="caddress-list-details" data-id="{$address.address_id}">
                             <div class="corder-left corder-address-dede">
-                                <span class="caddress-circle"></span>
+                                <span class="caddress-circle {if $address.address_id eq $user_info.address_id}caddress-active{/if}"></span>
                             </div>
                             <div class="corder-left corder-padr">
                                 <p>
@@ -162,6 +162,7 @@
                     $('.caddress-list-details .default.caddress-list-details')
                     .removeClass('caddress-morenadd').text('设置成默认地址');
                     $this.addClass('caddress-morenadd').text('默认地址');
+                    window.location.href = window.location.href;
                     return;
                 }
                 Dialog.tip(data.msg);

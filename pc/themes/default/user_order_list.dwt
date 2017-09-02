@@ -18,7 +18,7 @@
                 </div>
                 </form>
             </div>
-            <div class="corder-main-mainmain">
+            <div class="corder-main-mainmain" style="min-height: 250px">
                 <div class="corder-main-mains">
                     <span>项目</span>
                     <span>单价</span>
@@ -27,12 +27,12 @@
                     <span class="corder-status-releative">交易状态 <img src="themes/default/img/cimage6.png" alt="">
                             <div class="corder-status">
                                 <ul>
-                                    <li><a href="user.php?act=order_list&status=1">待付款</a></li>
-                                    <li><a href="user.php?act=order_list&status=2">待发货</a></li>
-                                    <li><a href="user.php?act=order_list&status=3">待收货</a></li>
-                                    <li><a href="user.php?act=order_list&status=4">交易完成</a></li>
-                                    <li><a href="user.php?act=order_list&status=5">交易取消</a></li>
-                                    <li><a href="user.php?act=order_list&status=6">退款中的订单</a></li>
+                                    <li {if $status==1}class='active'{/if}><a href="user.php?act=order_list&status=1">待付款</a></li>
+                                    <li {if $status==2}class='active'{/if}><a href="user.php?act=order_list&status=2">待发货</a></li>
+                                    <li {if $status==3}class='active'{/if}><a href="user.php?act=order_list&status=3">待收货</a></li>
+                                    <li {if $status==4}class='active'{/if}><a href="user.php?act=order_list&status=4">交易完成</a></li>
+                                    <li {if $status==5}class='active'{/if}><a href="user.php?act=order_list&status=5">交易取消</a></li>
+                                    <li {if $status==6}class='active'{/if}><a href="user.php?act=order_list&status=6">退货订单</a></li>
                                 </ul>
                             </div>
                         </span>
@@ -45,9 +45,12 @@
                                 <em>{$order.add_time|date}</em>
                                 <span class="corder-pad">订单号：{$order.order_sn}</span>
                             </span>
+                        {if ($order.old_order_status==2 && $order.pay_status==0 ) || ($order.old_order_status==5 && $order.shipping_status==2 && $order.pay_status==2) }
                         <span class="corder-right">
                                 <img src="themes/default/img/cimage7.png" alt="">
-                            </span>
+                            </span> {$order.order_status}
+                        {/if}
+
                     </p>
                     <div class="corder-details">
                         <div class="corder-top">
@@ -95,6 +98,12 @@
                                 <p class="cu">交易完成</p>
                                 <p class="again">再次购买</p>
                                 {/if}
+
+                                {if $order.shipping_status==1 && $order.pay_status==2}
+                                    <p class="buy"><a href="user.php?act=affirm_received&order_id={$order.order_id}">收货</a></p>
+                                {/if}
+
+
                             </div>
                             <div class="clear"></div>
                         </div><!--corder-top-->
@@ -117,6 +126,8 @@
 
                 {insert name="page" total=$total}
             </div>
+
+
         </div>
     </div>
 </div>

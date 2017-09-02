@@ -234,11 +234,22 @@ class User extends \zd\Controller {
     public function orderListAction() {
         $page_title = '我的订单';
         $search = $this->get('search');
+        $status = $this->get('status');
         $helps = get_shop_help();       // 网店帮助
-        $pager = UserOrder::getPage($_SESSION['user_id'], $search);
+        $pager = UserOrder::getPage($_SESSION['user_id'], $search, $status);
         $order_list = $pager->getPage();
         $total = $pager->getTotal();
-        $this->show(compact('page_title', 'helps', 'order_list', 'total', 'search'));
+        $this->show(compact('page_title', 'helps', 'order_list', 'total', 'search', 'status'));
+    }
+
+    public function affirmReceivedAction(){
+
+        include_once(ROOT_PATH . 'includes/lib_transaction.php');
+        $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
+        $user_id = $this->userId();
+        affirm_received($order_id, $user_id);
+
+        Helper::redirect($GLOBALS['_SERVER']['HTTP_REFERER']);
     }
 
     public function cancelOrderAction() {

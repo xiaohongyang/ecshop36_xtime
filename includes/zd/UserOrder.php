@@ -8,20 +8,53 @@ class UserOrder {
      * @param integer $userId
      * @return Page
      */
-    public static function getPage($userId, $search=null) {
+    public static function getPage($userId, $search=null, $status=null) {
         $searchWhere = '';
         if(!is_null($search)){
-            $searchWhere = " and og.goods_name like '%{$search}%'";
+            $searchWhere = " and (og.goods_name like '%{$search}%' or oi.order_sn like '{$search}' ) ";
         }
+        $statusWhere = is_null($status) ? '' : " and oi.order_status = {$status} ";
+        if(is_null($status)) {
+            $statusWhere = '';
+        } else {
+
+            switch ($status) {
+                case 1:
+                    //待支付
+                    $statusWhere = " and oi.pay_status=0 and oi.order_status<>2 " ;
+                    break;
+                case 2:
+                    //待发货
+                    $statusWhere = ' and oi.order_status=1 and oi.shipping_status=0 and oi.pay_status=2  ';
+                    break;
+                case 3:
+                    //待收货
+                    $statusWhere = ' and oi.order_status=5 and oi.shipping_status=1 and oi.pay_status=2  ';
+                    break;
+                case 4:
+                    //交易完成
+                    $statusWhere = ' and oi.order_status=5 and oi.shipping_status=2 and oi.pay_status=2  ';
+                    break;
+                case 5:
+                    //交易取消
+                    $statusWhere = ' and oi.order_status=2  ';
+                    break;
+                case 6:
+                    //退货
+                    $statusWhere = ' and oi.order_status =4  ';
+                    break;
+            }
+        }
+
         $count = Sql::create()->select('COUNT(distinct(oi.order_id)) AS count')
             ->from('order_info oi')
             ->inner('order_goods og', 'oi.order_id=og.order_id')
-            ->where('oi.is_delete = 0 '. $searchWhere .' and oi.user_id =')
+            ->where('oi.is_delete = 0 ' . $statusWhere . $searchWhere .' and oi.user_id =')
             ->addInt($userId);
         $sql = Sql::create()->select('distinct(oi.order_id),oi.*')
             ->from('order_info oi')
             ->inner('order_goods og', 'oi.order_id=og.order_id')
-            ->where('oi.is_delete = 0 '. $searchWhere .' and oi.user_id =')->addInt($userId);
+            ->where('oi.is_delete = 0 ' . $statusWhere . $searchWhere .' and oi.user_id =')->addInt($userId);
 
         $page = new Page(static::addWhere($count)->scalar());
         $page->setPage(static::addWhere($sql)
@@ -78,6 +111,7 @@ class UserOrder {
         }
         $item['format_status'] = static::getStatusLabel($item);
         $item['shipping_status'] = ($item['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $item['shipping_status'];
+        $item['old_order_status'] = $item['order_status'];
         $item['order_status'] = $GLOBALS['_LANG']['os'][$item['order_status']] . ',' . $GLOBALS['_LANG']['ps'][$item['pay_status']] . ',' . $GLOBALS['_LANG']['ss'][$item['shipping_status']];
         $item['total_fee'] = price_format($item['goods_amount'], false);
         $item['order_time'] = local_date($GLOBALS['_CFG']['time_format'], $item['add_time']);

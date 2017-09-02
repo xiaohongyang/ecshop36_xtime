@@ -2966,7 +2966,22 @@ form .register div .jiao span {
     width: 100%;
 }
 
-.cinfo-modal {
+.cinfo-center {
+    text-align: center;
+    padding: 20px;
+}
+
+.information .zuodiv p span.cinfo-red {
+    color: #FF4F51;
+    width: 60%;
+}
+
+.cinfo-modal
+,.cinfo-modal-x1
+,.cinfo-modal-x2
+,.cinfo-modal-x3
+,.cinfo-modal-x4
+{
     position: absolute;
     top: -60%;
     left: 45%;
@@ -2980,23 +2995,25 @@ form .register div .jiao span {
     display: none;
 }
 
-.cinfo-modal h4 {
+.cinfo-modal h4
+,.cinfo-modal-x1 h4
+,.cinfo-modal-x2 h4
+,.cinfo-modal-x3 h4
+,.cinfo-modal-x4 h4
+{
     text-align: center;
     font-size: 16px;
     font-weight: normal;
 }
 
-.cinfo-center {
-    text-align: center;
-    padding: 20px;
-}
 
-.information .zuodiv p span.cinfo-red {
-    color: #FF4F51;
-    width: 60%;
-}
 
-.cinfo-modal .corder-right button {
+.cinfo-modal .corder-right button
+,.cinfo-modal-x1 .corder-right button
+,.cinfo-modal-x2 .corder-right button
+,.cinfo-modal-x3 .corder-right button
+,.cinfo-modal-x4 .corder-right button
+{
     width: 100px;
     height: 35px;
     line-height: 20px;

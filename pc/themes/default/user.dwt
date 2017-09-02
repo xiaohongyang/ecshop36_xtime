@@ -37,7 +37,7 @@
                             <div class="caddress-modal-text">
                                 <p>用户名</p>
                                 <span class="cquestion-input cquestion-raduis caddress-ccc">
-                                    <input type="text" class="cinfo-input caddress-ccc" placeholder="158***20" disabled="">
+                                    <input type="text" class="cinfo-input caddress-ccc" placeholder="{$user_info.user_name}" disabled="">
                                     <img src="/pc/themes/default/img/cimage37.png" alt="">
                                 </span>
 
@@ -90,32 +90,95 @@
                 <p class="bor">注册信息与账户安全</p>
                 <div class="zuodiv">
                     <p>
-                        <span>真实姓名:</span>田馥甄<a href="javascript:;" class="cinfo-edit">修改</a>
+                        <span>真实姓名:</span>{$user_info.real_name}<a href="javascript:;" class="cinfo-edit">修改</a>
                     </p>
                     <p>
-                        <span>绑定邮箱:</span>LINK98765@qq.com<a href="javascript:;">修改绑定</a>
+                        <span>绑定邮箱:</span>{$user_info.email}<a href="javascript:;" class="cinfo-edit-x1" targetModal=".cinfo-modal-x1">修改绑定</a>
                     </p>
                     <p>
-                        <span>微信绑定:</span><img src="/pc/themes/default/img/39.png">呵呵哈哈哈<a href="javascript:;">修改绑定</a>
+                        <span>微信绑定:</span><img src="/pc/themes/default/img/39.png">{$user_info.wechat}<a href="javascript:;" class="cinfo-edit-x2" targetModal=".cinfo-modal-x2">修改绑定</a>
                     </p>
                     <div class="cinfo-modal" style="display: none;">
-                        <p><img src="/pc/themes/default/img/cimage36.png" alt="" class="corder-right cinfo-close"></p>
-                        <h4>修改真实姓名</h4>
-                        <div class="cinfo-center">
-                            <input type="text" class="cquestion-input">
-                        </div>
-                        <p><span class="cinfo-red">真实姓名不能为空</span></p>
-                        <div class="corder-right">
-                            <button>保存</button>
-                        </div>
+                        <form class="ajax-form" action="user.php?act=update_one_field&column=real_name" method="post">
+                            <p><img src="/pc/themes/default/img/cimage36.png" alt="" class="corder-right cinfo-close">
+                            </p>
+                            <h4>修改真实姓名</h4>
+                            <div class="cinfo-center">
+                                <input type="text" name="real_name" required="required" class="cquestion-input">
+                            </div>
+                            <p><span class="cinfo-red">真实姓名不能为空</span></p>
+                            <div class="corder-right">
+                                <button>保存</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="cinfo-modal-x1" style="display: none; ">
+                        <form class="ajax-form" action="user.php?act=update_one_field&column=email" method="post">
+                            <p><img src="/pc/themes/default/img/cimage36.png" alt="" class="corder-right cinfo-close-x1" targetModal=".cinfo-modal-x1">
+                            </p>
+                            <h4>修改绑定邮箱</h4>
+                            <div class="cinfo-center">
+                                <input type="text" name="email" required="required" class="cquestion-input">
+                            </div>
+                            <p><span class="cinfo-red">邮箱不能为空</span></p>
+                            <div class="corder-right">
+                                <button>保存</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="cinfo-modal-x2" style="display: none; ">
+                        <form class="ajax-form" action="user.php?act=update_one_field&column=wechat" method="post">
+                            <p><img src="/pc/themes/default/img/cimage36.png" alt="" class="corder-right cinfo-close-x2" targetModal=".cinfo-modal-x2">
+                            </p>
+                            <h4>修改绑定微信</h4>
+                            <div class="cinfo-center">
+                                <input type="text" name="wechat" required="required" class="cquestion-input">
+                            </div>
+                            <p><span class="cinfo-red">微信不能为空</span></p>
+                            <div class="corder-right">
+                                <button>保存</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="cinfo-modal-x3" style="display: none; ">
+                        <form class="ajax-form" action="user.php?act=update_one_field&column=password" method="post">
+                            <p><img src="/pc/themes/default/img/cimage36.png" alt="" class="corder-right cinfo-close-x3" targetModal=".cinfo-modal-x3">
+                            </p>
+                            <h4>修改密码</h4>
+                            <div class="cinfo-center">
+                                <input type="password" name="password" required="required" class="cquestion-input">
+                            </div>
+                            <p><span class="cinfo-red">密码不能为空</span></p>
+                            <div class="corder-right">
+                                <button>保存</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="cinfo-modal-x4" style="display: none; ">
+                        <form class="ajax-form" action="user.php?act=update_one_field&column=mobile_phone" method="post">
+                            <p><img src="/pc/themes/default/img/cimage36.png" alt="" class="corder-right cinfo-close-x4" targetModal=".cinfo-modal-x4">
+                            </p>
+                            <h4>修改注册手机</h4>
+                            <div class="cinfo-center">
+                                <input type="text" name="mobile_phone" required="required" class="cquestion-input">
+                            </div>
+                            <p><span class="cinfo-red">手机号不能为空</span></p>
+                            <div class="corder-right">
+                                <button>保存</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="youdiv">
                     <p>
-                        <span>登录密码:</span><a href="javascript:;">修改密码</a>
+                        <span>登录密码:</span><a href="javascript:;" class="cinfo-edit-x3" targetModal=".cinfo-modal-x3">修改密码</a>
                     </p>
                     <p>
-                        <span>注册手机:</span>+86 123****0987<a href="javascript:;">修改绑定</a>
+                        <span>注册手机:</span>{$user_info.mobile_phone}<a href="javascript:;" class="cinfo-edit-x4" targetModal=".cinfo-modal-x4">修改绑定</a>
                     </p>
                 </div>
                 <div class="clear"></div>
@@ -133,6 +196,7 @@
         $(".cinfo-close").click(function(){
             $(".cinfo-modal").hide();
         });
+
         $(".cinfo-edit1").click(function(){
             $(".cinfo-modal1").show();
         });
@@ -140,6 +204,25 @@
         $(".cinfo-close1").click(function(){
             $(".cinfo-modal1").hide();
         });
+
+        for(i=1;i<10;i++){
+
+            var j=i
+            $(".cinfo-edit-x" + i).click(function(){
+                var targetModal = $(this).attr('targetModal')
+                console.log(targetModal)
+                $(targetModal).show();
+            });
+
+            $(".cinfo-close-x" + i).click(function(){
+                var targetModal = $(this).attr('targetModal')
+                console.log(targetModal)
+                $(targetModal).hide();
+            });
+        }
+
+
+
         $(".upload-avatar").upload({
             url: 'user.php?act=avatar',
             template: '{url}'

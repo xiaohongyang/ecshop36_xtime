@@ -188,8 +188,9 @@ class User extends \zd\Controller {
      }
 
     public function indexAction() {
+        $helps = get_shop_help();       // 网店帮助
         $page_title = '会员中心';
-        $this->show(compact('page_title'));
+        $this->show(compact('page_title', 'helps'));
     }
 
     /**
@@ -295,6 +296,47 @@ class User extends \zd\Controller {
         ], [
             'user_id' => $this->userId()
         ]);
+        Helper::success();
+    }
+
+    public function updateRealNameAction(){
+        $real_name = $this->get('real_name');
+
+        Sql::update('users', [
+            'real_name' => addslashes($real_name),
+        ], [
+            'user_id' => $this->userId()
+        ]);
+        Helper::success();
+    }
+
+    public function updateOneFieldAction(){
+
+        $column = $this->get('column');
+        $data = [];
+        switch ($column) {
+            case 'password' :
+                $password = $this->get('password');
+                $ec_salt=rand(1,9999);
+                /*$sql = "UPDATE " .$ecs->table('admin_user'). "SET password = '".md5(md5($new_password).$ec_salt)."',`ec_salt`='$ec_salt' ".
+                    "WHERE user_id = '$adminid'";*/
+                $password = md5(md5($password).$ec_salt);
+                $data = [
+                    'password' => $password,
+                    'ec_salt' => $ec_salt
+                ];
+                break;
+            default :
+                $data = [
+                    $column => $this->get($column)
+                ];
+                breakk;
+        }
+        if(count($data)){
+            Sql::update('users', $data, [
+                'user_id' => $this->userId()
+            ]);
+        }
         Helper::success();
     }
 

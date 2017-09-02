@@ -970,6 +970,8 @@ function real_server_ip()
     return $serverip;
 }
 
+
+
 /**
  * 自定义 header 函数，用于过滤可能出现的安全隐患
  *
@@ -1305,6 +1307,10 @@ function picsrc($str)
     } else {
         return '/' . $str;
     }
+}
+
+function replace($search, $replaceString='', $str){
+    return str_replace($search, $replaceString, $str);
 }
 
 ?>

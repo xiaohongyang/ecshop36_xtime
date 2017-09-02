@@ -82,7 +82,7 @@
                         <td>{$log.change_time|datetime}</td>
                         <td>{$log.change_desc}</td>
                         <td><span>订单号:</span>{$log.log_id}</td>
-                        <td class="active">{if $log.user_money > 0} + {$log.user_money} {else} {$log.user_money} {/if}</td>
+                        <td class="active">{if $log.user_money > 0} +{$log.user_money} {else} <span style="color:#000;">{$log.user_money}</span> {/if}</td>
                         <td>交易完成</td>
                     </tr>
                     {/foreach}

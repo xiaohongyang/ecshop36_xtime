@@ -655,6 +655,9 @@ class cls_template
                     case 'picsrc':
                         $p = 'picsrc(' . $p . ")";
                         break;
+                    case 'replace':
+                        $p = 'replace(' . $s[1] . ",$s[2] ,$p)";
+                        break;
                     case 'price':
                         $p = 'price_format(' . $p . ', false)';
                         break;

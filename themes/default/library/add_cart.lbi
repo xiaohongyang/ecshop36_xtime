@@ -94,6 +94,11 @@
                     $(".cartGoods .price").html(data.result);
                     var sku = data.product_number;
                     $(".cartGoods .stock").html(sku);
+
+                    if($('.number-group .txt').val() > sku){
+                        $('.number-group .txt').val(sku);
+                    }
+
                     if (sku < 2) {
                         $(".cartGoods .kucun").addClass('disable');
                     } else {

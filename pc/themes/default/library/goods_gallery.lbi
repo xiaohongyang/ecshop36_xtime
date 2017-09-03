@@ -1,27 +1,69 @@
 <!--放大镜开始-->
 <div align="center" class="previewcen">
     <div id="preview">
-        <div class="jqzoom" id="spec-n1"><img height="555"
+        <div class="jqzoom" id="spec-n1"><img
+            class="zoom_01"
+            data-zoom-image="{$goods.goods_img | picsrc}"
+            height="555"
             src="/{$goods.goods_img}"
             jqimg="{$goods.goods_img}"
             width="555">
         </div>
         <div id=spec-n5>
             <div class=control id=spec-left>
-                <img src="themes/default/img/product-left.png" />
+                <img src="themes/default/img/product-left.png" onclick="$.fn.toLeft()" />
             </div>
             <div id=spec-list>
                 <ul class=list-h>
                    <!-- {foreach from=$pictures item=picture}-->
-                   <li><a href="/{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}"><img src="/{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
+                   <li><a href="javascript:void(0);" data-src="/{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}"><img src="/{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
                    <!--{/foreach}-->
                 </ul>
             </div>
             <div class=control id=spec-right>
-                <img src="themes/default/img/product-right.png" />
+                <img src="themes/default/img/product-right.png" onclick="$.fn.toRight()" />
             </div>
 
         </div>
     </div>
 </div><!--previewcen-->
 <!--放大镜结束-->
+
+
+<script type="text/javascript">
+
+$.fn.toLeft = function(){
+    var wrap = $('.list-h');
+    if(wrap.find('li').length <= 4)
+        return;
+
+    var firstObj = wrap.find("li:eq(0)")
+    wrap.append("<li>" + firstObj.html() + "</li>");
+    wrap.find('li:eq(0)').remove()
+}
+
+$.fn.toRight = function(){
+    var wrap = $('.list-h');
+    var length = wrap.find('li').length
+    if( length<= 4)
+        return;
+
+    var lastObj = wrap.find("li:last")
+    wrap.prepend("<li>" + lastObj.html() + "</li>");
+    wrap.find("li:last").remove()
+}
+
+$(function(){
+    $('.zoom_01').elevateZoom({zoomWindowWidth:500,zoomWindowHeight:500});//默认效果
+
+    $('body').on('click','.list-h a',function(){
+        var src= $(this).attr('data-src');
+        $('#spec-n1 img').attr('src', src);
+        $('#spec-n1 img').attr('data-zoom-images', src);
+        $('.zoomWindowContainer div').css('background-image', 'url(' + src + ')')
+    })
+
+    //移动
+
+})
+</script>

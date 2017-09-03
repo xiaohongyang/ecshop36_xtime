@@ -30,7 +30,7 @@ class User extends \zd\Controller {
      * 不需要登录的action
      * @var array
      */
-    protected $notLogin = ['login', 'register','getPassword'];
+    protected $notLogin = ['login', 'register', 'find_password','getPassword'];
 
     public function loginAction() {
         $page_title = '登录';
@@ -73,7 +73,6 @@ class User extends \zd\Controller {
         $this->assign('send_code', $send_code);
         $this->show('/register', compact('page_title'));
     }
-
     public function registerActionPost() {
         global $_CFG, $_LANG, $ecs, $db, $err;
         if ($_CFG['shop_reg_closed']) {
@@ -173,6 +172,86 @@ class User extends \zd\Controller {
                 'url' => $back_act
             ]);
         }
+        Helper::failure($err->last_message());
+    }
+
+    public function findPasswordAction() {
+        global $_LANG;
+        $page_title = '注册';
+        $send_code = $this->random(6,1);
+
+        //开启SESSION
+        session_start();
+
+        $_SESSION['send_code'] = $send_code;
+
+        $username = '15995716443';
+
+        /* 密码提示问题 */
+        $this->assign('passwd_questions', $_LANG['passwd_questions']);
+        $this->assign('send_code', $send_code);
+        $this->show('/find_password.dwt', compact('page_title'));
+    }
+
+    public function findPasswordActionPost() {
+        global $_CFG, $_LANG, $ecs, $db, $err;
+        if ($_CFG['shop_reg_closed']) {
+            Helper::failure('注册已关闭！');
+        }
+        include_once(ROOT_PATH . 'includes/lib_passport.php');
+
+        session_start();
+        $username = $this->get('username');
+        $password = $this->get('password');
+
+        $mobile_code = $this->get('mobile_code');
+
+        if (empty($username)) {
+            Helper::failure('手机号码不可为空');
+        }
+        if (empty($mobile_code)) {
+            Helper::failure('手机验证码不可为空');
+        }
+        if($username != $_SESSION["sms_mobile"]){
+            Helper::failure('请填写发送短信时的手机号码');
+        }
+        if ($_POST['mobile_code'] != $_SESSION["sms_mobile_code"]) {
+            Helper::failure('手机验证码输入错误');
+        }
+        $_SESSION["sms_mobile_code"] = '';
+        $_SESSION["sms_mobile"] = '';
+
+
+        $back_act = $this->get('back_act');
+
+
+        if (strlen($username) < 3) {
+            Helper::failure($_LANG['passport_js']['username_shorter']);
+        }
+
+        if (strlen($password) < 6) {
+            Helper::failure($_LANG['passport_js']['password_shorter']);
+        }
+
+        if (strpos($password, ' ') > 0) {
+            Helper::failure($_LANG['passwd_balnk']);
+        }
+
+        $userId = Sql::create()->select('user_id')->from('users')->where("mobile_phone ='{$username}'  ")->scalar();
+
+        if($userId) {
+            $password = $this->get('password');
+            $ec_salt=rand(1,9999);
+            $password = md5(md5($password).$ec_salt);
+            $data = [
+                'password' => $password,
+                'ec_salt' => $ec_salt
+            ];
+            Sql::update('users', $data, [
+                'user_id' => $userId
+            ]);
+        }
+
         Helper::failure($err->last_message());
     }
 

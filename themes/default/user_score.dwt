@@ -20,7 +20,7 @@
                 style="border:1px solid #68C3BC;padding:0px 5px;display:block;height:30px;width:55px;line-height:30px;text-align:center;border-radius:3px;color:#68C3BC">兑换</span></span></li>
             {/foreach}
         </ul>
-        <p class="djjs">查看会员等级特权介绍</p>
+        <p class="djjs"><a href="user.php?act=card_level">查看会员等级特权介绍</a></p>
     </div><!--content-->
 
 

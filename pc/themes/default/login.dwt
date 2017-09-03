@@ -51,7 +51,7 @@
             <div>
                 <img src="/pc/themes/default/img/33.png" class="zuo">
                 <input type="password" name="password" required placeholder="密码">
-                <a href="user.php?act=password">忘记密码</a>
+                <a href="user.php?act=find_password">忘记密码</a>
             </div>
             <div>
                 <img src="/pc/themes/default/img/34.png" class="zuo">

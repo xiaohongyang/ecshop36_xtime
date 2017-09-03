@@ -176,8 +176,11 @@ class User extends \zd\Controller {
     }
 
     public function findPasswordAction() {
+
+        $this->renderHelper();
+
         global $_LANG;
-        $page_title = '注册';
+        $page_title = '找回密码';
         $send_code = $this->random(6,1);
 
         //开启SESSION
@@ -250,9 +253,10 @@ class User extends \zd\Controller {
             Sql::update('users', $data, [
                 'user_id' => $userId
             ]);
+            Helper::success();
+        } else {
+            Helper::failure('用户不存在');
         }
-
-        Helper::failure($err->last_message());
     }
 
     public function logoutAction() {

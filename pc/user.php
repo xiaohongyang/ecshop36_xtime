@@ -209,6 +209,7 @@ class User extends \zd\Controller {
             ->andWhere('user_money', '<>', 0)
             ->order('change_time desc')
             ->limit(Sql::pageLimit())->all();
+        $this->renderHelper();
         $this->show(compact('page_title', 'total', 'log_list'));
     }
 
@@ -228,6 +229,7 @@ class User extends \zd\Controller {
             ->andWhere('pay_points', '<>', 0)
             ->order('change_time desc')
             ->limit(Sql::pageLimit())->all();
+        $this->renderHelper();
         $this->show(compact('page_title', 'total', 'log_list'));
     }
 
@@ -355,6 +357,7 @@ class User extends \zd\Controller {
     public function addressListAction() {
         $page_title = '地址管理';
         $address_list = UserAddress::all();
+        $this->renderHelper();
         $this->show(compact('page_title', 'address_list'));
     }
 
@@ -422,6 +425,7 @@ class User extends \zd\Controller {
     public function auctionListAction() {
         $page_title = '我的竞拍';
         list($total, $auction_list) = Auction::getUserList();
+        $this->renderHelper();
         $this->show(compact('page_title', 'total', 'auction_list'));
     }
 
@@ -450,6 +454,7 @@ class User extends \zd\Controller {
 
 
     public function collectListAction() {
+
         include_once(ROOT_PATH . 'includes/lib_clips.php');
         $total = Sql::create()
             ->selectCount()
@@ -461,7 +466,14 @@ class User extends \zd\Controller {
         $goods_list = get_collection_goods($this->userId(),
             $pager['size'], $pager['start']);
         $page_title = '我的收藏';
-        $this->show(compact('pager', 'goods_list', 'page_title'));
+
+        $this->renderHelper();
+        $this->show(compact('pager', 'goods_list', 'page_title', 'total'));
+    }
+
+    private function renderHelper(){
+        $helps = get_shop_help();       // 网店帮助
+        $this->assign('helps', $helps);
     }
 
     public function deleteCollectAction() {

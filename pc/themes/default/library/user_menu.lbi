@@ -1,7 +1,7 @@
 <div class="corder-main-header">
     <ul class="corder-main-ul corder-overflow">
         <li {if $action eq 'order_list'}class="active"{/if}><a href="user.php?act=order_list">我的订单</a></li>
-        <li><a href="javascript:;">我的收藏</a></li>
+        <li {if $action eq 'collect_list'}class="active"{/if}><a href="user.php?act=collect_list">我的收藏</a></li>
         <li {if $action eq 'auction_list'}class="active"{/if}><a href="user.php?act=auction_list">我的竞拍</a></li>
         <li {if $action eq 'account'}class="active"{/if}><a href="user.php?act=account">我的余额</a></li>
         <li {if $action eq 'points'}class="active"{/if}><a href="user.php?act=points">我的积分</a></li>

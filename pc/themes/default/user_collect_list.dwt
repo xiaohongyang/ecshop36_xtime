@@ -1,0 +1,47 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+    <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
+</div>
+
+
+<div class="box">
+
+    <div class="corder-main">
+        <!-- #BeginLibraryItem "/library/user_menu.lbi" -->
+        <!-- #EndLibraryItem -->
+
+        <div class="favourite-main">
+            <div class="favourite-list">
+
+                {foreach from=$goods_list item=goods}
+                    <div class="favourite-list-img">
+                    <div class="favorite-details">
+                        <a href="goods.php?id={$goods.goods_id}" target="_blank">
+                        <div class="favourite-img">
+                            <img src="{$goods.goods_thumb|picsrc}" alt="">
+                        </div>
+                        <p>{$goods.goods_name}</p>
+                        <p>
+                            <img src="./img/24.png" alt="">
+                            <span class="ornageji">{$goods.shop_price}</span>
+                        </p>
+                        </a>
+                    </div>
+                </div>
+                {/foreach}
+
+
+                {insert name="page" total=$total}
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".corder-status-releative").click(function(){
+            $(".corder-status").toggle();
+        });
+    });
+</script>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

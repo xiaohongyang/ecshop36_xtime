@@ -247,6 +247,9 @@ elseif ($_REQUEST['act'] == 'view')
         }
 
         $auction['gmt_end_time'] = local_strtotime($auction['end_time']);
+        if(strtotime($auction['end_time']) <= strtotime(date('Y-m-d H:i:s'))) {
+            $auction['is_finished'] = 1;
+        }
         $smarty->assign('auction', $auction);
 
         /* 取得拍卖商品信息 */

@@ -21,7 +21,7 @@
                         </div>
                         <p>{$goods.goods_name}</p>
                         <p>
-                            <img src="./img/24.png" alt="">
+                            <img src="/pc/themes/default/img/24.png" alt="">
                             <span class="ornageji">{$goods.shop_price}</span>
                         </p>
                         </a>

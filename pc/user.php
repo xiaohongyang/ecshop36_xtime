@@ -30,7 +30,7 @@ class User extends \zd\Controller {
      * 不需要登录的action
      * @var array
      */
-    protected $notLogin = ['login', 'register', 'find_password','getPassword'];
+    protected $notLogin = ['login', 'register', 'find_password','getPassword','account_add'];
 
     public function loginAction() {
         $page_title = '登录';
@@ -294,6 +294,42 @@ class User extends \zd\Controller {
             ->limit(Sql::pageLimit())->all();
         $this->renderHelper();
         $this->show(compact('page_title', 'total', 'log_list'));
+    }
+
+    /**
+     * 余额充值
+     */
+    public function accountAddAction(){
+
+        include_once(ROOT_PATH . 'includes/lib_order.php');
+
+        /* 检查参数 */
+        $user_id = empty($_REQUEST['user_id']) ? 0 : intval($_REQUEST['user_id']);
+        if ($user_id <= 0)
+        {
+            Helper::failure('用户id错误');
+        }
+        $user = user_info($user_id);
+        if (empty($user))
+        {
+            Helper::failure('用户不存在');
+        }
+
+        /* 提交值 */
+        $change_desc    = sub_str($_POST['change_desc'], 255, false);
+        $user_money     = floatval($_POST['add_sub_user_money']) * abs(floatval($_POST['user_money']));
+        $frozen_money   = floatval($_POST['add_sub_frozen_money']) * abs(floatval($_POST['frozen_money']));
+        $rank_points    = floatval($_POST['add_sub_rank_points']) * abs(floatval($_POST['rank_points']));
+        $pay_points     = floatval($_POST['add_sub_pay_points']) * abs(floatval($_POST['pay_points']));
+
+        if ($user_money == 0 && $frozen_money == 0 && $rank_points == 0 && $pay_points == 0)
+        {
+            Helper::failure('金额没有变化');
+        }
+
+        /* 保存 */
+        log_account_change($user_id, $user_money, $frozen_money, $rank_points, $pay_points, $change_desc, ACT_ADJUSTING);
+        Helper::success('充值成功');
     }
 
     /**

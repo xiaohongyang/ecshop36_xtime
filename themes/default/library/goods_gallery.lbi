@@ -1,10 +1,35 @@
+<style type="text/css">
+    .dots{
+        position: absolute;
+        bottom: 0;
+        left: 46%;
+    }
 
-  <div class="slider">
+    .dots li {
+        list-style: none;
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        font-size: 0px;
+        border-radius: 50%;
+        color: #E5E5E5;
+        background: #ccc;
+        margin-right: 5px;
+    }
+    .dots li.active{
+        background: #65C1BD;
+    }
+
+
+</style>
+
+
+  <div class="slider" style="height: auto;">
       <div class="slider-box  ">
           <ul>
               <!-- {foreach from=$pictures item=picture}-->
               <li  ><a href="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}">
-                      <img src="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" alt=""></a></li>
+                      <img src="{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
               <!--{/foreach}-->
               <!--<li>This is a slide.</li>
               <li>This is another slide.</li>

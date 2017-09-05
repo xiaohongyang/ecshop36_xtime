@@ -2,7 +2,7 @@
 <div class="box">
     <div class="content" >
         <!-- #BeginLibraryItem "/library/page_title.lbi" --><!-- #EndLibraryItem -->
-        <form action="user.php" method="post" name="formUser">
+        <form action="user.php" method="post" name="formUser" onsubmit='return checkSubmit()'>
                 <ul class="memberindexul" style="margin-top:10px">
                     <li>
                         <span>手机号:</span>
@@ -36,13 +36,34 @@
                 <input name="agreement" type="hidden" value="1"/>
                 <input name="act" type="hidden" value="act_register" >
                 <input type="hidden" name="back_act" value="{$back_act}" />
-                <input type="submit" value="提交" class="login" />
+                <input type="submit" value="提交" class="login btn-register" />
             </form>
     </div><!--content-->
 
 
 </div><!--box-->
 <script>
+
+function checkSubmit() {
+
+    var result = true;
+
+    var confirm_password = $('input[name=confirm_password]').val();
+    var password = $('input[name=password]').val();
+    var reg = new RegExp('[a-zA-Z0-9]{8,16}')
+    var regNumber = new RegExp('^([0-9]{8,16})$')
+    var regWord = new RegExp('^([a-zA-Z]{8,16})$')
+
+    if(!reg.test(password) || regNumber.test(password) || regWord.test(password)) {
+        Dialog.tip("密码必须为8-16位的数字和字母") 
+        result = false
+    } else if(password != confirm_password) {
+        Dialog.tip("两次输入的密码不一致") 
+        result = false
+    }
+
+    return false;
+}
 $(document).ready(function () {
     $('[name=username]').blur(function () {
         var phone = $(this).val();

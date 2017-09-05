@@ -15,13 +15,15 @@
 
           </div>
       <h4 class="number-group"><span>购买数量</span><input type="button" value="+" class="jia number-plus">
-      <input type="text" value="1" class="txt number">
+      <input type="text" value="1" class="txt number" onkeyup="this.value=this.value.replace(/\D/g,'')" >
       <input type="button" value="-" class="jian no number-minus"></h4>
       <input type="button" value="加入购物车" class="kucun">
     </div><!-- /.modal-content -->
   </div>
 </div>
 </div>
+
+<input type='text' id='product_number' value='{$goods.goods_number}' />
 <script>
     $(document).ready(function() {
         var goods_id = 0;
@@ -93,11 +95,17 @@
                 if (data.err_msg == '') {
                     $(".cartGoods .price").html(data.result);
                     var sku = data.product_number;
+                    $('#product_number').val(sku)
                     $(".cartGoods .stock").html(sku);
 
+                    /*
                     if($('.number-group .txt').val() > sku){
                         $('.number-group .txt').val(sku);
                     }
+                    if($('.number-group .txt').val() == 0){
+                        $('.number-group .txt').val(1);
+                    }
+                    */
 
                     if (sku < 2) {
                         $(".cartGoods .kucun").addClass('disable');
@@ -134,6 +142,14 @@
             var step = 'add_goods'
             step = isBuy ? step + '&flow_type=buy_now' : step
             var url = "flow.php?step="+ step +"&goods_id=" + goods_id + "&num=" + num + "&spec="+ spec
+
+            var product_number = parseInt($('#product_number').val());
+            var currentBuyNumber = parseInt($(".cartGoods .number").val());
+            if(product_number < currentBuyNumber){
+                Dialog.tip('库存不足!')
+                return false;
+            }
+
             $.getJSON(url, function(data) {
                 if (data.code == 0) {
                     if (isBuy) {
@@ -164,12 +180,12 @@
             var num = parseInt($(".cartGoods .number").val());
             if (num > sku) {
                 num = sku;
-                Dialog.tip('输入的数量超过了库存数');
+                //Dialog.tip('输入的数量超过了库存数');
             }
             if (num < 1) {
                 num = 1;
             }
-            $(".cartGoods .number").val(num);
+            //$(".cartGoods .number").val(num);
             if (num >= sku) {
                 $(".cartGoods .number-plus").addClass('disable');
             } else {

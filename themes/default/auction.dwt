@@ -23,7 +23,7 @@
             </div>
             <div class="x-shopprice">
                 <div class="x-left">
-                    <span class="x-shopuser">当前叫价：{$auction.formated_current_price}</span>
+                    <span class="x-shopuser">当前叫价：{if $auction.last_bid.formated_bid_price }{$auction.last_bid.formated_bid_price} {else} 暂无报价 {/if}</span>
                 </div>
                 <div class="x-right">
                     <span class="x-rightspan">{$auction.bid_user_count}人叫价<img src="/themes/default/img/jiantou1.png" alt=""></span>

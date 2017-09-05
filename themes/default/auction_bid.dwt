@@ -6,7 +6,12 @@
             <img src="/themes/default/img/10.png" width="10px" /></a>输入叫价
             <a href="javascript:;" class="right">提交</a></h4>
         <div class="x-confirmmain-text x-confirmmain-text1">
-            <span>该商品当前叫价：{$auction.formated_current_price}</span>
+            {if $auction.bid_times>0 }
+
+                <span>该商品当前叫价：{$auction.last_bid.formated_bid_price}</span>
+            {else}
+                <span>该商品最低叫价: {$auction.formated_start_price}</span>
+            {/if}
             <textarea name="price" id="" cols="46" rows="2"></textarea>
             <p>
                 <span>单位：星辉币</span>

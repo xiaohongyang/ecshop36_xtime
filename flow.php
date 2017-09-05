@@ -2251,6 +2251,24 @@ else
 
     /* 取得商品列表，计算合计 */
     $cart_goods = get_cart_goods($flow_type);
+
+    if(is_array($cart_goods) && key_exists('goods_list', $cart_goods) && count($cart_goods['goods_list'])) {
+        foreach ($cart_goods['goods_list'] as $key=>$row) {
+            if(!empty($row['goods_attr_id']) && intval($row['goods_attr_id'])>0){
+
+                $attrIds = explode(',', $row['goods_attr_id']);
+                $goodsInfo = get_products_info($row['goods_id'], $attrIds);
+                $cart_goods['goods_list'][$key]['product_number'] = is_null($goodsInfo['product_number']) ? 0 : $goodsInfo['product_number'];
+            } else {
+                $goodsInfo = get_goods_info($row['goods_id']);
+                $cart_goods['goods_list'][$key]['product_number'] = $goodsInfo['goods_number'];
+            }
+            if($cart_goods['goods_list'][$key]['product_number'] <  $cart_goods['goods_list'][$key]['goods_number']  ) {
+                $cart_goods['goods_list'][$key]['is_on_sale'] = false;
+            }
+        }
+    }
+
     $smarty->assign('goods_list', $cart_goods['goods_list']);
     $smarty->assign('total', $cart_goods['total']);
 

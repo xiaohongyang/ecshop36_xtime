@@ -1,10 +1,10 @@
 <!-------------- 底部导航 ------------------------->
 <footer class="navbar navbar-default navbar-fixed-bottom" style="z-index:1">
-  <dl{if $menuIndex < 1} class="current"{/if}>
+  <dl{if $menuIndex < 1 and $search_type!='auction'} class="current"{/if}>
     <dt><a href="/"><img src="themes/default/img/1{if $menuIndex < 1}-1{/if}.png"></a></dt>
     <dd><a href="/">商城</a></dd>
   </dl>
-  <dl{if $menuIndex eq 1} class="current"{/if}>
+  <dl{if $menuIndex eq 1 or $search_type=='auction'} class="current"{/if}>
     <dt><a href="auction.php"><img src="themes/default/img/2{if $menuIndex eq 1}-2{/if}.png"></a></dt>
     <dd><a href="auction.php">竞拍</a></dd>
   </dl>

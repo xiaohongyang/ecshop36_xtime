@@ -5,8 +5,9 @@
         <h1>
             <span class="san"></span>
             <form class="searchForm" action="search.php" >
+                <input type="hidden" name="type" value="auction"/>
                 <span class="fang"></span>
-                <input type="text" name="keywords" class="radius">
+                <input type="text" name="keywords"  class="radius">
             </form>
         </h1>
         <script>

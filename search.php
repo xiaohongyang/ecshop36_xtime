@@ -208,7 +208,7 @@ else
             $val        = mysql_like_quote(trim($val));
             $sc_dsad    = $_REQUEST['sc_ds'] ? " OR goods_desc LIKE '%$val%'" : '';
             //$keywords  .= "(goods_name LIKE '%$val%' OR goods_sn LIKE '%$val%' OR keywords LIKE '%$val%' $sc_dsad)";
-            $keywords  .= "(goods_name LIKE '%$val%' )";
+            $keywords  .= "(g.goods_name LIKE '%$val%' )";
 
             $sql = 'SELECT DISTINCT goods_id FROM ' . $ecs->table('tag') . " WHERE tag_words LIKE '%$val%' ";
             $res = $db->query($sql);
@@ -381,16 +381,35 @@ else
         $page = $max_page;
     }
 
-    /* 查询商品 */
-    $sql = "SELECT g.goods_id, g.goods_name, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ".
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
-                "g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_thumb, g.goods_img, g.goods_brief, g.goods_type ".
+
+    if($_REQUEST['type'] == 'auction') {
+
+        $smarty->assign('search_type','auction');
+        /* 查询商品 */
+        $sql = "SELECT distinct(g.goods_id), a.act_id, g.goods_name, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ".
+            "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+            "g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_thumb, g.goods_img, g.goods_brief, g.goods_type ".
+            "FROM " .$ecs->table('goods'). " AS g ".
+            "join ecs_goods_activity a on a.goods_id = g.goods_id and a.act_type = '2' AND a.is_finished < 2 " .
+            "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+            "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+            "WHERE g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_alone_sale = 1 $attr_in ".
+            "AND (( 1 " . $categories . $keywords . $brand . $min_price . $max_price . $intro . $outstock . " ) ".$tag_where." ) " .
+            "ORDER BY $sort $order";
+        //拍卖商品查询
+    } else {
+        /* 查询商品 */
+        $sql = "SELECT g.goods_id, g.goods_name, g.market_price, g.is_new, g.is_best, g.is_hot, g.shop_price AS org_price, ".
+            "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+            "g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_thumb, g.goods_img, g.goods_brief, g.goods_type ".
             "FROM " .$ecs->table('goods'). " AS g ".
             "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                    "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+            "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
             "WHERE g.is_delete = 0 AND g.is_on_sale = 1 AND g.is_alone_sale = 1 $attr_in ".
-                "AND (( 1 " . $categories . $keywords . $brand . $min_price . $max_price . $intro . $outstock . " ) ".$tag_where." ) " .
+            "AND (( 1 " . $categories . $keywords . $brand . $min_price . $max_price . $intro . $outstock . " ) ".$tag_where." ) " .
             "ORDER BY $sort $order";
+    }
+
     $res = $db->SelectLimit($sql, $size, ($page - 1) * $size);
 
     $arr = array();
@@ -447,8 +466,17 @@ else
         $arr[$row['goods_id']]['goods_brief']   = $row['goods_brief'];
         $arr[$row['goods_id']]['goods_thumb']   = get_image_path($row['goods_id'], $row['goods_thumb'], true);
         $arr[$row['goods_id']]['goods_img']     = get_image_path($row['goods_id'], $row['goods_img']);
-        $arr[$row['goods_id']]['url']           = build_uri('goods', array('gid' => $row['goods_id']), $row['goods_name']);
+
+        if(key_exists('act_id', $row)){
+            //auction.php?act=view&id=6
+            $arr[$row['goods_id']]['act_id'] = $row['act_id'];
+            $arr[$row['goods_id']]['url']  = "/auction.php?act=view&id={$row['act_id']}";
+        } else {
+            $arr[$row['goods_id']]['url']           = build_uri('goods', array('gid' => $row['goods_id']), $row['goods_name']);
+        }
+
     }
+    $smarty->assign('key', $_REQUEST['key']);
 
     if($display == 'grid')
     {
@@ -457,6 +485,9 @@ else
             //$arr[] = array();
         }
     }
+
+
+
     $smarty->assign('goods_list', $arr);
     $smarty->assign('category',   $category);
     $smarty->assign('keywords',   htmlspecialchars(stripslashes($_REQUEST['keywords'])));
@@ -512,6 +543,8 @@ else
     $smarty->assign('helps',       get_shop_help());      // 网店帮助
     $smarty->assign('top_goods',  get_top10());           // 销售排行
     $smarty->assign('promotion_info', get_promotion_info());
+
+
 
     $smarty->display('search.dwt');
 }
@@ -605,5 +638,54 @@ function get_seachable_attributes($cat_id = 0)
     }
 
     return $attributes;
+}
+
+
+function auction_list()
+{
+    $auction_list = array();
+    $auction_list['finished'] = $auction_list['finished'] = array();
+
+    $now = gmtime();
+    $sql = "SELECT a.*, IFNULL(g.goods_thumb, '') AS goods_thumb " .
+        "FROM " . $GLOBALS['ecs']->table('goods_activity') . " AS a " .
+        "LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS g ON a.goods_id = g.goods_id " .
+        "WHERE a.act_type = '" . GAT_AUCTION . "' " .
+        " AND a.is_finished < 2 ORDER BY a.act_id DESC";
+    $res = \zd\Sql::create($sql)->query();
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        $ext_info = unserialize($row['ext_info']);
+        $auction = array_merge($row, $ext_info);
+        $auction['status_no'] = auction_status($auction);
+        $auction['current_price'] = \zd\Sql::create()->select('Max(bid_price) as price')
+            ->from('auction_log')
+            ->where('act_id = '.$auction['act_id'])->scalar();
+        $auction['user_count'] = \zd\Sql::create()->select('count(bid_user) as count')
+            ->from('auction_log')
+            ->where('act_id = '.$auction['act_id'])
+            ->group('bid_user')->scalar();
+
+        $auction['formated_start_time'] = local_date($GLOBALS['_CFG']['time_format'], $auction['start_time']);
+        $auction['formated_end_time']   = local_date($GLOBALS['_CFG']['time_format'], $auction['end_time']);
+        $auction['formated_start_price'] = price_format($auction['start_price']);
+        $auction['formated_end_price'] = price_format($auction['end_price']);
+        $auction['formated_deposit'] = price_format($auction['deposit']);
+        $auction['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+        $auction['url'] = build_uri('auction', array('auid'=>$auction['act_id']));
+
+        if($auction['status_no'] < 2)
+        {
+            $auction_list['under_way'][] = $auction;
+        }
+        else
+        {
+            $auction_list['finished'][] = $auction;
+        }
+    }
+
+    $auction_list = @array_merge($auction_list['under_way'], $auction_list['finished']);
+
+    return $auction_list;
 }
 ?>

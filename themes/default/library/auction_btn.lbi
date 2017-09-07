@@ -1,6 +1,17 @@
 {if $auction.is_finished==1}
-    <div class="col-xs-12 x-nobuy">
-        <a href="#" class="">竞拍已结束</a>
+
+
+    <div class="col-xs-7 x-paddr">
+        {if $auction.last_bid.formated_bid_price }
+        <span>当前叫价：</span>
+        <span>{$auction.last_bid.formated_bid_price}</span>
+        {else}
+        <span>暂无报价</span>
+        {/if}
+
+    </div>
+    <div class="col-xs-5 x-addbuy" style="background: #999">
+        <a href="javascript:;" class="">竞拍已结束</a>
     </div>
 {else}
 

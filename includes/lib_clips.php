@@ -100,7 +100,9 @@ function get_auction_goods($user_id, $num = 10, $start = 0, $status=null)
                     g.shop_price AS org_price,
                     g.promote_price,
                     g.promote_start_date,
-                    g.promote_end_date
+                    g.promote_end_date,
+                    act.is_finished,
+                    act.end_time
                      
                 FROM
                     {$GLOBALS['ecs']->table('auction_log')} AS log
@@ -136,6 +138,7 @@ STD;
         $goods_list[$row['goods_id']]['market_price']  = price_format($row['market_price']);
         $goods_list[$row['goods_id']]['shop_price']    = price_format($row['shop_price']);
         $goods_list[$row['goods_id']]['promote_price'] = ($promote_price > 0) ? price_format($promote_price) : '';
+        $goods_list[$row['goods_id']]['is_finished'] = $row['is_finished']==1 || $row['end_time']<time() ? 1 : 0;
         $goods_list[$row['goods_id']]['url']           = build_uri('auction', array('act_id'=>$row['act_id'],'act'=>'auction_detail'), $row['goods_name']);
     }
 

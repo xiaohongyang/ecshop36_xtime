@@ -25,10 +25,16 @@
                     <a href="{$goods.url}">
                         <p class="collection-left">{$goods.goods_name}</p>
                     </a>
-                    
                    <!-- <p class="collection-right del">
                         <img src="themes/default/img/29.png" alt="" >
                     </p>-->
+                </div>
+                <div class="status">
+                    {if $goods.is_finished}
+                        <p class='finished-1'>竞拍已结束</p>
+                    {else}
+                        <p class='finished-0'>竞拍进行中...</p>
+                    {/if}
                 </div>
             </div>
             {/foreach}

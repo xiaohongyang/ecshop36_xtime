@@ -5,7 +5,7 @@
             <div class="x-headjt" onclick="javascrpt:window.location.href=history.back()">
                 <img src="themes/default/img/jt.png" alt="">
             </div>
-            <div class="x-headax x-headaxhui addCollect" data-goods="{$goods.goods_id}">
+            <div class="x-headax x-headaxhui addCollect" data-goods="{$auction.goods_id}">
             </div>
             <div class="goods-gallery">
                 <!-- #BeginLibraryItem "/library/goods_gallery.lbi" --><!-- #EndLibraryItem -->
@@ -76,7 +76,7 @@
                 Dialog.tip(data.msg);
             });
         });
-        $.getJSON('user.php?act=has_collect&id={$goods.goods_id}', function (data) {
+        $.getJSON('user.php?act=has_collect&id={$auction.goods_id}', function (data) {
             if (data.code == 0) {
                 $(".addCollect").removeClass('x-headaxhui');
             }

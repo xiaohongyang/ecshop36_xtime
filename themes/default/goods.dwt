@@ -1,9 +1,5 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
-            333
-            {if $goods_auction_info}
-                {$goods_auction_info.is_finished}
-               <a href="/auction.php?act=view&id={$goods_auction_info.act_id}" class="addCart"  data-for=".selected-attr"><span class="shoop addCart" >正在竞拍</span></a>
-            {/if}4444
+
 <div class="x-around">
     <div class="x-head" style="background:#FEFFFF">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -45,6 +41,16 @@
                 <button class="btn x-btn1">{$words}</button>
                 <!-- {/foreach} -->
             </div>
+
+                    {if $goods_auction_info  && $goods_auction_info.is_finished==0}
+                        <div class=" row x-row row-btn-jp">
+                            <div class="col-xs-5 x-addbuy">
+                                <a href="/auction.php?act=view&id={$goods_auction_info.act_id}" class="btn-jp"  data-for=".selected-attr"><span class="shoop addCart" >正在竞拍</span></a>
+                            </div>
+                        </div>
+                    {/if}
+
+
         </div>
         <div class="x-main">
             {if $goods.promote_end_date}

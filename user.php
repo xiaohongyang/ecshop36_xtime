@@ -1443,16 +1443,37 @@ elseif ($action == 'collection_list')
 elseif ($action == 'user_auction')
 {
     include_once(ROOT_PATH . 'includes/lib_clips.php');
+    $fiddle = $_REQUEST['fiddle'];
 
     $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
 
-    $sql = "SELECT COUNT(*) FROM " .$ecs->table('collect_goods').
-        " WHERE user_id='$user_id' ORDER BY add_time DESC";
+    $time = time();
+    if(!$fiddle) {
+        $whereFiddle = "";
+    } else if($fiddle==1){
+        $whereFiddle = " and ( a.is_finished=0 and a.end_time > '$time' ) ";
+    } else {
+        $whereFiddle = " and ( a.is_finished=1 or a.end_time <= '$time' ) ";
+    }
+
+    $sql = "SELECT
+                count(distinct(log.act_id))
+            FROM
+                {$GLOBALS['ecs']->table('collect_goods')}  g
+            join {$GLOBALS['ecs']->table('goods_activity')}  a on g.goods_id=a.goods_id
+            join {$GLOBALS['ecs']->table('auction_log')} AS log on log.act_id = a.act_id
+             
+            WHERE
+                log.bid_user  = '{$user_id}' {$whereFiddle}
+								 
+            ORDER BY
+                g.add_time DESC";
+
     $record_count = $db->getOne($sql);
 
     $pager = get_pager('user.php', array('act' => $action), $record_count, $page);
     $smarty->assign('pager', $pager);
-    $smarty->assign('goods_list', get_auction_goods($user_id, $pager['size'], $pager['start']));
+    $smarty->assign('goods_list', get_auction_goods($user_id, $pager['size'], $pager['start'],  $fiddle));
     $smarty->assign('url',        $ecs->url());
     $lang_list = array(
         'UTF8'   => $_LANG['charset']['utf8'],
@@ -1462,6 +1483,7 @@ elseif ($action == 'user_auction')
     $smarty->assign('page_title', '我的竞拍');
     $smarty->assign('lang_list',  $lang_list);
     $smarty->assign('user_id',  $user_id);
+    $smarty->assign('fiddle', $fiddle);
     $smarty->display('user_auction.dwt');
 }
 

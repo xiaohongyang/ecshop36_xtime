@@ -1,7 +1,17 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <div class="box">
+
+    <div class="zhekouzhe zhekou1">
+        <ul class="zhekou ">
+            <li><a href="user.php?act=user_auction&"{if !$fiddle} class="current"{/if}>全部竞拍</a></li>
+            <li><a href="user.php?act=user_auction&fiddle=1"{if $fiddle==1} class="current"{/if}>进行中</a></li>
+            <li><a href="user.php?act=user_auction&fiddle=2"{if $fiddle==2} class="current"{/if}>已结束</a></li>
+        </ul>
+    </div>
+
     <div class="content" >
-        <!-- #BeginLibraryItem "/library/page_title.lbi" --><!-- #EndLibraryItem -->
+        <h4 class="confirmhead"><a href="user.php"><img src="/themes/default/img/10.png" width="10px" /></a>我的竞拍<a href="javascript:;" class="right fenlei"><img src="/themes/default/img/fenlei1.png" alt=""></a></h4>
+
         <div class="collection-list">
             {foreach from=$goods_list item=goods}
             <div class="collection-thing"  data-id="{$goods.rec_id}">
@@ -40,5 +50,15 @@
             });
         });
     });
+</script>
+<script>
+$(document).ready(function() {
+    $(".fenlei").click(function() {
+        $(".zhekouzhe").toggle();
+    });
+    $(".zhekouzhe").click(function() {
+        $(".zhekouzhe").hide();
+    });
+});
 </script>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

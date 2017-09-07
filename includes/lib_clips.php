@@ -74,11 +74,22 @@ function get_collection_goods($user_id, $num = 10, $start = 0)
  * @param   int     $user_id        用户ID
  * @param   int     $num            列表最大数量
  * @param   int     $start          列表其实位置
+ * @param   int     $status         状态
  *
  * @return  array   $arr
  */
-function get_auction_goods($user_id, $num = 10, $start = 0)
+function get_auction_goods($user_id, $num = 10, $start = 0, $status=null)
 {
+
+    $time = time();
+    if(is_null($status) || !$status){
+        $whereStatus = "";
+    } else if($status==1){
+        $whereStatus = " and (act.is_finished=0 and act.end_time > '{$time}' ) ";
+    } else {
+        $whereStatus = " and (act.is_finished=1 or act.end_time <= '{$time}' ) ";
+    }
+
     $sql = <<<STD
                 SELECT
                     distinct(log.act_id), 
@@ -97,7 +108,7 @@ function get_auction_goods($user_id, $num = 10, $start = 0)
                 JOIN {$GLOBALS['ecs']->table('goods')} AS g ON g.goods_id = act.goods_id
                 
                 WHERE
-                    log.bid_user = '{$user_id}'
+                    log.bid_user = '{$user_id}' {$whereStatus}
                 
                 ORDER BY
                     log.act_id desc

@@ -181,7 +181,8 @@ elseif ($_REQUEST['act'] == 'log') {
     $smarty->assign('goods', $goods);
     $smarty->assign('auction', $auction);
     $isMine = isset($_GET['my']);
-    $smarty->assign('auction_log', auction_log($id, !$isMine));
+    $userId = $isMine && $_SESSION['user_id'] ? $_SESSION['user_id'] : null;
+    $smarty->assign('auction_log', auction_log($id, $userId));
     $smarty->assign('isMine', $isMine);
     $smarty->assign('user_id', $_SESSION['user_id']);
     $smarty->display('auction_log.dwt', $cache_id);

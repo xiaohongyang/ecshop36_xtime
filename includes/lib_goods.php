@@ -1249,20 +1249,23 @@ function auction_info($act_id, $config = false)
  * @param   int     $act_id     活动id
  * @return  array
  */
-function auction_log($act_id)
+function auction_log($act_id, $userId = null)
 {
+
+    $userWhere = is_null($userId) ?  "" : " and u.user_id={$userId}  ";
     $log = array();
-    $sql = "SELECT a.*, u.user_name " .
+    $sql = "SELECT a.*, u.user_name , u.avatar " .
             "FROM " . $GLOBALS['ecs']->table('auction_log') . " AS a," .
                       $GLOBALS['ecs']->table('users') . " AS u " .
             "WHERE a.bid_user = u.user_id " .
-            "AND act_id = '$act_id' " .
+            "AND act_id = '$act_id' {$userWhere}  " .
             "ORDER BY a.log_id DESC";
     $res = $GLOBALS['db']->query($sql);
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
         $row['bid_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['bid_time']);
         $row['formated_bid_price'] = price_format($row['bid_price'], false);
+        $row['avatar'] = picsrc($row['avatar']);
         $log[] = $row;
     }
 

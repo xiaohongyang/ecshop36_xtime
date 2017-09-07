@@ -7,17 +7,22 @@
                 <img src="/themes/default/img/22.png" alt="">
             </div>
             <div class="x-right">
-                <p>{$goods.goods_name}</p>
+                <p>{$auction.goods_name}</p>
                 <p class="x-ccc">最低加价幅度：{$auction.formated_amplitude}</p>
                 <p>当前叫价：<span class="x-purple">{$auction.formated_current_price}</span></p>
             </div>
         </div>
         <div class="x-recoredbody">
             {foreach from=$auction_log item=log}
+            <div class='clear-fix' style='clear:both'></div>
             <div class="x-recoredtext">
                 <div class="x-left">
                     <div class="x-left x-recoredimg">
-                        <img src="/themes/default/img/16.png" alt="">
+                        {if $log.avatar}
+                            <img src="{$log.avatar}" alt="" style='width:48px; height:48px;'>
+                        {else}
+                            <img src="/themes/default/img/16.png" alt="">
+                        {/if}
                     </div>
                     <div class="x-left">
                         <p>{$log.user_name}

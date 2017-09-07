@@ -1,4 +1,9 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+            333
+            {if $goods_auction_info}
+                {$goods_auction_info.is_finished}
+               <a href="/auction.php?act=view&id={$goods_auction_info.act_id}" class="addCart"  data-for=".selected-attr"><span class="shoop addCart" >正在竞拍</span></a>
+            {/if}4444
 <div class="x-around">
     <div class="x-head" style="background:#FEFFFF">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -82,6 +87,8 @@
                 <span class="x-cshop">购物车</span>
                 <span class="x-number">{insert name='cart_info'}</span>
             </div>
+
+
             <div class="col-xs-5 x-addshop">
                 <a href="javascript:;" class="addCart" data-id="{$goods.goods_id}" data-for=".selected-attr">加入购物车</a>
             </div>

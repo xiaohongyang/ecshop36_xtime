@@ -273,6 +273,21 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
         $package_goods_list = get_package_goods_list($goods['goods_id']);
         $smarty->assign('package_goods_list',$package_goods_list);    // 获取关联礼包
 
+        $auctionList = auction_list();
+        $auctionGoods = [];
+        if(is_array($auctionList) && count($auctionList)) {
+            foreach ($auctionList as $auction) {
+                $auctionGoods[$auction['goods_id']] = $auction;
+            }
+        }
+        if(key_exists( $goods['goods_id'], $auctionGoods)){
+            $goods['goods_auction_info'] = $auctionGoods[$goods['goods_id']];
+            if($goods['goods_auction_info']['end_time'] < time()){
+                $goods['goods_auction_info']['is_finished'] = 1;
+            }
+            $smarty->assign('goods_auction_info', $goods['goods_auction_info']);
+        }
+
         assign_dynamic('goods');
         $volume_price_list = get_volume_price_list($goods['goods_id'], '1');
         $smarty->assign('volume_price_list',$volume_price_list);    // 商品优惠价格区间
@@ -661,4 +676,52 @@ function get_package_goods_list($goods_id)
     return $res;
 }
 
+
+function auction_list()
+{
+    $auction_list = array();
+    $auction_list['finished'] = $auction_list['finished'] = array();
+
+    $now = gmtime();
+    $sql = "SELECT a.*, IFNULL(g.goods_thumb, '') AS goods_thumb " .
+        "FROM " . $GLOBALS['ecs']->table('goods_activity') . " AS a " .
+        "LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS g ON a.goods_id = g.goods_id " .
+        "WHERE a.act_type = '" . GAT_AUCTION . "' " .
+        " AND a.is_finished < 2 ORDER BY a.act_id DESC";
+    $res = \zd\Sql::create($sql)->query();
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        $ext_info = unserialize($row['ext_info']);
+        $auction = array_merge($row, $ext_info);
+        $auction['status_no'] = auction_status($auction);
+        $auction['current_price'] = \zd\Sql::create()->select('Max(bid_price) as price')
+            ->from('auction_log')
+            ->where('act_id = '.$auction['act_id'])->scalar();
+        $auction['user_count'] = \zd\Sql::create()->select('count(bid_user) as count')
+            ->from('auction_log')
+            ->where('act_id = '.$auction['act_id'])
+            ->group('bid_user')->scalar();
+
+        $auction['formated_start_time'] = local_date($GLOBALS['_CFG']['time_format'], $auction['start_time']);
+        $auction['formated_end_time']   = local_date($GLOBALS['_CFG']['time_format'], $auction['end_time']);
+        $auction['formated_start_price'] = price_format($auction['start_price']);
+        $auction['formated_end_price'] = price_format($auction['end_price']);
+        $auction['formated_deposit'] = price_format($auction['deposit']);
+        $auction['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+        $auction['url'] = build_uri('auction', array('auid'=>$auction['act_id']));
+
+        if($auction['status_no'] < 2)
+        {
+            $auction_list['under_way'][] = $auction;
+        }
+        else
+        {
+            $auction_list['finished'][] = $auction;
+        }
+    }
+
+    $auction_list = @array_merge($auction_list['under_way'], $auction_list['finished']);
+
+    return $auction_list;
+}
 ?>

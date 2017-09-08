@@ -19,6 +19,7 @@
       <script src="/js/jquery.touchSwipe.min.js"></script>
     <script src="/js/jquery.dialog.min.js"></script>
     <script src="/js/jquery.slider.min.js"></script>
+    <script src="/js/jquery.slider_new.min.js"></script>
     <script src="/themes/default/js/main.js"></script>
 </head>
 <body>

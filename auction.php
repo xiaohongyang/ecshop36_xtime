@@ -176,6 +176,7 @@ elseif ($_REQUEST['act'] == 'log') {
         ecs_header("Location: ./\n");
         exit;
     }
+    $goods_id = $auction['goods_id'];
     $cache_id = $id;
     $goods = goods_info($goods_id);
     $smarty->assign('goods', $goods);

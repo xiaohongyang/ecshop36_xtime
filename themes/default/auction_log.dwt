@@ -4,7 +4,7 @@
         <h4 class="confirmhead"><a href="javascript:history.back();"><img src="/themes/default/img/10.png" width="10px" /></a>商品竞拍记录<a href="javascript:;" class="right fenlei"><img src="/themes/default/img/fenlei1.png" alt=""></a></h4>
         <div class="x-recoredmian">
             <div class="x-left">
-                <img src="/themes/default/img/22.png" alt="">
+                <img src="{$goods.goods_thumb }" alt="" style='width:194px; height: 194px;'>
             </div>
             <div class="x-right">
                 <p>{$auction.goods_name}</p>

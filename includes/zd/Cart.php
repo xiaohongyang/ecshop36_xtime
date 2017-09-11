@@ -593,6 +593,10 @@ class Cart {
                 {
                     $goods_storage=$goods['goods_number'];
                 }
+
+                if($num > 99) {
+                    Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
+                }
                 if ($GLOBALS['_CFG']['use_storage'] == 0 || $num <= $goods_storage)
                 {
                     $goods_price = get_final_price($goods_id, $num, true, $spec);
@@ -626,5 +630,16 @@ class Cart {
             . $GLOBALS['ecs']->table('cart') . " WHERE session_id = '" . SESS_ID . "' AND is_gift <> 0";
         $GLOBALS['db']->query($sql);
         return $rec_id;
+    }
+
+    public static  function getCartNumber($goods_id, $spec) {
+        $sql = "select goods_number from " . $GLOBALS['ecs']->table('cart') . " 
+            WHERE session_id = '" .SESS_ID. "' AND goods_id = '$goods_id' ".
+            " AND parent_id = 0 AND goods_attr = '" .get_goods_attr_info($spec). "' " .
+            " AND extension_code <> 'package_buy' " .
+            "AND rec_type = 'CART_GENERAL_GOODS'";
+
+        $result = $GLOBALS['db']->getOne($sql);
+        return $result;
     }
 }

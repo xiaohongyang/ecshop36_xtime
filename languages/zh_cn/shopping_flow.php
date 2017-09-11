@@ -33,6 +33,7 @@ $_LANG['goods_not_exists'] = '对不起，指定的商品不存在';
 $_LANG['drop_goods_confirm'] = '您确实要把该商品移出购物车吗？';
 $_LANG['goods_number_not_int'] = '请您输入正确的商品数量。';
 $_LANG['stock_insufficiency'] = '非常抱歉，您选择的商品 %s 的库存数量只有 %d，您最多只能购买 %d 件。';
+$_LANG['cart_limit_99'] = '购物车最多只可以放99个商品。';
 $_LANG['package_stock_insufficiency'] = '非常抱歉，您选择的超值礼包数量已经超出库存。请您减少购买量或联系商家。';
 $_LANG['shopping_flow'] = '购物流程';
 $_LANG['username_exists'] = '您输入的用户名已存在，请换一个试试。';

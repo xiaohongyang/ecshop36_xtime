@@ -1918,28 +1918,36 @@ elseif ($_REQUEST['step'] == 'update_cart')
 
 }
 //立即购买
-elseif ($_REQUEST['step'] == 'add_goods' && $_REQUEST['flow_type'] == 'buy_now') {
-    $goods_id = intval($_GET['goods_id']);
-    $num = intval(Helper::get('num', 1));
-    $spec = explode(',', Helper::get('spec', ''));
-    $flowType = CART_GENERAL_GOODS;
-    $rec_id = Cart::addToCart($goods_id, $num, $spec,0,$flow_type);
-    if (!empty($rec_id)) {
-        Helper::success($rec_id);
+elseif ($_REQUEST['step'] == 'add_goods' ) {
+
+    if ($_REQUEST['flow_type'] == 'buy_now') {
+        if($num > 99) {
+            Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
+        }
+        $goods_id = intval($_GET['goods_id']);
+        $num = intval(Helper::get('num', 1));
+        $spec = explode(',', Helper::get('spec', ''));
+        $flowType = CART_GENERAL_GOODS;
+        $rec_id = Cart::addToCart($goods_id, $num, $spec,0,$flow_type);
+        if (!empty($rec_id)) {
+            Helper::success($rec_id);
+        }
+        $msg = $err->last_message();
+        Helper::failure(is_array($msg) ? current($msg) : $msg);
+    }  else {
+        if($num > 99) {
+            Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
+        }
+        $goods_id = intval($_GET['goods_id']);
+        $num = intval(Helper::get('num', 1));
+        $spec = explode(',', Helper::get('spec', ''));
+        $rec_id = Cart::addToCart($goods_id, $num, $spec);
+        if (!empty($rec_id)) {
+            Helper::success($rec_id);
+        }
+        $msg = $err->last_message();
+        Helper::failure(is_array($msg) ? current($msg) : $msg);
     }
-    $msg = $err->last_message();
-    Helper::failure(is_array($msg) ? current($msg) : $msg);
-}
-elseif ($_REQUEST['step'] == 'add_goods') {
-    $goods_id = intval($_GET['goods_id']);
-    $num = intval(Helper::get('num', 1));
-    $spec = explode(',', Helper::get('spec', ''));
-    $rec_id = Cart::addToCart($goods_id, $num, $spec);
-    if (!empty($rec_id)) {
-        Helper::success($rec_id);
-    }
-    $msg = $err->last_message();
-    Helper::failure(is_array($msg) ? current($msg) : $msg);
 }
 
 
@@ -2392,8 +2400,7 @@ function flow_update_cart($arr)
                 exit;
             }
             if ($val >= 99) {
-                Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
-                    $row['goods_number'], $row['goods_number'] - $row['warn_number']));
+                Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
                 exit;
             }
             if ($val < 1) {

@@ -209,9 +209,20 @@
             if (num >= $.fn.cart_sku) {
                 $(".cartGoods .number-plus").addClass('disable');
             }
+
+            $('.cartGoods .number').trigger('change')
         });
         $(".cartGoods .close").click(function() {
             $(".cartGoods").hide();
         });
+
+
+
+        $('.cartGoods .number').change(function(){
+            if($(this).val()>99) {
+                Dialog.tip('最多购买数量不能超过99。');
+                $(this).val(99)
+            }
+        })
     });
 </script>

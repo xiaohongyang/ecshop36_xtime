@@ -174,6 +174,8 @@ if (!$smarty->is_cached('goods.dwt', $cache_id))
     /* 获得商品的信息 */
     $goods = get_goods_info($goods_id);
 
+    $goods['shop_price'] = $_SESSION['user_id'] ? $goods['rank_price'] : $goods['shop_price'];
+
     // 价格处理
     $s_price = explode('.', $goods['shop_price']);
 

@@ -60,7 +60,13 @@
                   }, 500);
                   return;
               }
-              Dialog.tip(data.msg);
+              var msg;
+              if(typeof data.msg == 'object' && data.msg.length>0){
+                  msg = data.msg[0]
+              } else {
+                  msg = data.msg;
+              }
+              Dialog.tip(msg);
           });
       });
       $(".closee").click(function() {

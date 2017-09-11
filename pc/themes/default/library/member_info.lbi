@@ -1,5 +1,6 @@
 {if $user_info}
-<img src="{$headpic}"  width="50" height="50" class="avatar"/>{$user_info.user_name}
+
+<img src="{$user_info2.avatar}"  width="50" height="50" class="avatar"/>{$user_info.user_name}
 
 <div class="nicheng">
     <dl>

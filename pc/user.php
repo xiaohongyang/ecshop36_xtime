@@ -631,7 +631,7 @@ class User extends \zd\Controller {
         if (!empty($_SESSION['user_id'])) {
             include_once ROOT_PATH.'includes/lib_order.php';
             $userInfo = $this->userInfo();
-            $this->assign('user_info', $userInfo);
+            $this->assign('user_info2', $userInfo);
             $this->assign('headpic', $userInfo['avatar']);
         } elseif (!in_array(static::$action, $this->notLogin)) {
             $this->invokeAction('login');

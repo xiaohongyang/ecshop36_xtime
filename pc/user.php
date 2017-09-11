@@ -616,13 +616,23 @@ class User extends \zd\Controller {
         return $this->info;
     }
 
+    public static function getUserInfo(){
+        $userInfo = [];
+        if (!empty($_SESSION['user_id'])) {
+            $userInfo = user_info($_SESSION['user_id']);
+        }
+        return $userInfo;
+    }
+
     public function init() {
         global $user;
         $this->assign('action', static::$action);
         $this->user = $user;
         if (!empty($_SESSION['user_id'])) {
             include_once ROOT_PATH.'includes/lib_order.php';
-            $this->assign('user_info', $this->userInfo());
+            $userInfo = $this->userInfo();
+            $this->assign('user_info', $userInfo);
+            $this->assign('headpic', $userInfo['avatar']);
         } elseif (!in_array(static::$action, $this->notLogin)) {
             $this->invokeAction('login');
         }

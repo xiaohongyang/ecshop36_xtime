@@ -11,6 +11,20 @@ use zd\Goods as UserGoods;
 
 class Goods extends \zd\Controller {
 
+    public function init() {
+        global $user;
+        $this->assign('action', static::$action);
+        $this->user = $user;
+        if (!empty($_SESSION['user_id'])) {
+            include_once ROOT_PATH.'includes/lib_order.php';
+            $userInfo = user_info($_SESSION['user_id']);
+            $this->assign('user_info', $userInfo);
+            $this->assign('headpic', $userInfo['avatar']);
+        } elseif (!in_array(static::$action, $this->notLogin)) {
+            $this->invokeAction('login');
+        }
+    }
+
     public function indexAction() {
         $id = intval($this->id);
         $this->hasCache($id . '-' . $_SESSION['user_rank']);

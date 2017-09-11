@@ -38,17 +38,46 @@ class Home extends \zd\Controller {
     }
 
     private function _getGoodsList($sort, $order, $page) {
+        $totalOrderJoin = <<<EOT
+        join
+        (
+        select * from 
+        (
+        SELECT
+            sum(g.goods_number)/0.8 + eg.click_count/0.2  as total_order, g.goods_id
+            
+        FROM
+            {$GLOBALS['ecs']->table('order_goods')} AS g 
+        join {$GLOBALS['ecs']->table('goods')} as eg on g.goods_id = eg.goods_id
+        join {$GLOBALS['ecs']->table('order_info')} AS o on o.order_id = g.order_id AND o.order_status = 5
+         
+        GROUP BY g.goods_id
+        ) total_table
+        ) total_table
+         
+         on g.goods_id = total_table.goods_id
+EOT;
+       
+
         $res = Sql::create()->select('g.goods_id,g.goods_brief,  g.goods_name, g.market_price, g.is_vip, g.add_time, g.click_count, g.shop_price AS org_price',
             "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price",
-            'g.promote_price, promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img')
+            'g.promote_price, promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, total_table.total_order')
             ->from('goods g')
+            ->addSql($totalOrderJoin)
             ->left('member_price mp', "mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]'")
             ->where('g.is_on_sale = 1')
             ->andWhere('g.is_alone_sale = 1')
             ->andWhere('g.is_delete = 0')
             ->when(!empty($sort), function (Sql $sql) use ($sort, $order) {
-                $sql->order(sprintf('g.%s %s', $sort, $order));
+                if($sort != 'total_order') {
+
+                    $sql->order(sprintf('g.%s %s', $sort, $order));
+                } else {
+                    $sql->order(sprintf('total_table.%s %s', $sort, $order));
+                }
             })->limit(($page - 1) * 20, 20)->all();
+
+
 
         $goods = array();
         foreach ($res as $idx => $row) {

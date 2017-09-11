@@ -41,8 +41,13 @@
     <div class="contents">
         <h1 class="title"><img src="themes/default/img/9.png" /></h1>
         <div class="screen">
-             <div>
-                <a href="javascript:;">综合</a>
+             <div class="sort-btn 
+            {if $sort eq 'total_order' && $order eq 'asc'} sort-asc {/if}
+            {if $sort eq 'total_order' && $order eq 'desc'} sort-desc {/if}
+            ">
+                <a href="javascript:;" data-sort-column="total_order">综合</a>
+                <i class="asc-btn"></i>
+                <i class="desc-btn"></i>
             </div>
             <div class="sort-btn 
             {if $sort eq 'price' && $order eq 'asc'} sort-asc {/if}

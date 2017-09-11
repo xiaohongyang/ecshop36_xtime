@@ -2411,7 +2411,7 @@ function flow_update_cart($arr)
                 if ($product_number < $val)
                 {
                     Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
-                        $product_number['product_number'], $product_number['product_number']));
+                        $product_number, $product_number));
                     exit;
                 }
                 if ($val > 99)

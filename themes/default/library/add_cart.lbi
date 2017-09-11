@@ -29,13 +29,13 @@
         var goods_id = 0;
         var is_buy = false;
         var showAttrEle = null;
-        var sku = 1;
+        $.fn.cart_sku = 1;
         var showGoods = function(goods) {
             $(".cartGoods .thumb").attr("src", goods.goods_thumb);
             //$(".cartGoods .title").html(goods.goods_name);
             $(".cartGoods .price").html(goods.shop_price);
-            sku = goods.goods_number;
-             $(".cartGoods .stock").html(sku);
+            $.fn.cart_sku = goods.goods_number;
+             $(".cartGoods .stock").html($.fn.cart_sku);
             var html = '';
             $.each(goods.properties, function(i, item) {
                 var h = '';
@@ -49,7 +49,7 @@
             $(".cartGoods .spec").html(html);
             $(".cartGoods .number").val(1);
             $(".cartGoods .number-minus").addClass('disable');
-            if (sku < 2) {
+            if ($.fn.cart_sku < 2) {
                 $(".cartGoods .number-plus").addClass('disable');
             } else {
                 $(".cartGoods .number-plus").removeClass('disable');
@@ -94,20 +94,20 @@
             attr.join(',') + '&number=' + qty, function (data) {
                 if (data.err_msg == '') {
                     $(".cartGoods .price").html(data.result);
-                    var sku = data.product_number;
-                    $('#product_number').val(sku)
-                    $(".cartGoods .stock").html(sku);
+                    $.fn.cart_sku = data.product_number;
+                    $('#product_number').val($.fn.cart_sku)
+                    $(".cartGoods .stock").html($.fn.cart_sku);
 
                     /*
-                    if($('.number-group .txt').val() > sku){
-                        $('.number-group .txt').val(sku);
+                    if($('.number-group .txt').val() > $.fn.cart_sku){
+                        $('.number-group .txt').val($.fn.cart_sku);
                     }
                     if($('.number-group .txt').val() == 0){
                         $('.number-group .txt').val(1);
                     }
                     */
 
-                    if (sku < 2) {
+                    if ($.fn.cart_sku < 2) {
                         $(".cartGoods .kucun").addClass('disable');
                     } else {
                         $(".cartGoods .kucun").removeClass('disable');
@@ -172,21 +172,21 @@
                 $(".cartGoods .number-minus").addClass('disable');
             }
             $(".cartGoods .number").val(num);
-            if (num < sku) {
+            if (num < $.fn.cart_sku) {
                 $(".cartGoods .number-plus").removeClass('disable');
             }
         });
         $(".cartGoods .number").blur(function() {
             var num = parseInt($(".cartGoods .number").val());
-            if (num > sku) {
-                num = sku;
+            if (num > $.fn.cart_sku) {
+                num = $.fn.cart_sku;
                 //Dialog.tip('输入的数量超过了库存数');
             }
             if (num < 1) {
                 num = 1;
             }
             //$(".cartGoods .number").val(num);
-            if (num >= sku) {
+            if (num >= $.fn.cart_sku) {
                 $(".cartGoods .number-plus").addClass('disable');
             } else {
                 $(".cartGoods .number-plus").removeClass('disable');
@@ -200,13 +200,13 @@
         $(".cartGoods .number-plus").click(function() {
             var num = parseInt($(".cartGoods .number").val());
             num ++;
-            if (num > sku) {
+            if (num > $.fn.cart_sku) {
                 Dialog.tip('不能再添加数量了哦');
                 return;
             }
             $(".cartGoods .number-minus").removeClass('disable');
             $(".cartGoods .number").val(num);
-            if (num >= sku) {
+            if (num >= $.fn.cart_sku) {
                 $(".cartGoods .number-plus").addClass('disable');
             }
         });

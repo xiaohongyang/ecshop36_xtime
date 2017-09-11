@@ -107,6 +107,13 @@
     <!-- #BeginLibraryItem "/library/page_menu.lbi" --><!-- #EndLibraryItem -->
 
 </div><!--box-->
-
+<script>
+$(document).ready(function () {
+        var silder = $(".slider").slider({
+          width: 1,
+          height: 200
+      });
+});
+</script>
 
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

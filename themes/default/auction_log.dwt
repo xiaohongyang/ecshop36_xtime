@@ -1,10 +1,10 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
 <div class="box">
-    <div class="content" style="margin-bottom:100px;background-color:#f8f8f8;">
+    <div class="content" style="background-color:#f8f8f8;">
         <h4 class="confirmhead"><a href="javascript:history.back();"><img src="/themes/default/img/10.png" width="10px" /></a>商品竞拍记录<a href="javascript:;" class="right fenlei"><img src="/themes/default/img/fenlei1.png" alt=""></a></h4>
         <div class="x-recoredmian">
             <div class="x-left">
-                <img src="{$goods.goods_thumb }" alt="" style='width:194px; height: 194px;'>
+                <img src="{$goods.goods_thumb }" alt="">
             </div>
             <div class="x-right">
                 <p>{$auction.goods_name}</p>
@@ -19,7 +19,7 @@
                 <div class="x-left">
                     <div class="x-left x-recoredimg">
                         {if $log.avatar}
-                            <img src="{$log.avatar}" alt="" style='width:48px; height:48px;'>
+                            <img src="{$log.avatar}" alt="" style='width:48px; height:48px;border-radius:50%;'>
                         {else}
                             <img src="/themes/default/img/16.png" alt="">
                         {/if}

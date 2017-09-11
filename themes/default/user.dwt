@@ -2,7 +2,7 @@
 <div class="box">
     <div class="content">
         <dl class="memberindex">
-            <dt><img src="{$info.avatar}" width="100%" /></dt>
+            <dt><img src="{$info.avatar}" width="100%" height="100%" /></dt>
             <dd>
                 <a href="user.php?act=profile">
                     <span>{$info.nick_name}</span>

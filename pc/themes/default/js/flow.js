@@ -12,6 +12,12 @@ function getSelectedAttributes(ele) {
 };
 
 $(document).ready(function () {
+
+    $('body').on('keyup','.number-box .number',function(){
+        var value = $(this).val()
+        $(this).val(value.replace(/\D/g,''))
+    })
+
     var showCartCount = function () {
         if ($("#cartCount").length < 1) {
             return;

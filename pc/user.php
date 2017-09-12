@@ -33,6 +33,7 @@ class User extends \zd\Controller {
     protected $notLogin = ['login', 'register', 'find_password','getPassword','account_add'];
 
     public function loginAction() {
+        $this->renderHelper();
         $page_title = '登录';
         $this->show('/login', compact('page_title'));
     }
@@ -636,6 +637,8 @@ class User extends \zd\Controller {
         } elseif (!in_array(static::$action, $this->notLogin)) {
             $this->invokeAction('login');
         }
+
+        $this->renderHelper();
     }
 
     /**

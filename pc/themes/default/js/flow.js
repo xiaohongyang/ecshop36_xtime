@@ -99,6 +99,10 @@ $(document).ready(function () {
          $.getJSON('user.php?act=collect&id=' + ele.attr('data-goods'), function (data) {
             if (data.code == 0) {
                 Dialog.tip(data.data || '收藏成功！');
+                //已收藏
+                $('img.collected_1').show()
+                $('img.collected_0').hide()
+                $(".collecting span").text(parseInt( $(".collecting span").text() ) + 1);
                 return;
             }
             Dialog.tip(data.msg);

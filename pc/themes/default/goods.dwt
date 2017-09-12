@@ -25,7 +25,8 @@
                     {/if}
                 </p>
                 <div class="xing collecting addCollect" data-goods="{$goods.goods_id}">
-                    <img src="themes/default/img/product6.png" />
+                    <img src="themes/default/img/product6.png"  class='collected_1' />
+                    <img src="themes/default/img/star-noactive.png"  class='collected_0' />
                     <span>0</span>
                 </div>
             </div>
@@ -128,6 +129,14 @@
             $.getJSON('goods.php?act=collect_count&id={$id}', function(data) {
                 if (data.code != 0) {
                     return;
+                } else if(data.data.collected){
+                    //已收藏
+                    $('img.collected_1').show()
+                    $('img.collected_0').hide()
+                } else{
+                    //未收藏
+                    $('img.collected_0').show()
+                    $('img.collected_1').hide()
                 }
                 $(".collecting span").text(data.data.count);
             });

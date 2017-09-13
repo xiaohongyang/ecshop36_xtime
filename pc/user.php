@@ -364,6 +364,40 @@ class User extends \zd\Controller {
         $this->show(compact('page_title', 'helps', 'order_list', 'total', 'search', 'status'));
     }
 
+    public function removeOrderAction(){
+
+        $order_id = intval($_REQUEST['id']);
+        $userId = $_SESSION['user_id'];
+
+        $dbOrderId = Sql::create()->select('order_id')
+            ->from('order_info')->where('user_id='.$userId)->andWhere('order_id='.$order_id)->scalar();
+        $isUserOrder = $dbOrderId ? true : false;
+
+        if($isUserOrder) {
+            $GLOBALS['db']->query("DELETE FROM ".$GLOBALS['ecs']->table('order_info'). " WHERE order_id = '$order_id'");
+            $GLOBALS['db']->query("DELETE FROM ".$GLOBALS['ecs']->table('order_goods'). " WHERE order_id = '$order_id'");
+            $GLOBALS['db']->query("DELETE FROM ".$GLOBALS['ecs']->table('order_action'). " WHERE order_id = '$order_id'");
+            $action_array = array('delivery', 'back');
+            $this->del_delivery($order_id, $action_array);
+
+            if ($GLOBALS['db'] ->errno() == 0)
+            {
+//            $url = 'order.php?act=query&' . str_replace('act=remove_order', '', $_SERVER['QUERY_STRING']);
+                $url = $_SERVER['HTTP_REFERER'];
+                Helper::success("删除成功");
+            }
+            else
+            {
+//            make_json_error($GLOBALS['db']->errorMsg());
+                Helper::failure("删除失败");
+            }
+        } else {
+            Helper::failure("无权限删除访订单");
+        }
+
+
+    }
+
     public function affirmReceivedAction(){
 
         include_once(ROOT_PATH . 'includes/lib_transaction.php');
@@ -632,6 +666,7 @@ class User extends \zd\Controller {
         if (!empty($_SESSION['user_id'])) {
             include_once ROOT_PATH.'includes/lib_order.php';
             $userInfo = $this->userInfo();
+            $this->assign('user_info', $userInfo);
             $this->assign('user_info2', $userInfo);
             $this->assign('headpic', $userInfo['avatar']);
         } elseif (!in_array(static::$action, $this->notLogin)) {
@@ -669,6 +704,50 @@ class User extends \zd\Controller {
             }
         }
         return $hash;
+    }
+
+
+
+    /**
+     * 删除订单所有相关单子
+     * @param   int     $order_id      订单 id
+     * @param   int     $action_array  操作列表 Array('delivery', 'back', ......)
+     * @return  int     1，成功；0，失败
+     */
+    private function del_delivery($order_id, $action_array)
+    {
+        $return_res = 0;
+
+        if (empty($order_id) || empty($action_array))
+        {
+            return $return_res;
+        }
+
+        $query_delivery = 1;
+        $query_back = 1;
+        if (in_array('delivery', $action_array))
+        {
+            $sql = 'DELETE O, G
+                FROM ' . $GLOBALS['ecs']->table('delivery_order') . ' AS O, ' . $GLOBALS['ecs']->table('delivery_goods') . ' AS G
+                WHERE O.order_id = \'' . $order_id . '\'
+                AND O.delivery_id = G.delivery_id';
+            $query_delivery = $GLOBALS['db']->query($sql, 'SILENT');
+        }
+        if (in_array('back', $action_array))
+        {
+            $sql = 'DELETE O, G
+                FROM ' . $GLOBALS['ecs']->table('back_order') . ' AS O, ' . $GLOBALS['ecs']->table('back_goods') . ' AS G
+                WHERE O.order_id = \'' . $order_id . '\'
+                AND O.back_id = G.back_id';
+            $query_back = $GLOBALS['db']->query($sql, 'SILENT');
+        }
+
+        if ($query_delivery && $query_back)
+        {
+            $return_res = 1;
+        }
+
+        return $return_res;
     }
 }
 User::invoke();

@@ -74,16 +74,20 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'price')
 
 if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'buy') {
     $goods_id = intval(Helper::get('id'));
+
+
     if ($goods_id < 1) {
         Helper::failure('请选择商品');
     }
-    $goods = Sql::create()->select('goods_id, goods_name, goods_number, goods_thumb, shop_price')->from('goods')->where('goods_id='.$goods_id)
+    $goods = Sql::create()->select('goods_id, goods_name, goods_number, goods_thumb, shop_price')
+        ->from('goods')->where('goods_id='.$goods_id)
         ->andWhere('is_delete = 0')
         ->one();
+    $goodsInfo = get_goods_info($goods_id);
     if (empty($goods)) {
         Helper::failure('商品不存在！');
     }
-    $goods['shop_price'] = price_format($goods['shop_price'], false);
+    $goods['shop_price'] = $_SESSION['user_id'] ? $goodsInfo['rank_price'] : $goodsInfo['shop_price'];
     $properties = get_goods_properties($goods_id);
     $goods['properties'] = $properties['spe'];
     Helper::success($goods);

@@ -205,7 +205,7 @@ $(document).ready(function () {
 
     $(".number-box .number-plus").click(function () {
         var $this = $(this);
-        var numberEle = $this.parents('.number-box').find('.number-input');
+            var numberEle = $this.parents('.number-box').find('.number-input');
         var num = parseInt(numberEle.val()) + 1
         var max = numberEle.attr('max');
         if (max) {
@@ -213,8 +213,16 @@ $(document).ready(function () {
                 Dialog.tip('不能大于库存数');
             }
             num = Math.min(num, parseInt(max));
-            num = num == 0 ? 1 : num;
+
+            if(num > 99) {
+                Dialog.tip("数量不能大于99");
+                num = 99;
+            }
         }
+
+
+
+        num = num == 0 ? 1 : num;
         numberEle.val(num);
         numberEle.trigger('change');
     });

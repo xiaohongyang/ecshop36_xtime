@@ -53,7 +53,7 @@
                                         <td>
                                             <input type="checkbox">
                                             <div class="dlkuan">
-                                                <h1><img src="{$goods.goods_thumb}"></h1>
+                                                <h1><img src="{$goods.goods_thumb|picsrc}"></h1>
                                                 <div class="ddkuan">
                                                     <p>{$goods.goods_name}</p>
                                                     <!--<p><span class="hse">规格:</span>S/M;黑色;套装/单买;50*60MM/70*70MM</p>
@@ -75,10 +75,10 @@
                                             <p>+0积分</p>    
                                         </td>
                                         <td>
-                                            <p class="huise">每人限购10件</p>
+                                            <p class="huise">每人限购99件</p>
                                             <p class="jiajian number-box">
                                                 <span class="number-minus">-</span>
-                                                <input type="text" class="number-input" value="{$goods.goods_number}">
+                                                <input type="text" class="number-input" max="{$goods.goods_number}" value="{$goods.goods_number}">
                                                 <span class="number-plus">+</span>
                                                 </p><div class="clear"></div>
                                             <p></p>

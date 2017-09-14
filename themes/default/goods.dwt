@@ -3,7 +3,7 @@
 <div class="x-around">
     <div class="x-head" style="background:#FEFFFF">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <div class="x-headjt" onclick="javascrpt:window.location.href=history.back()">
+            <div class="x-headjt" onclick="javascript:history.go(-1); ">
                 <img src="themes/default/img/jt.png" alt="">
             </div>
             <div class="x-headax x-headaxhui addCollect" data-goods="{$goods.goods_id}">

@@ -2,7 +2,7 @@
 <div class="x-around">
     <div class="x-head" style="background:#FEFFFF">
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <div class="x-headjt" onclick="javascrpt:window.location.href=history.back()">
+            <div class="x-headjt" onclick="javascript:history.go(-1);">
                 <img src="themes/default/img/jt.png" alt="">
             </div>
             <div class="x-headax x-headaxhui addCollect" data-goods="{$auction.goods_id}">
@@ -26,7 +26,7 @@
                     <span class="x-shopuser">当前叫价：{if $auction.last_bid.formated_bid_price }{$auction.last_bid.formated_bid_price} {else} 暂无报价 {/if}</span>
                 </div>
                 <div class="x-right">
-                    <a href="/auction.php?act=log&id=2"><span class="x-rightspan">{$auction.bid_user_count}人叫价<img src="/themes/default/img/jiantou1.png" style='display:none;' alt=""></span></a>
+                    <a href="/auction.php?act=log&id={$auction.act_id}"><span class="x-rightspan">{$auction.bid_user_count}人叫价<img src="/themes/default/img/jiantou1.png" style='display:none;' alt=""></span></a>
                 </div>
 
             </div>

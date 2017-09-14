@@ -87,7 +87,7 @@ if (!empty($_REQUEST['act']) && $_REQUEST['act'] == 'buy') {
     if (empty($goods)) {
         Helper::failure('商品不存在！');
     }
-    $goods['shop_price'] = $_SESSION['user_id'] ? $goodsInfo['rank_price'] : $goodsInfo['shop_price'];
+    $goods['shop_price'] = $_SESSION['user_id'] ? price_format($goodsInfo['rank_price'], false) : price_format($goodsInfo['shop_price'],false);
     $properties = get_goods_properties($goods_id);
     $goods['properties'] = $properties['spe'];
     Helper::success($goods);

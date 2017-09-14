@@ -142,11 +142,16 @@
         $('.remove-order').click(function(){
             var order_id = $(this).attr('data-order-id');
             var url = 'user.php?act=remove_order&id=' + order_id;
+
             $.ajax({
                 url : url,
                 data : {},
-                success :function () {
-                    console.log()
+                dateType : {},
+                success :function (json) {
+                    if(json.status=='success'){
+
+                    }
+                    console.log(json)
                 }
             })
         })

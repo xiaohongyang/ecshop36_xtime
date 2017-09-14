@@ -16,6 +16,7 @@
     <script src="/js/jquery.lazyload.js"></script>
     <script type="text/javascript" src="themes/default/js/jquery.event.drag-1.5.min.js"></script>
     <script type="text/javascript" src="themes/default/js/jquery.touchSlider.js"></script>
+    <script type="text/javascript" src="themes/default/js/common_pc.js"></script>
 
 </head>
 <body>

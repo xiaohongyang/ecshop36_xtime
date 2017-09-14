@@ -66,7 +66,11 @@ $(document).ready(function() {
         }
         $.getJSON('user.php?act=default_address&id=' + address_id, function (data) {
             if (data.code == 0) {
-                window.location.reload();
+                if($('#back_to_order').val()){
+                    window.location.href= $('#back_to_order').val() + '&clear_back_to_order'
+                } else {
+                    window.location.reload();
+                }
                 return;
             }
 
@@ -74,4 +78,7 @@ $(document).ready(function() {
     });
 });
 </script>
+
+<input type='hidden' id='back_to_order' value='{$back_to_order}'  />
+
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

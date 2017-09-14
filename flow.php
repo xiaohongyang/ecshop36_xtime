@@ -444,6 +444,11 @@ elseif ($_REQUEST['step'] == 'checkout')
     //-- 订单确认
     /*------------------------------------------------------ */
 
+    if(key_exists('clear_back_to_order', $_REQUEST)) {
+        $_SESSION['back_to_order'] = '';
+        unset($_SESSION['back_to_order']);
+    }
+
     if ($_REQUEST['flow_type'] == 'buy_now'){
         $smarty->assign('flow_type', $_REQUEST['flow_type']);
     }
@@ -516,6 +521,15 @@ elseif ($_REQUEST['step'] == 'checkout')
     if (!check_consignee_info($consignee, $flow_type))
     {
         /* 如果不完整则转向到收货人信息填写界面 */
+
+        $flowType = "";
+        if(key_exists('flow_type', $_REQUEST)){
+            $flowType = '&flow_type=' . $_REQUEST['flow_type'];
+        }
+
+        $callbackUrl = "flow.php?step=checkout&cart_value={$_REQUEST['cart_value']}{$flowType}";
+
+        $_SESSION['back_to_order'] = $callbackUrl;
         ecs_header("Location: user.php?act=address\n");
         exit;
     }

@@ -146,15 +146,25 @@
             $.ajax({
                 url : url,
                 data : {},
-                dateType : {},
+                dateType : 'json',
                 success :function (json) {
-                    if(json.status=='success'){
 
+                    json = JSON.parse(json);
+                    if(json.code==0){
+                        var obj = $('a[data-order-id='+order_id+']');
+                        var wrap = obj.closest('.dd-details')
+                        wrap.remove();
+                        $.fn.myAlert('删除成功');
+                    } else {
+                        $.fn.myAlert('删除失败');
                     }
                     console.log(json)
                 }
             })
         })
     });
+
 </script>
+
+<input type="hidden" id="back_url" value={$back_url} />
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

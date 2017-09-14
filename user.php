@@ -1329,6 +1329,8 @@ elseif ($action == 'address_list')
     $smarty->assign('page_title', $mode == 'select' ? '收货地址' : '地址管理');
     $smarty->assign('name_of_region',   array($_CFG['name_of_region_1'], $_CFG['name_of_region_2'], $_CFG['name_of_region_3'], $_CFG['name_of_region_4']));
 
+    $smarty->assign('back_to_order', key_exists('back_to_order', $_SESSION) ? $_SESSION['back_to_order'] : false);
+
     $smarty->display('user_address_list.dwt');
 }
 elseif ($action == 'address') {
@@ -1343,6 +1345,8 @@ elseif ($action == 'address') {
         'label' => '保存'
     ]);
     $smarty->assign('referer', $_SERVER['HTTP_REFERER']);
+    $smarty->assign('back_to_order', $_SESSION['back_to_order']);
+
     $smarty->display('user_address.dwt');
 }
 

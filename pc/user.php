@@ -366,9 +366,6 @@ class User extends \zd\Controller {
 
     public function removeOrderAction(){
 
-
-        Helper::failure("删除成功");
-
         $order_id = intval($_REQUEST['id']);
         $userId = $_SESSION['user_id'];
 

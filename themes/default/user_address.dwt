@@ -71,7 +71,9 @@ $(document).ready(function () {
         $.post('user.php?act=act_edit_address', consignee, function (data) {
             if (data.code == 0) {
 
-                if(referer.match(/(goods.php\?id=[\d]*)/) != null){
+
+
+                if(referer.match(/(goods.php\?id=[\d]*)/) != null && !$('#back_to_order').val()){
                     window.location.href = referer
                 } else {
                     window.location.href = 'user.php?act=address_list';
@@ -83,4 +85,6 @@ $(document).ready(function () {
     });
 });
 </script>
+
+<input type=hidden id='back_to_order' value='{$back_to_order}' />
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

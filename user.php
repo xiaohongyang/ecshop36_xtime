@@ -1421,7 +1421,7 @@ elseif ($action == 'collection_list')
     $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
 
     $sql = "SELECT COUNT(*) FROM " .$ecs->table('collect_goods').
-        " WHERE user_id='$user_id' ORDER BY add_time DESC";
+        " WHERE user_id='$user_id' and goods_id >0 ORDER BY add_time DESC";
     $record_count = $db->getOne($sql);
 
     $pager = get_pager('user.php', array('act' => $action), $record_count, $page);

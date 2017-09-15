@@ -49,7 +49,7 @@
                                 <table class="top-table">
                                     <tbody>
                                         {foreach from=$goods_list item=goods}
-                                        <tr data-id="{$goods.rec_id}" class="goods-item">
+                                        <tr data-id="{$goods.rec_id}"  class="goods-item" >
                                         <td>
                                             <input type="checkbox">
                                             <div class="dlkuan">
@@ -495,23 +495,39 @@ $(document).ready(function() {
         });
     });
     $(".check-all [type=checkbox]").click(function () {
+
+        var wrap = $(this).closest('div')
         if ($(this).is(':checked')) {
-            mapGoods(function (goods) {
-                goods.find('[type=checkbox]').prop('checked', true);
-            });
-            $(".check-all input").attr('checked', true);
+
+            wrap.find('div').find('input[type=checkbox]').prop('checked', true);
+
+//            mapGoods(function (goods) {
+//                goods.find('[type=checkbox]').prop('checked', true);
+//            });
+//            $(".check-all input").attr('checked', true);
         } else {
-            $(".check-all input").removeAttr('checked');
+//            $(".check-all input").removeAttr('checked');
+            wrap.find('div').find('input[type=checkbox]').prop('checked', false);
         }
         
         showAmount();
     });
     $(".goods-item [type=checkbox]").click(function () {
         if (!$(this).is(':checked')) {
-            $(".check-all input").removeAttr('checked');
+//            $(".check-all input").removeAttr('checked');
+            $(".check-all [type=checkbox]").prop('checked', false);
         }
         showAmount();
     });
+
+    $('.dibu .check-all input[type=checkbox]').click(function(){
+
+        if($(this).is(':checked'))
+            $(this).closest('.corder-main-main').find('input[type=checkbox]').prop('checked', true);
+        else
+            $(this).closest('.corder-main-main').find('input[type=checkbox]').prop('checked', false);
+    })
+
     $(".checkout").click(function() {
         var url = $(this).attr('href');
         if (!url) {

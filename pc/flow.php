@@ -41,6 +41,16 @@ class Flow extends \zd\Controller {
         Helper::failure($err->last_message()[0]);
     }
 
+    public function dropGoodsAction() {
+        global $err;
+        include_once ROOT_PATH. 'includes/flow.php';
+        $rec_id = intval($this->get('id'));
+        if (flow_drop_cart_goods($rec_id)) {
+            Helper::successMessage('删除成功！');
+        }
+        Helper::failure($err->last_message()[0]);
+    }
+
     public function updateCartAction() {
         global $_LANG;
         if (isset($_POST['goods_number']) && is_array($_POST['goods_number'])) {

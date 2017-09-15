@@ -37,7 +37,7 @@
                             <div class="corder-left"></div>
                             <div class="corder-confirm-addlist corder-undefind">
                                 <div class="corder-left corder-address-dede">
-                                    <span class="caddress-circle"></span>
+                                    <span class="caddress-circle {if $address.address_id==$consignee.address_id} caddress-active {/if}" data-id='{$address.address_id}' ></span>
                                 </div>
                                 <div class="corder-left corder-padr">
                                     <p>
@@ -198,4 +198,14 @@
         </form>
     </div>
 </div>
+
+<script type='text/javascript' >
+    $('body').on('click','.caddress-circle', function(){
+        $('.caddress-active').removeClass('caddress-active');
+        $(this).addClass('caddress-active');
+
+        $('input[name=address_id]').val($('.caddress-active').attr('data-id'))
+    })
+</script>
+
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

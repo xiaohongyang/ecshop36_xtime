@@ -179,7 +179,8 @@ class Flow extends \zd\Controller {
             exit;
         }
 
-        $consignee = get_consignee($_SESSION['user_id']);
+//        $consignee = get_consignee($_SESSION['user_id']);
+        $consignee = get_consignee_by_id($_POST['address_id']);
 
         /* 检查收货人信息是否完整 */
         if (!check_consignee_info($consignee, $flow_type)) {

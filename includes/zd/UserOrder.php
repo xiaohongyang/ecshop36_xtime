@@ -11,7 +11,13 @@ class UserOrder {
     public static function getPage($userId, $search=null, $status=null) {
         $searchWhere = '';
         if(!is_null($search)){
-            $searchWhere = " and (og.goods_name like '%{$search}%' or oi.order_sn like '%{$search}%' ) ";
+            $searchWhere = " and (og.goods_name like '%{$search}%' 
+                or oi.order_sn like '%{$search}%'   
+                OR oi.consignee LIKE '%{$search}%' 
+                OR oi.address LIKE '%{$search}%' 
+                OR oi.tel LIKE '%{$search}%'
+                )
+            ";
         }
         $statusWhere = is_null($status) ? '' : " and oi.order_status = {$status} ";
         if(is_null($status)) {

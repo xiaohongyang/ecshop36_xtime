@@ -1728,6 +1728,28 @@ function get_consignee($user_id)
 }
 
 /**
+ * 取得收货人信息
+ * @param   int     $user_id    用户编号
+ * @return  array
+ */
+function get_consignee_by_id($address_id)
+{
+
+        /* 如果不存在，则取得用户的默认收货人信息 */
+        $arr = array();
+
+        if ($address_id > 0)
+        {
+            /* 取默认地址 */
+            $arr = \zd\Sql::create()->from('user_address')
+                ->where('address_id='.$address_id)
+                ->order('address_id desc')->one();
+        }
+
+        return $arr;
+}
+
+/**
  * 查询购物车（订单id为0）或订单中是否有实体商品
  * @param   int     $order_id   订单id
  * @param   int     $flow_type  购物流程类型

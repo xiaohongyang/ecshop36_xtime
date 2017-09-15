@@ -1357,7 +1357,15 @@ function user_info($user_id)
         $user['nick_name'] = !empty($user['nick_name']) ? $user['nick_name'] : $user['user_name'];
         $user['formated_user_money'] = price_format($user['user_money'], false);
         $user['formated_frozen_money'] = price_format($user['frozen_money'], false);
+
+        $rank = $GLOBALS['db']->getRow("select rank_name from {$GLOBALS['ecs']->table('user_rank')} WHERE rank_id='{$user['user_rank']}'");
+        $user['rank_name'] = $rank['rank_name'];
+
+//        $_SESSION['discount'] = $rank['discount'];
+//        $_SESSION['user_rank'] = $user['user_rank'];
     }
+
+
 
     return $user;
 }

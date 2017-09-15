@@ -45,20 +45,17 @@
             <div class="huibg">
                 <p class="hui">原价:<span>{$goods.market_price|price}</span></p>
                 <p class="hei">会员折扣价:<span class='price'>
-                    {if $s_price[0]}
-                    {$s_price[0]}.{$s_price[1]}
-                    {else}
-                    {$goods.shop_price|price}
-                    {/if}
+                    {$goods.rank_price}
                 </span></p>
             </div>
             <!-- {* 开始循环所有可选属性 *} -->
             <!-- {foreach from=$specification item=spec key=spec_key} -->
-            <div class="guige spec_li">
+            <div class="guige spec_li" data-attr-name='{$spec.name}'>
                 <p>{$spec.name}</p>
                 <!-- {foreach from=$spec.values item=value key=key} -->
                 <label for="spec_value_{$value.id}">
-                    <input type="radio" class="spec" name="spec_{$spec_key}" value="{$value.id}" id="spec_value_{$value.id}" {if $key eq 0}checked{/if}/>
+                    <input type="radio" class="spec" name="spec_{$spec_key}" value="{$value.id}"
+                    id="spec_value_{$value.id}"   />
                     {$value.label} </label>
                 <!-- {/foreach} -->
                 <div class="clear"></div>
@@ -184,6 +181,8 @@
 
         getCollect();
 
+
+        $('.spec').prop('checked', false);
     });
 
 

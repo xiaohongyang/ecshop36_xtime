@@ -280,6 +280,7 @@ class Helper {
      * @return string
      */
     public static function priceFormat($price) {
+
         $price = number_format($price, 2, '.', '').'';
         $price = explode('.', $price, 2);
         return '<span class="cgoods-money">'

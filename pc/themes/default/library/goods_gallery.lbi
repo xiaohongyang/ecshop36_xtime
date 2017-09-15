@@ -16,7 +16,8 @@
             <div id=spec-list>
                 <ul class=list-h>
                    <!-- {foreach from=$pictures item=picture}-->
-                   <li><a href="javascript:void(0);" data-src="/{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}"><img src="/{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
+                   <li><a href="javascript:void(0);"
+                          data-src="/{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}"><img src="/{if $picture.thumb_url}{$picture.thumb_url}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
                    <!--{/foreach}-->
                 </ul>
             </div>

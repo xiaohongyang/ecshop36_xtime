@@ -49,6 +49,8 @@ $(document).ready(function () {
     });
 
     var addCart = function (data, callback) {
+
+
         if (data.number < 1) {
             Dialog.tip('请输入有效的数量');
             return;
@@ -77,6 +79,22 @@ $(document).ready(function () {
         return data;
     };
     $(".addCart").click(function () {
+
+        var checkAttrSet = true;
+        $('.spec_li').each(function(){
+
+            if($(this).find('.spec:checked').length==0){
+                // $.fn.myAlert('请选择商品属性:' + $(this).attr('data-attr-name'));
+                $.fn.myAlert('请选择商品属性');
+                checkAttrSet = false;
+                return false;
+            }
+        })
+
+        if(!checkAttrSet){
+            return false;
+        }
+
         var dialog = Dialog.loading();
         var $this = $(this);
         addCart(getGoodsAttr($("#goods-box"), $this.attr('data-goods'), 1), function (data) {
@@ -92,6 +110,22 @@ $(document).ready(function () {
     });
 
     $("#buy").click(function () {
+
+        var checkAttrSet = true;
+        $('.spec_li').each(function(){
+
+            if($(this).find('.spec:checked').length==0){
+                // $.fn.myAlert('请选择商品属性:' + $(this).attr('data-attr-name'));
+                $.fn.myAlert('请选择商品属性');
+                checkAttrSet = false;
+                return false;
+            }
+        })
+
+        if(!checkAttrSet){
+            return false;
+        }
+
         addCart(getGoodsAttr($("#goods-box")), function (data) {
             if (data.code == 0) {
                 window.location.href = "flow.php";

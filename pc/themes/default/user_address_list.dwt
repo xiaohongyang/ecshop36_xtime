@@ -54,7 +54,7 @@
 
 <div class="caddress-modal">
     <div class="caddress-modal-cystem">
-        <form id="addGrid" action="user.php?act=save_address" method="post">
+        <form id="addGrid" action="user.php?act=save_address" method="post" onsubmit="return checkForm();">
         <div class="corder-left caddress-modal-left">
             <div class="caddress-modal-first">
                 <div class="caddress-modal-text">
@@ -105,7 +105,7 @@
         </div>
         <input type="hidden" name="address_id" value="">
         <div class="corder-right caddress-modal-right">
-            <button class="saveBtn">&nbsp;+&nbsp;添&nbsp;加</button>
+            <button type="button" class="saveBtn">&nbsp;+&nbsp;添&nbsp;加</button>
             <button type="button" class="corder-close">&nbsp;x&nbsp;取&nbsp;消</button>
         </div>
         </form>
@@ -278,6 +278,34 @@
                 return false;
             }
         });
+
+
     });
+
+    function checkForm(){
+        var tel = $('input[name=tel]').val();
+
+        return false;
+    }
+    $('input[name=tel]').change(function(){
+
+        $(this).val($.trim($(this).val()))
+        var tel = $(this).val()
+        if(!new RegExp(/^\d+$/).test(tel)){
+            $.fn.telErrorMsg = '电话号码只能为数字'
+            console.log($.fn.errorMsg)
+        } else {
+            $.fn.telErrorMsg = false;
+        }
+    })
+
+    $('.saveBtn').click(function(){
+        if($.fn.telErrorMsg){
+            $.fn.myAlert($.fn.telErrorMsg)
+            return false;
+        }
+
+        $(this).closest('form').trigger('submit')
+    })
 </script>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

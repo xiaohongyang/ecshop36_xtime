@@ -78,11 +78,11 @@
                                             <p class="huise">每人限购99件</p>
                                             <p class="jiajian number-box">
                                                 <span class="number-minus">-</span>
-                                                <input type="text" class="number-input" max="{$goods.goods_number}" value="{$goods.goods_number}">
+                                                <input type="text" class="number-input" max="{$goods.goods_number}" value="{$goods.cart_number}">
                                                 <span class="number-plus">+</span>
                                                 </p><div class="clear"></div>
                                             <p></p>
-                                            <p class="hongse">*库存紧张</p>    
+                                            <!--<p class="hongse">*库存紧张</p>-->
                                         </td>
                                         <td>
                                             <p class="amount">{$goods.subtotal|price}</p>

@@ -51,6 +51,8 @@ class Home extends \zd\Controller {
     }
 
     private function _getGoodsList($sort, $order, $page) {
+
+        //踪全排序
         $totalOrderJoin = <<<EOT
         join
         (
@@ -91,6 +93,23 @@ EOT;
             })->limit(($page - 1) * 20, 20)->all();
 
 
+        $sql =  Sql::create()->select('g.goods_id,g.goods_brief,  g.goods_name, g.market_price, g.is_vip, g.add_time, g.click_count, g.shop_price AS org_price',
+            "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price",
+            'g.promote_price, promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, total_table.total_order')
+            ->from('goods g')
+            ->addSql($totalOrderJoin)
+            ->left('member_price mp', "mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]'")
+            ->where('g.is_on_sale = 1')
+            ->andWhere('g.is_alone_sale = 1')
+            ->andWhere('g.is_delete = 0')
+            ->when(!empty($sort), function (Sql $sql) use ($sort, $order) {
+                if($sort != 'total_order') {
+
+                    $sql->order(sprintf('g.%s %s', $sort, $order));
+                } else {
+                    $sql->order(sprintf('total_table.%s %s', $sort, $order));
+                }
+            })->limit(($page - 1) * 20, 20)->sql;
 
         $goods = array();
         foreach ($res as $idx => $row) {
@@ -107,7 +126,8 @@ EOT;
             $goods[$idx]['market_price'] = price_format($row['market_price']);
             $goods[$idx]['short_name']   = $GLOBALS['_CFG']['goods_name_length'] > 0 ?
                 sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
-            $goods[$idx]['shop_price']   = price_format($row['shop_price']);
+//            $goods[$idx]['shop_price']   = price_format($row['shop_price']);
+            $goods[$idx]['shop_price']   = $row['shop_price'];
             $goods[$idx]['goods_thumb'] = $goods[$idx]['thumb']        = get_image_path($row['goods_id'], $row['goods_thumb'], true);
             $goods[$idx]['goods_img']    = get_image_path($row['goods_id'], $row['goods_img']);
             $goods[$idx]['url']          = build_uri('goods', array('gid' => $row['goods_id']), $row['goods_name']);

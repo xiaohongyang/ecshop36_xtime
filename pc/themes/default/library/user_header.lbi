@@ -4,11 +4,11 @@
                     <div class="corder-left corder-member-img">
 
                         <img src="{$user_info.avatar|picsrc}" class="avatar" alt="">
-                        <span class="corder-ssr">SSR</span>
+                        <span class="corder-ssr">{$user_info.rank_name}</span>
                     </div>
                     <div class="corder-left corder-member-info">
                         <span>{$user_info.nick_name}</span>
-                        <span>LV.&nbsp;SSR</span>
+                        <span>LV.&nbsp;{$user_info.rank_name}</span>
                     </div>
                 </div>
                 <div class="corder-right corder-members">

@@ -25,7 +25,11 @@
                             <span class="ornageji">{$goods.shop_price}</span>
                         </p>
                         </a>
-                    </div>
+
+                        <span class="collection-right del" data-id='{$goods.rec_id}' style='display:inline:block; float:right;margin-top: -32px;'>
+                                <img src="/themes/default/img/29.png" alt="">
+                        </span>
+                </div>
                 </div>
                 {/foreach}
 
@@ -42,6 +46,23 @@
         $(".corder-status-releative").click(function(){
             $(".corder-status").toggle();
         });
+
+        $(".del").click(function(){
+            var id = $(this).attr('data-id')
+            var url = "user.php?act=delete_collect&id=" + id
+            var data = {}
+            var t = $(this)
+            $.ajax({
+                url : url,
+                data : data,
+                dataType : 'json',
+                success : function(json){
+                    console.log(json)
+                    $.fn.myAlert('删除成功')
+                    t.closest('.favorite-details').remove()
+                }
+            })
+        })
     });
 </script>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

@@ -1174,7 +1174,7 @@ function group_buy_status($group_buy)
  */
 function auction_info($act_id, $config = false)
 {
-    $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('goods_activity') . " WHERE act_id = '$act_id'";
+    $sql = "SELECT a.*, g.user_rank FROM " . $GLOBALS['ecs']->table('goods_activity') . " as a left join {$GLOBALS['ecs']->table('goods')} as g on a.goods_id=g.goods_id WHERE a.act_id = '$act_id'";
     $auction = $GLOBALS['db']->getRow($sql);
     if ($auction['act_type'] != GAT_AUCTION)
     {
@@ -1241,7 +1241,44 @@ function auction_info($act_id, $config = false)
     $auction['current_price'] = isset($auction['last_bid']) ? $auction['last_bid']['bid_price'] : $auction['start_price'];
     $auction['formated_current_price'] = price_format($auction['current_price'], false);
 
+    require_once(dirname(__FILE__) . '/../admin/includes/lib_goods.php');
+    $rankTmpList = get_user_rank_list();
+    $rank_list = [];
+    foreach ($rankTmpList as $rank) {
+        $rank_list[$rank['rank_id']] = $rank;
+    }
+
+    $rank = [];
+    $tmpRank = $auction['user_rank'];
+    $tmpRank = trim($tmpRank, ',');
+    $tmpRank = explode(',', $tmpRank);
+    if(count($tmpRank)) {
+        foreach ($tmpRank as $rankId) {
+            $rank[] = $rank_list[$rankId];
+        }
+        $auction['user_rank'] = $rank;
+    } else {
+        $auction['user_rank'] = [];
+    }
+
     return $auction;
+}
+
+//判断用户是否有权限
+function have_goods_rights($goodsId, $userId) {
+
+    $result = false;
+    $sql = "SELECT user_rank FROM " . $GLOBALS['ecs']->table('goods') ." where goods_id='{$goodsId}' ";
+    $goodsRank = $GLOBALS['db']->getRow($sql);
+
+    $sql = "SELECT user_rank FROM " . $GLOBALS['ecs']->table('users') ." where user_id='{$userId}' ";
+    $userRank = $GLOBALS['db']->getRow($sql);
+
+    if($goodsRank && $userRank) {
+        $userRank = $userRank['user_rank'].',';
+        $result = $goodsRank['user_rank'] == '' || strpos($goodsRank['user_rank'], $userRank) !== false;
+    }
+    return $result;
 }
 
 /**

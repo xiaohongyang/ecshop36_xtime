@@ -15,8 +15,7 @@
     </div>
 {else}
 
-
-    {if $status eq 1 && !$price}
+    {if $status eq 1 && (!$price || $price<=0)}
     <div class="col-xs-7 x-paddr x-paddr1">
        <span>您还没参与本次竞拍</span>
     </div>

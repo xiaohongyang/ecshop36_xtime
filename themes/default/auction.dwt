@@ -43,7 +43,11 @@
                 <div class="x-gxshop">
                     <div class="x-left">
                         <span class="x-gxyx">竞价权限</span>
-                        <span>SR，SSR</span>
+                        <span>
+                            {foreach from=$auction.user_rank item=rank}
+                                {$rank.rank_name}
+                            {/foreach}
+                        </span>
                     </div>
                     <div class="x-right hide" >
                         <a href="auction.php?act=log&id={$auction.act_id}"><img src="/themes/default/img/yjt.png" alt=""></a>

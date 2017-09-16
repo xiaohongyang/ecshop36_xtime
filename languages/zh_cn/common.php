@@ -449,6 +449,7 @@ $_LANG['button_buy'] = '立即购买';
 $_LANG['au_not_under_way'] = '拍卖活动已结束，不能再出价了';
 $_LANG['au_bid_price_error'] = '请输入正确的价格';
 $_LANG['au_bid_after_login'] = '您只有注册成为会员并且登录之后才能出价';
+$_LANG['au_bid_no_rights'] = '当前用户等级不够,无此商品竞价权限';
 $_LANG['au_bid_repeat_user'] = '您已经是这个商品的最高出价人了';
 $_LANG['au_your_lowest_price'] = '您的出价不能低于 %s';
 $_LANG['au_user_money_short'] = '您的可用资金不足，请先到用户中心充值';

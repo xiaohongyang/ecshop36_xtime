@@ -333,6 +333,10 @@ elseif ($_REQUEST['act'] == 'bid')
     }
     $user = user_info($user_id);
 
+    if (! have_goods_rights($auction['goods_id'], $user_id)) {
+        show_message($_LANG['au_bid_no_rights']);
+    }
+
     if ($auction['last_bid']['bid_user'] == $user_id )
     {
         show_message($_LANG['au_bid_repeat_user'], '', '', 'error');
@@ -599,7 +603,7 @@ function auction_list()
     $auction_list['finished'] = $auction_list['finished'] = array();
 
     $now = gmtime();
-    $sql = "SELECT a.*, IFNULL(g.goods_thumb, '') AS goods_thumb " .
+    $sql = "SELECT a.*, IFNULL(g.goods_thumb, '') AS goods_thumb, g.user_rank " .
             "FROM " . $GLOBALS['ecs']->table('goods_activity') . " AS a " .
                 "LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS g ON a.goods_id = g.goods_id " .
             "WHERE a.act_type = '" . GAT_AUCTION . "' " .
@@ -638,5 +642,27 @@ function auction_list()
 
     $auction_list = @array_merge($auction_list['under_way'], $auction_list['finished']);
 
+    require_once(dirname(__FILE__) . '/admin/includes/lib_goods.php');
+    $rankTmpList = get_user_rank_list();
+    $rank_list = [];
+    foreach ($rankTmpList as $rank) {
+        $rank_list[$rank['rank_id']] = $rank;
+    }
+    if(is_array($auction_list) && count($auction_list)) {
+        foreach ($auction_list as $key=>$auction) {
+            $rank = [];
+            $tmpRank = $auction['user_rank'];
+            $tmpRank = trim($tmpRank, ',');
+            $tmpRank = explode(',', $tmpRank);
+            if(count($tmpRank)) {
+                foreach ($tmpRank as $rankId) {
+                    $rank[] = $rank_list[$rankId];
+                }
+                $auction_list[$key]['user_rank'] = $rank;
+            } else {
+                $auction_list[$key]['user_rank'] = [];
+            }
+        }
+    }
     return $auction_list;
 }

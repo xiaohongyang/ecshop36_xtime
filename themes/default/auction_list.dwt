@@ -97,7 +97,11 @@
                 <dt><a href="auction.php?act=view&id={$goods.act_id}">
                     <img src="{$goods.goods_thumb}" width="100%;"></a></dt>
                 <dd class="zyyi">{$goods.goods_name}</dd>
-                <dd><span class="x-jingpaima">SR,SSR</span></dd>
+                <dd><span class="x-jingpaima">
+                    {foreach from=$goods.user_rank item=rank}
+                        {$rank.rank_name}
+                    {/foreach}
+                </span></dd>
                 <dd class="x-orange">当前叫价<span class="x-purple">
                     {if $goods.current_price > 0}{$goods.current_price|price}{else}未出价{/if}</span></dd>
             </dl>

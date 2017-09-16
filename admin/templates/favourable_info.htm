@@ -22,7 +22,10 @@
   </tr>
   <tr>
     <td class="label">{$lang.label_user_rank}</td>
-    <td>{foreach from=$user_rank_list item=user_rank}<input type="checkbox" name="user_rank[]" value="{$user_rank.rank_id}" {if $user_rank.checked}checked="true"{/if} />{$user_rank.rank_name} {/foreach}</td>
+    <td>{foreach from=$user_rank_list item=user_rank}
+      <input type="checkbox" name="user_rank[]" value="{$user_rank.rank_id}"
+                                                            {if $user_rank.checked}checked="true"{/if} />{$user_rank.rank_name}
+      {/foreach}</td>
   </tr>
   <tr>
     <td class="label">{$lang.label_act_range}</td>

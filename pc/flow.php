@@ -32,13 +32,38 @@ class Flow extends \zd\Controller {
     public function addGoodsAction() {
         global $err;
         include_once ROOT_PATH. 'includes/lib_order.php';
-        $goods_id = intval($this->get('goods_id'));
-        $num = intval($this->get('num', 1));
-        $spec = explode(',', $this->get('spec', ''));
-        if (addto_cart($goods_id, $num, $spec)) {
-            Helper::successMessage('添加成功！');
+
+        $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
+        $num = $_REQUEST['num'];
+
+        if ($_REQUEST['flow_type'] == 'buy_now') {
+            if($num > 99) {
+                Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
+            }
+            $goods_id = intval($_GET['goods_id']);
+            $num = intval(Helper::get('num', 1));
+            $spec = explode(',', Helper::get('spec', ''));
+            $flowType = CART_GENERAL_GOODS;
+            $rec_id = Cart::addToCart($goods_id, $num, $spec,0,$flow_type);
+            if (!empty($rec_id)) {
+                Helper::success($rec_id);
+            }
+            $msg = $err->last_message();
+            Helper::failure(is_array($msg) ? current($msg) : $msg);
+        }  else {
+            if($num > 99) {
+                Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
+            }
+            $goods_id = intval($_GET['goods_id']);
+            $num = intval(Helper::get('num', 1));
+            $spec = explode(',', Helper::get('spec', ''));
+            $rec_id = Cart::addToCart($goods_id, $num, $spec);
+            if (!empty($rec_id)) {
+                Helper::success($rec_id);
+            }
+            $msg = $err->last_message();
+            Helper::failure(is_array($msg) ? current($msg) : $msg);
         }
-        Helper::failure($err->last_message()[0]);
     }
 
     public function dropGoodsAction() {
@@ -74,7 +99,14 @@ class Flow extends \zd\Controller {
 
     public function checkoutAction() {
         global $_LANG;
-        $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
+        if($_REQUEST['flow_type'] && $_REQUEST['flow_type'] == 'buy_now'){
+
+            $flow_type = CART_BUY_NOW;
+            $this->assign('flow_type', 'buy_now');
+        } else {
+
+            $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
+        }
         /* 团购标志 */
         if ($flow_type == CART_GROUP_BUY_GOODS) {
             $this->assign('is_group_buy', 1);
@@ -147,7 +179,11 @@ class Flow extends \zd\Controller {
         include_once('includes/lib_payment.php');
 
         /* 取得购物类型 */
-        $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
+        if($_REQUEST['flow_type'] == 'buy_now'){
+            $flow_type = CART_BUY_NOW;
+        } else {
+            $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
+        }
 
         /* 检查购物车中是否有商品 */
 

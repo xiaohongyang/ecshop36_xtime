@@ -55,7 +55,12 @@ $(document).ready(function () {
             Dialog.tip('请输入有效的数量');
             return;
         }
-        $.getJSON("flow.php?step=add_goods&goods_id=" + data.goods_id + "&num=" + data.number + "&spec="+ data.spec, callback);
+
+        var url = "flow.php?step=add_goods&goods_id=" + data.goods_id + "&num=" + data.number + "&spec="+ data.spec
+        if(data.flow_type)
+            url += '&flow_type=' + data.flow_type
+
+        $.getJSON(url, callback);
     }, getGoodsAttr = function (ele, goods_id, number) {
         var data = {
             "quick": 1,
@@ -99,11 +104,14 @@ $(document).ready(function () {
         var $this = $(this);
         addCart(getGoodsAttr($("#goods-box"), $this.attr('data-goods'), 1), function (data) {
             dialog.close();
-            if (data.code == 0) {
-                if(typeof data.msg == 'undefined'){
-                    data.msg = '您尚未登录，请先登录!'; 
-                }
-                $('.x-footer .x-number').text(parseInt($('.x-footer .x-number').text()) + 1);
+
+            if(data && data.data && data.data.url){
+
+                Dialog.tip('您尚未登录，请先登录')
+                return;
+            } else if (data.status=='success') {
+                Dialog.tip('添加成功');
+                return;
             }
             Dialog.tip(data.msg);
         });
@@ -126,9 +134,11 @@ $(document).ready(function () {
             return false;
         }
 
-        addCart(getGoodsAttr($("#goods-box")), function (data) {
+        var param = getGoodsAttr($("#goods-box"));
+        param.flow_type = 'buy_now'
+        addCart(param, function (data) {
             if (data.code == 0) {
-                window.location.href = "flow.php";
+                window.location.href = "flow.php?step=checkout&cart_value=" + data.data + "&flow_type=buy_now";
             }
             Dialog.tip(data.msg);
         });

@@ -61,7 +61,7 @@
                                 <tr>
                                     <td>
                                         <div class="dlkuan">
-                                            <h1><img src="{$goods.goods_thumb}"></h1>
+                                            <h1><img src="{$goods.goods_thumb|picsrc}"></h1>
                                             <div class="ddkuan">
                                                 <p>{$goods.goods_name}</p>
                                                 <p><span class="hse">规格:</span>{$goods.goods_attr}</p>
@@ -79,7 +79,7 @@
                                     </td>
                                     <td>{$goods.goods_price}</td>
                                     <td>{$goods.goods_number}</td>
-                                    <td>{$goods.subtotal}</td>
+                                    <td>{$order.total_fee}</td>
                                     {if $order.status eq 0}
                                     <td>退款/退货</td>
                                     {/if}

@@ -49,7 +49,7 @@
                                 <table class="top-table">
                                     <tbody>
                                         {foreach from=$goods_list item=goods}
-                                        <tr data-id="{$goods.rec_id}"  class="goods-item" >
+                                        <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" class="goods-item" >
                                         <td>
                                             <input type="checkbox">
                                             <div class="dlkuan">
@@ -78,7 +78,7 @@
                                             <p class="huise">每人限购99件</p>
                                             <p class="jiajian number-box">
                                                 <span class="number-minus">-</span>
-                                                <input type="text" class="number-input" max="{$goods.goods_number}" value="{$goods.cart_number}">
+                                                <input type="text" class="number-input" data-rec="{$goods.rec_id}" max="{$goods.goods_number}" value="{$goods.cart_number}">
                                                 <span class="number-plus">+</span>
                                                 </p><div class="clear"></div>
                                             <p></p>
@@ -465,8 +465,18 @@ $(document).ready(function() {
             }
         });
     }, uploadCart = function (goods, num) {
+        var wrap = goods;
         changeGoods(goods.attr('data-rec'), num, function () {
             showAmount();
+
+            var number = goods.find('.number-input').val()
+            number = parseFloat(number)
+            var price = goods.attr('data-price')
+            price = parseFloat(price)
+
+            var amount = price * number;
+            amount = amount.toFixed(2) + '星辉币'
+            goods.find('.amount').html(amount)
         });
     };
 

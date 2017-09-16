@@ -54,7 +54,7 @@ class Home extends \zd\Controller {
 
         //踪全排序
         $totalOrderJoin = <<<EOT
-        join
+        left join
         (
         select * from 
         (
@@ -76,7 +76,11 @@ EOT;
 
         $res = Sql::create()->select('g.goods_id,g.goods_brief,  g.goods_name, g.market_price, g.is_vip, g.add_time, g.click_count, g.shop_price AS org_price',
             "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price",
-            'g.promote_price, promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, total_table.total_order')
+            'g.promote_price, promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, 
+            IFNULL(
+                total_table.total_order,
+                0
+            ) total_order')
             ->from('goods g')
             ->addSql($totalOrderJoin)
             ->left('member_price mp', "mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]'")

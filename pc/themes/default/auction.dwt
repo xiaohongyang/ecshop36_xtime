@@ -50,9 +50,9 @@
                     {foreach from=$auction_list item=goods}
                     <div>
                         <dl>
-                            <dt><img src="{$goods.goods_thumb}"></dt>
-                            <dd class="one"><a href="{$goods.url}">周边商品</a></dd>
-                            <dd class="two"><a href="{$goods.url}">{$goods.goods_name}</a></dd>
+                            <dt><img src="{$goods.goods_thumb|picsrc}"></dt>
+                            <dd class="one"><a href="{$goods.url}">{$goods.goods_name}</a></dd>
+                            <dd class="two"><a href="{$goods.url}">周边商品</a></dd>
                             <dd class="three">当前参与人数：<em class="produce-purple">{$goods.user_count}</em></dd>
                             <dd class="four corder-paddt"><span class="produce-purple">*</span>截止时间：<span class="produce-purple">{$goods.formated_end_time}</span></dd>
                             <dd class="five corder-paddt">当前叫价：<span class="produce-purple prdouce-weight"><em class="produce-big">{$goods.current_price}</em></span>星辉币</dd>

@@ -10,7 +10,7 @@ ADD COLUMN `wechat` VARCHAR(100)   NOT NULL DEFAULT '' COMMENT '微信' AFTER `r
 
 
 --- 20170914 添加等级id
-ALTER TABLE `ecs_goods_activity`
-DROP COLUMN `rank_id`,
-ADD COLUMN `rank_id`  tinyint(1) NOT NULL DEFAULT 0 COMMENT '等级id 0不限等级' AFTER `ext_info`;
+ALTER TABLE `ecs_goods`
+ADD COLUMN `user_rank`  varchar(255) NOT NULL DEFAULT '' COMMENT '会员权限 1对多 逗号分隔' AFTER `is_vip`;
+
 

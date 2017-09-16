@@ -114,7 +114,12 @@
             </td>
           </tr>
           {/if}
-
+          <tr>
+            <td class="label">购买等级权限设置：(默认不限)</td>
+            <td>{foreach from=$user_rank_list item=user_rank}
+              <input type="checkbox" name="set_rank[]" {if $user_rank.is_rank}checked="checked"{/if} value="{$user_rank.rank_id}"  />{$user_rank.rank_name}
+              {/foreach}</td>
+          </tr>
           <!--鍟嗗搧浼樻儬浠锋牸-->
           <tr>
             <td class="label"><a href="javascript:showNotice('volumePrice');" title="{$lang.form_notice}"><img src="images/notice.gif" width="16" height="16" border="0" alt="{$lang.form_notice}"></a>{$lang.lab_volume_price}</td>
@@ -188,6 +193,7 @@
               <br /><input type="text" size="40" value="{$lang.lab_picture_url}" style="color:#aaa;" onfocus="if (this.value == '{$lang.lab_picture_url}'){this.value='http://';this.style.color='#000';}" name="goods_img_url"/>
             </td>
           </tr>
+
           <tr id="auto_thumb_1">
             <td class="label"> {$lang.lab_thumb}</td>
             <td id="auto_thumb_3">

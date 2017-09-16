@@ -263,8 +263,11 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
                 'promote_end_date'   => local_date('Y-m-d', gmstr2tome('+1 month')),
                 'goods_weight'  => 0,
                 'give_integral' => -1,
-                'rank_integral' => -1
+                'rank_integral' => -1,
+                'set_rank' => []
             );
+        } else {
+            $goods['set_rank'] = explode(',', $goods['user_rank']);
         }
 
         /* 获取商品类型存在规格的类型 */
@@ -442,7 +445,14 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $smarty->assign('cat_list', cat_list(0, $goods['cat_id']));
     $smarty->assign('brand_list', get_brand_list());
     $smarty->assign('unit_list', get_unit_list());
-    $smarty->assign('user_rank_list', get_user_rank_list());
+    $rankList = get_user_rank_list();
+
+    $goods['set_rank'] = is_null($goods['set_rank']) ? [] :$goods['set_rank'];
+    foreach ($rankList as $key=>$value) {
+
+        $rankList[$key]['is_rank'] = in_array($value['rank_id'], $goods['set_rank']);
+    }
+    $smarty->assign('user_rank_list', $rankList);
     $smarty->assign('weight_unit', $is_add ? '1' : ($goods['goods_weight'] >= 1 ? '1' : '0.001'));
     $smarty->assign('cfg', $_CFG);
     $smarty->assign('form_act', $is_add ? 'insert' : ($_REQUEST['act'] == 'edit' ? 'update' : 'insert'));
@@ -475,6 +485,23 @@ elseif ($_REQUEST['act'] == 'add' || $_REQUEST['act'] == 'edit' || $_REQUEST['ac
     $smarty->assign('volume_price_list', $volume_price_list);
     /* 显示商品信息页面 */
     assign_query_info();
+
+    /* 取得用户等级 */
+    $user_rank_list = array();
+    $user_rank_list[] = array(
+        'rank_id'   => 0,
+        'rank_name' => $_LANG['not_user'],
+        'checked'   => strpos(',' . $favourable['user_rank'] . ',', ',0,') !== false
+    );
+    $sql = "SELECT rank_id, rank_name FROM " . $ecs->table('user_rank');
+    $res = $db->query($sql);
+    while ($row = $db->fetchRow($res))
+    {
+        $row['checked'] = strpos(',' . $favourable['user_rank'] . ',', ',' . $row['rank_id']. ',') !== false;
+        $user_rank_list[] = $row;
+    }
+//    $smarty->assign('user_rank_list', $user_rank_list);
+
     $smarty->display('goods_info.htm');
 }
 
@@ -820,6 +847,8 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
     $promote_price = !empty($_POST['promote_price']) ? floatval($_POST['promote_price'] ) : 0;
     $is_promote = empty($promote_price) ? 0 : 1;
     $promote_start_date = ($is_promote && !empty($_POST['promote_start_date'])) ? local_strtotime($_POST['promote_start_date']) : 0;
+    $set_rank = !empty($_POST['set_rank']) ? implode(',', $_POST['set_rank']) : "";
+    $set_rank = $set_rank == '' ? '' : $set_rank.',';
     $promote_end_date = ($is_promote && !empty($_POST['promote_end_date'])) ? local_strtotime($_POST['promote_end_date']) : 0;
     $goods_weight = !empty($_POST['goods_weight']) ? $_POST['goods_weight'] * $_POST['weight_unit'] : 0;
     $is_best = isset($_POST['is_best']) ? 1 : 0;
@@ -852,13 +881,13 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             "cat_id, brand_id, shop_price, market_price, virtual_sales, is_promote, promote_price, " .
                     "promote_start_date, promote_end_date, goods_img, goods_thumb, original_img, keywords, goods_brief, " .
                     "seller_note, goods_weight, goods_number, warn_number, integral, give_integral, is_best, is_new, is_hot, " .
-                    "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, rank_integral, suppliers_id)" .
+                    "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, rank_integral, suppliers_id, user_rank)" .
                 "VALUES ('$_POST[goods_name]', '$goods_name_style', '$goods_sn', '$catgory_id', " .
                 "'$brand_id', '$shop_price', '$market_price', '$virtual_sales', '$is_promote','$promote_price', ".
                     "'$promote_start_date', '$promote_end_date', '$goods_img', '$goods_thumb', '$original_img', ".
                     "'$_POST[keywords]', '$_POST[goods_brief]', '$_POST[seller_note]', '$goods_weight', '$goods_number',".
                     " '$warn_number', '$_POST[integral]', '$give_integral', '$is_best', '$is_new', '$is_hot', '$is_on_sale', '$is_alone_sale', $is_shipping, ".
-                    " '$_POST[goods_desc]', '" . gmtime() . "', '". gmtime() ."', '$goods_type', '$rank_integral', '$suppliers_id')";
+                    " '$_POST[goods_desc]', '" . gmtime() . "', '". gmtime() ."', '$goods_type', '$rank_integral', '$suppliers_id', '$set_rank')";
         }
         else
         {
@@ -866,13 +895,13 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                     "cat_id, brand_id, shop_price, market_price, virtual_sales, is_promote, promote_price, " .
                     "promote_start_date, promote_end_date, goods_img, goods_thumb, original_img, keywords, goods_brief, " .
                     "seller_note, goods_weight, goods_number, warn_number, integral, give_integral, is_best, is_new, is_hot, is_real, " .
-                    "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, extension_code, rank_integral)" .
+                    "is_on_sale, is_alone_sale, is_shipping, goods_desc, add_time, last_update, goods_type, extension_code, rank_integral, rank_integral)" .
                 "VALUES ('$_POST[goods_name]', '$goods_name_style', '$goods_sn', '$catgory_id', " .
                     "'$brand_id', '$shop_price', '$market_price', '$virtual_sales', '$is_promote','$promote_price', ".
                     "'$promote_start_date', '$promote_end_date', '$goods_img', '$goods_thumb', '$original_img', ".
                     "'$_POST[keywords]', '$_POST[goods_brief]', '$_POST[seller_note]', '$goods_weight', '$goods_number',".
                     " '$warn_number', '$_POST[integral]', '$give_integral', '$is_best', '$is_new', '$is_hot', 0, '$is_on_sale', '$is_alone_sale', $is_shipping, ".
-                    " '$_POST[goods_desc]', '" . gmtime() . "', '". gmtime() ."', '$goods_type', '$code', '$rank_integral')";
+                    " '$_POST[goods_desc]', '" . gmtime() . "', '". gmtime() ."', '$goods_type', '$code', '$rank_integral', '$set_rank')";
         }
     }
     else
@@ -893,6 +922,8 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
             @unlink(ROOT_PATH . $row['goods_thumb']);
         }
 
+
+
         $sql = "UPDATE " . $ecs->table('goods') . " SET " .
                 "goods_name = '$_POST[goods_name]', " .
                 "goods_name_style = '$goods_name_style', " .
@@ -906,7 +937,8 @@ elseif ($_REQUEST['act'] == 'insert' || $_REQUEST['act'] == 'update')
                 "promote_price = '$promote_price', " .
                 "promote_start_date = '$promote_start_date', " .
                 "suppliers_id = '$suppliers_id', " .
-                "promote_end_date = '$promote_end_date', ";
+                "promote_end_date = '$promote_end_date', " .
+                "user_rank = '$set_rank', ";
 
         /* 如果有上传图片，需要更新数据库 */
         if ($goods_img)

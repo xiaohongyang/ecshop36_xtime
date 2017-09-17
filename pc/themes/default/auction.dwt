@@ -4,7 +4,7 @@
         </div>
         <!--banner -->
 <div class="main_visual">
-        
+
         <div class="flicking_con">
             <a href="#" class="">1</a>
             <a href="#" class="">2</a>
@@ -29,21 +29,31 @@
             <div class="contents">
                 <h1 class="title"><img src="/pc/themes/default/img/9.png"></h1>
                 <div class="screen">
-                    <div>
-                        <a href="javascript:;">价格</a>
-                        <img src="/pc/themes/default/img/19.png">
-                        <img src="/pc/themes/default/img/20.png">
+                    <div class="sort-btn
+                    {if $sort eq 'price' && $order eq 'asc'} sort-asc {/if}
+                    {if $sort eq 'price' && $order eq 'desc'} sort-desc {/if}
+                    ">
+                        <a href="javascript:;" data-sort-column="price">价格</a>
+                        <i class="asc-btn"></i>
+                        <i class="desc-btn"></i>
+
                     </div>
-                    <div>
-                        <a href="javascript:;">销量</a>
-                        <img src="/pc/themes/default/img/19.png">
-                        <img src="/pc/themes/default/img/20.png">
-                    </div>
-                    <div>
-                        <a href="javascript:;">上架时间</a>
-                        <img src="/pc/themes/default/img/19.png">
-                        <img src="/pc/themes/default/img/20.png">
-                    </div>
+                    <div class="sort-btn
+                    {if $sort eq 'sales' && $order eq 'asc'} sort-asc {/if}
+                    {if $sort eq 'sales' && $order eq 'desc'} sort-desc {/if}
+                    ">
+                                <a href="javascript:;" data-sort-column="sales">销量</a>
+                                <i class="asc-btn"></i>
+                                <i class="desc-btn"></i>
+                            </div>
+                            <div class="sort-btn
+                    {if $sort eq 'add_time' && $order eq 'asc'} sort-asc {/if}
+                    {if $sort eq 'add_time' && $order eq 'desc'} sort-desc {/if}
+                    ">
+                                <a href="javascript:;" data-sort-column="add_time">上架时间</a>
+                                <i class="asc-btn"></i>
+                                <i class="desc-btn"></i>
+                            </div>
                     <p class="clear"></p>
                 </div><!--screen-->
                 <div class="pro">
@@ -56,8 +66,27 @@
                             <dd class="three">当前参与人数：<em class="produce-purple">{$goods.user_count}</em></dd>
                             <dd class="four corder-paddt"><span class="produce-purple">*</span>截止时间：<span class="produce-purple">{$goods.formated_end_time}</span></dd>
                             <dd class="five corder-paddt">当前叫价：<span class="produce-purple prdouce-weight"><em class="produce-big">{$goods.current_price}</em></span>星辉币</dd>
-                            <dd class="new"><a href="{$goods.url}">NEW</a></dd>
-                            <dd class="ssr"><a href="{$goods.url}">SSR</a></dd>
+                            {if $goods.user_rank==''}
+
+                                {foreach from=$user_rank_list item=rank}
+                                    <dd class="{if $rank.rank_id == 1}ssr{/if}
+                                                {if $rank.rank_id == 2}new{/if}
+                                                {if $rank.rank_id == 3}ur{/if}
+                                                {if $rank.rank_id == 4}sr{/if}
+                                                {if $rank.rank_id == 5}r{/if} rank{$rank.rank_name}">{$rank.rank_name}</dd>
+                                {/foreach}
+
+                            {else}
+                                {foreach from=$goods.rank_list item=rank}
+                                    <dd class="{if $rank.rank_id == 1}ssr{/if}
+                                                {if $rank.rank_id == 2}new{/if}
+                                                {if $rank.rank_id == 3}ur{/if}
+                                                {if $rank.rank_id == 4}sr{/if}
+                                                {if $rank.rank_id == 5}r{/if} rank{$rank.rank_name}">{$rank.rank_name}</dd>
+                                {/foreach}
+                            {/if}
+                            <!--<dd class="new"><a href="{$goods.url}">NEW</a></dd>
+                            <dd class="ssr"><a href="{$goods.url}">SSR</a></dd>-->
                             <p class="clear"></p>
                         </dl>
                     </div>
@@ -69,7 +98,7 @@
                 {insert name="page" total=$total}
 
             </div><!--contents-->
-          
+
         </div><!--content-->
      </div>
 
@@ -83,9 +112,9 @@ $(document).ready(function(){
 	},function(){
 		$("#btn_prev,#btn_next").fadeOut()
 	});
-	
+
 	$dragBln = false;
-	
+
 	$(".main_image").touchSlider({
 		flexible : true,
 		speed : 200,
@@ -96,25 +125,25 @@ $(document).ready(function(){
 			$(".flicking_con a").removeClass("on").eq(e.current-1).addClass("on");
 		}
 	});
-	
+
 	$(".main_image").bind("mousedown", function() {
 		$dragBln = false;
 	});
-	
+
 	$(".main_image").bind("dragstart", function() {
 		$dragBln = true;
 	});
-	
+
 	$(".main_image a").click(function(){
 		if($dragBln) {
 			return false;
 		}
 	});
-	
+
 	timer = setInterval(function(){
 		$("#btn_next").click();
 	}, 5000);
-	
+
 	$(".main_visual").hover(function(){
 		clearInterval(timer);
 	},function(){
@@ -122,7 +151,7 @@ $(document).ready(function(){
 			$("#btn_next").click();
 		},5000);
 	});
-	
+
 	$(".main_image").bind("touchstart",function(){
 		clearInterval(timer);
 	}).bind("touchend", function(){
@@ -130,7 +159,40 @@ $(document).ready(function(){
 			$("#btn_next").click();
 		}, 5000);
 	});
-	
+
+
+    //排序
+    var listenSort = function(){
+        $('.sort-btn').find('a').click(function(){
+            var parent = $(this).closest('.sort-btn')
+            console.log(parent.index())
+            var method = parent.hasClass('sort-asc') ? 'desc' : 'asc'
+            var column = $(this).attr('data-sort-column')
+            replaceSortUrl(column, method)
+        })
+    }
+    listenSort();
+
+    function replaceSortUrl(sort, order) {
+        var url = window.location.href;
+        if (url.indexOf('?') == -1) {
+            url += '?' + 'sort=' + sort + '&order=' + order;
+        } else {
+            var newSort = 'sort=' + sort;
+            var newOrder = 'order=' + order;
+            if(url.match(new RegExp('(sort=[^&]+)')) != null) {
+                url = url.replace(new RegExp('(sort=[^&]+)'), newSort)
+            } else {
+                url += '&' + newSort;
+            }
+            if(url.match(new RegExp('(order=[^&]+)')) != null) {
+                url = url.replace(new RegExp('(order=[^&]+)'), newOrder)
+            } else {
+                url += '&' + newOrder;
+            }
+        }
+        window.location.href = url;
+    }
 });
 </script>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

@@ -66,12 +66,32 @@
                                                 <p>{$goods.goods_name}</p>
                                                 <p><span class="hse">规格:</span>{$goods.goods_attr}</p>
                                                 <p>
-                                                    <span class="hong">UR专享</span>
-                                                    <span class="huang">SSR专享</span>
-                                                    <span class="hui">SR专享</span>
-                                                    <span class="lv">R专享</span>
-                                                    <span class="lan">N专享</span>
-                                                    <div class="clear"></div>
+                                                    {if $goods.user_rank == ''}
+                                                        <span class="hong">UR专享</span>
+                                                        <span class="huang">SSR专享</span>
+                                                        <span class="hui">SR专享</span>
+                                                        <span class="lv">R专享</span>
+                                                        <span class="lan">N专享</span>
+                                                    {else}
+                                                        {foreach from=$goods.rank_list item=rank}
+
+                                                            {foreach from=$user_rank_list item=rank_item key=key}
+                                                                {if $rank_item.rank_id== $rank.rank_id}
+                                                                    <span class="
+                                                                                {if $rank.rank_id == 1}lan{/if}
+                                                                                {if $rank.rank_id == 1}lv{/if}
+                                                                                {if $rank.rank_id == 1}hui{/if}
+                                                                                {if $rank.rank_id == 1}huang{/if}
+                                                                                {if $rank.rank_id == 1}hong{/if}
+                                                                                "
+                                                                    >{$rank_item.rank_name}</span>
+                                                                {/if}
+                                                            {/foreach}
+
+                                                        {/foreach}
+                                                    {/if}
+                                                        <div class="clear"></div>
+
                                                 </p>
                                             </div><!--ddkuan-->
                                             <div class="clear"></div>
@@ -79,7 +99,7 @@
                                     </td>
                                     <td>{$goods.goods_price}</td>
                                     <td>{$goods.goods_number}</td>
-                                    <td>{$order.total_fee}</td>
+                                    <td>{$goods.goods_sub_price}</td>
                                     {if $order.status eq 0}
                                     <td>退款/退货</td>
                                     {/if}

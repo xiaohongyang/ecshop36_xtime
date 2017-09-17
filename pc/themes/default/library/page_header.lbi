@@ -37,11 +37,19 @@
                     <a href="index.php"><img src="themes/default/img/1.png" /></a>    
                 </h1><!--logo-->
                 <div class="search">
-                    <form class="search-form" action="search.php" method="get">
-                        <input type="text" name="keywords" required class="shuru" placeholder="{if $keywords}{$keywords}{else}search{/if}" />
-                        <span class="search-btn"><img src="themes/default/img/15.png" /></span>
-                        <div class="clear"></div>
-                    </form>
+                    {if $auction_name=='auction'}
+                        <form class="search-form" action="auction.php" method="get">
+                            <input type="text" name="keywords" required class="shuru" placeholder="{if $keywords}{$keywords}{else}search{/if}" />
+                            <span class="search-btn"><img src="themes/default/img/15.png" /></span>
+                            <div class="clear"></div>
+                        </form>
+                    {else}
+                        <form class="search-form" action="search.php" method="get">
+                            <input type="text" name="keywords" required class="shuru" placeholder="{if $keywords}{$keywords}{else}search{/if}" />
+                            <span class="search-btn"><img src="themes/default/img/15.png" /></span>
+                            <div class="clear"></div>
+                        </form>
+                    {/if}
                 </div><!--search-->
                 <div class="shopping">
                     <div class="shops">

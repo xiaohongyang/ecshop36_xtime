@@ -16,16 +16,40 @@ class Auction {
             ->scalar();
     }
 
-    public static function getList() {
+    public static function getList($search=null, $sort, $order) {
         $auction_list = array();
-        $auction_list['finished'] = $auction_list['finished'] = array();
+//        $auction_list['finished'] = $auction_list['finished'] = array();
+
+        $whereSearch = !is_null($search) ? " and g.goods_name like  '%{$search}%' " : '';
+
+        switch ($sort) {
+            case 'price' :
+                $sort = 'al.bid_price';
+                break;
+            case 'add_time' :
+                $sort = 'a.start_time';
+                break;
+            default:
+                $sort = 'a.act_id';
+                $order = 'desc';
+                break;
+        }
+        $orderString = " ORDER BY $sort $order ";
 
         $now = gmtime();
-        $sql = "SELECT a.*, IFNULL(g.goods_thumb, '') AS goods_thumb " .
+        $sql = "SELECT a.*, IFNULL(g.goods_thumb, '') AS goods_thumb, g.user_rank " .
             "FROM " . $GLOBALS['ecs']->table('goods_activity') . " AS a " .
             "LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS g ON a.goods_id = g.goods_id " .
+            "JOIN ( 
+                    select 
+                        a.act_id, max(l.bid_price) as bid_price
+                    from ecs_goods_activity a
+                    join ecs_auction_log l on a.act_id=l.act_id
+                    group by act_id
+                 )  
+                AS al ON a.act_id = al.act_id " .
             "WHERE a.act_type = '" . GAT_AUCTION . "' " .
-            " AND a.is_finished < 2 ORDER BY a.act_id DESC";
+            " AND a.is_finished < 2 {$whereSearch}   $orderString";
         $res = Sql::create($sql)->query();
         while ($row = $GLOBALS['db']->fetchRow($res)) {
             $ext_info = unserialize($row['ext_info']);
@@ -47,18 +71,40 @@ class Auction {
             $auction['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
             $auction['url'] = build_uri('auction', array('auid'=>$auction['act_id']));
 
-            if($auction['status_no'] < 2)
-            {
-                $auction_list['under_way'][] = $auction;
-            }
-            else
-            {
-                $auction_list['finished'][] = $auction;
-            }
+//            if($auction['status_no'] < 2)
+//            {
+//                $auction_list['under_way'] = $auction;
+//            }
+//            else
+//            {
+//                $auction_list['finished'][] = $auction;
+//            }
+            $auction_list[] = $auction;
         }
 
-        $auction_list = @array_merge($auction_list['under_way'], $auction_list['finished']);
+        $user_rank_list = UserOrder::get_user_rank_list();
+        $rank_list = [];
+        foreach ($user_rank_list as $rank) {
+            $rank_list[$rank['rank_id']] = $rank;
+        }
 
+        if(count($auction_list)) {
+            foreach ($auction_list as $key=>$goods) {
+
+                if(strlen($goods['user_rank']) > 0) {
+                    $userRank = trim($goods['user_rank'], ',');
+                    $rankArray = explode(',', $userRank);
+                    $arr = [];
+
+                    foreach ($rankArray as $rankId) {
+                        $arr[$rankId] = $rank_list[$rankId];
+                    }
+                    $auction_list[$key]['rank_list'] = $arr;
+                } else {
+                    $auction_list[$key]['rank_list'] = [];
+                }
+            }
+        }
         return $auction_list;
     }
 

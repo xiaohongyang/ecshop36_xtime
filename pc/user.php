@@ -361,7 +361,8 @@ class User extends \zd\Controller {
         $pager = UserOrder::getPage($_SESSION['user_id'], $search, $status);
         $order_list = $pager->getPage();
         $total = $pager->getTotal();
-        $this->show(compact('page_title', 'helps', 'order_list', 'total', 'search', 'status'));
+        $user_rank_list = UserOrder::get_user_rank_list();
+        $this->show(compact('page_title', 'helps', 'order_list', 'total', 'search', 'status', 'user_rank_list'));
     }
 
     public function removeOrderAction(){

@@ -19,8 +19,14 @@ class Auction extends \zd\Controller {
         $categories =     get_categories_tree(); // 分类树
         $helps = get_shop_help();       // 网店帮助
         $total = Auc::count();
-        $auction_list = Auc::getList();
-        $this->show(compact('page_title', 'helps', 'categories', 'total', 'auction_list'));
+        $search = $this->get('keywords', null);
+
+        $sort = strtolower($this->get('sort', 'price'));
+        $order = strtolower($this->get('order', 'desc'));
+        $auction_list = Auc::getList($search, $sort, $order);
+        $auction_name='auction';
+        $user_rank_list = \zd\UserOrder::get_user_rank_list();
+        $this->show(compact('page_title', 'helps', 'categories','auction_name', 'total', 'auction_list', 'user_rank_list', 'sort', 'order'));
     }
 
     public function viewAction() {
@@ -262,12 +268,15 @@ class Auction extends \zd\Controller {
     }
 
     public function init() {
+        global $user;
         $this->assign('action', static::$action);
+        $this->user = $user;
         if (!empty($_SESSION['user_id'])) {
             include_once ROOT_PATH.'includes/lib_order.php';
-            $this->assign('user_info', $this->userInfo());
-        } else if (!in_array(static::$action, ['index', 'view', 'log'])) {
-            Helper::redirect('user.php');
+            $userInfo = user_info($_SESSION['user_id']);
+            $this->assign('user_info', $userInfo);
+            $this->assign('user_info2', $userInfo);
+            $this->assign('headpic', $userInfo['avatar']);
         }
     }
 }

@@ -119,22 +119,52 @@ class UserOrder {
         $item['shipping_status'] = ($item['shipping_status'] == SS_SHIPPED_ING) ? SS_PREPARING : $item['shipping_status'];
         $item['old_order_status'] = $item['order_status'];
         $item['order_status'] = $GLOBALS['_LANG']['os'][$item['order_status']] . ',' . $GLOBALS['_LANG']['ps'][$item['pay_status']] . ',' . $GLOBALS['_LANG']['ss'][$item['shipping_status']];
-        $item['total_fee'] = price_format($item['goods_amount'], false);
         $item['order_time'] = local_date($GLOBALS['_CFG']['time_format'], $item['add_time']);
         return $item;
     }
 
     public static function getOrderGoods($orderId) {
-        $data = Sql::create()->select('og.*,g.goods_thumb')
+        $data = Sql::create()->select('og.*,g.goods_thumb,g.user_rank, og.goods_price, og.goods_number')
             ->from('order_goods og')->left('goods g', 'g.goods_id = og.goods_id')
             ->where('og.order_id='.$orderId)->all();
         foreach ($data as &$item) {
+
+            $item['goods_sub_price']     =   price_format($item['goods_price'] * $item['goods_number'], false) ;
             $item['goods_price'] = price_format($item['goods_price'], false);
             $item['market_price'] = price_format($item['market_price'], false);
             $item['subtotal']     = price_format($item['subtotal'], false);
-
         }
+
+        $user_rank_list = self::get_user_rank_list();
+        $rank_list = [];
+        foreach ($user_rank_list as $rank) {
+            $rank_list[$rank['rank_id']] = $rank;
+        }
+
+        foreach ($data as $key=>$goods) {
+
+            if(strlen($goods['user_rank']) > 0) {
+                $userRank = trim($goods['user_rank'], '');
+                $rankArray = explode(',', $userRank);
+                $arr = [];
+
+                foreach ($rankArray as $rankId) {
+                    $arr[$rankId] = $rank_list[$rankId];
+                }
+                $data[$key]['rank_list'] = $arr;
+            } else {
+                $data[$key]['rank_list'] = [];
+            }
+        }
+
         return $data;
+    }
+
+    public static function get_user_rank_list(){
+        $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('user_rank') .
+            " ORDER BY min_points";
+
+        return $GLOBALS['db']->getAll($sql);
     }
 
     public static function getCount($user_id) {

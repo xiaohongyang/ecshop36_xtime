@@ -113,10 +113,7 @@
     $(".zhekouzhe").click(function() {
       $(".zhekouzhe").hide();  
     });
-      var silder = $(".slider").slider({
-          width: 1,
-          height: 200
-      });
+
   });
   function replaceUri(key, val) {
     var url = window.location.href;

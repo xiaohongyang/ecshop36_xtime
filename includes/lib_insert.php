@@ -190,11 +190,20 @@ function insert_ads($arr)
         switch ($row['media_type'])
         {
             case 0: // 图片广告
-                $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
+                /*$src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
                         DATA_DIR . "/afficheimg/$row[ad_code]" : $row['ad_code'];
                 $ads[] = "<a href='affiche.php?ad_id=$row[ad_id]&amp;uri=" .urlencode($row["ad_link"]). "'
                 target='_blank'><img src='$src' width='" .$row['ad_width']. "' height='$row[ad_height]'
-                border='0' /></a>";
+                border='0' /></a>";*/
+
+                $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?
+                        DATA_DIR . "/afficheimg/$row[ad_code]" : $row['ad_code'];
+                if(strpos($src, 'http') !== false) {
+                    if(!file_exists($src))
+                        $src = '/images/no_picture.gif';
+                }
+                $ads[] = "<a href='affiche.php?ad_id=$row[ad_id]&amp;uri=" .urlencode($row["ad_link"]). "'
+                target='_blank'> <img src=\"{$src}\" alt=\"\"></a>";
                 break;
             case 1: // Flash
                 $src = (strpos($row['ad_code'], 'http://') === false && strpos($row['ad_code'], 'https://') === false) ?

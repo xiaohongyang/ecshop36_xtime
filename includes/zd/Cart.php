@@ -26,7 +26,9 @@ class Cart {
      * @return array|bool
      */
     public static function all($type = CART_GENERAL_GOODS) {
-        $arr = Sql::create()->select('c.*, g.goods_number as goods_number,c.goods_number as cart_number , c.goods_price * c.goods_number AS subtotal, g.goods_thumb')->from('cart c')
+        $arr = Sql::create()->select('c.*, g.goods_number as goods_number,c.goods_number as cart_number , c.goods_price ,
+         c.goods_price * c.goods_number AS subtotal, g.goods_thumb')
+            ->from('cart c')
         ->left('goods g', 'c.goods_id = g.goods_id')
         ->where('session_id', SESS_ID)
         ->andWhere('rec_type', $type)->all();

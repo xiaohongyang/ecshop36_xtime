@@ -232,7 +232,7 @@ $(document).ready(function () {
         numberEle.val(num);
         numberEle.trigger('change');
     });
-    $(".number-box .number-minus").click(function () {
+    $("body").on("click", ".number-box .number-minus", function () {
         var $this = $(this);
         if ($this.hasClass('disable')) {
             return;
@@ -247,7 +247,7 @@ $(document).ready(function () {
         numberEle.trigger('change');
     });
 
-    $(".number-box .number-plus").click(function () {
+    $('body').on('click', ".number-box .number-plus", function () {
         var $this = $(this);
             var numberEle = $this.parents('.number-box').find('.number-input');
         var num = parseInt(numberEle.val()) + 1
@@ -270,7 +270,7 @@ $(document).ready(function () {
         numberEle.val(num);
         numberEle.trigger('change');
     });
-    $(".cart-box .number-box .number-input").change(function () {
+    $('body').on("change", ".number-box .number-input", function () {
         var $this = $(this);
         var minusEle = $this.parents('.number-group').find('.minus');
         var num = Math.max(1, parseInt($this.val()));

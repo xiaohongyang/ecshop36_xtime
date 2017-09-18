@@ -77,8 +77,10 @@ class Flow extends \zd\Controller {
 
     public function updateCartAction() {
         global $_LANG;
-        if (isset($_POST['goods_number']) && is_array($_POST['goods_number'])) {
-            Cart::updateCart($_POST['goods_number']);
+
+
+        if (isset($_POST['goods_number']) && is_array($goodsNumber)) {
+            Cart::updateCart($goodsNumber);
             Helper::success($_LANG['update_cart_notice']);
         }
         Helper::failure('更新失败！');

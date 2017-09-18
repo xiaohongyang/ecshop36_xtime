@@ -4,12 +4,12 @@
     <h1>
         <img src="{$goods.goods_thumb}" />
     </h1>
-    <div class="yifu-deta">
+    <div class="yifu-deta goods-item" data-rec="{$goods.rec_id}" data-price="{$goods.goods_price">
         <p class="bold">{$goods.goods_name}</p>
         <p class="hui">{$goods.goods_price}</p>
         <p class="but number-box">
             <span class="number-minus">-</span>
-            <input type="text" class="number-input" value="{$goods.goods_number}" placeholder="1" />
+            <input type="text" class="number-input" value="{$goods.cart_number}" data-max="{$goods.goods_number}" placeholder="1" />
             <span class="number-plus">+</span>
             <div class="clear"></div>
         </p>
@@ -37,3 +37,9 @@
 <p class="cshopcar-blue">购物车空空如也！</p>
 <input type="button" value="先去看看" onclick="location.href = 'index.php';"/>
 {/if}
+
+
+
+<script type="text/javascript">
+
+</script>

@@ -480,7 +480,7 @@ $(document).ready(function() {
         });
     };
 
-    $(".number-box .number-input").change(function () {
+    $('body').on('change',".number-box .number-input", function () {
         var $this = $(this);
         var minusEle = $this.parents('.number').find('.number-minus');
         var num = Math.max(1, parseInt($this.val()));

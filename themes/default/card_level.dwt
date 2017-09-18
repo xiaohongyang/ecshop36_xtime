@@ -11,18 +11,15 @@
                 <!--<a class="backbtnl">
                     <img src="img/member-zuo.png">
                 </a>-->
-                <span><img src="img/member2.png" alt=""></span>
+                <span><img src="themes/default/img/member2.png" alt=""></span>
             </div>
             <div class="member-dg">
-                <img src="img/member1.png" alt="">
+                <img src="themes/default/img/member1.png" alt="">
             </div>
             <div class="member-text">
-                <p>1. 会员等级是通过使用积分兑换获得， 会员可通过已有积分兑换对应的会员等级一年<span class="member-red">（365天）</span>。
+                <p>1. 会员等级是通过使用积分兑换获得， 会员可通过已有积分兑换对应的会员等级一年<span class="member-red">（365天）</span>。 兑换后,等级有效期间，可兑换更高会员等级，但不可兑换和当前等级一样或低于当前等级的会员等级。一年时限到后，会员等级自动更新为普通的注册会员。
                 </p>
-                <p>
-                    兑换后,等级有效期间，可兑换更高会员等级，但不可兑换和当前等级一样或低于当前等级的会员等级。
-                </p>
-                <p>一年时限到后，会员等级自动更新为普通的注册会员。</p>
+               
             </div>
             <div class="member-text1">
                 <p>2.单向进行会员等级升级时，所花费积分为所需的全部积分，不按积分差价进行计算。</p>
@@ -34,7 +31,7 @@
                 <p>最终解释权归本公司所有。</p>
             </div>
             <div class="cmember-footer">
-                <img src="./img/footer-logo.png" alt="">
+                <img src="themes/default/img/footer-logo.png" alt="">
                         <br/>
                         <br/>
             </div>

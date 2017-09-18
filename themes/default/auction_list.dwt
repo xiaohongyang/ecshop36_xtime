@@ -91,7 +91,7 @@
         <!--{/if}-->
     </ul>
     <div class="content" style="margin-bottom:50px">
-        <div class="zyliang">
+        <div class="zyliang zyliang-list">
             {foreach from=$auction_list item=goods}
             <dl>
                 <dt><a href="auction.php?act=view&id={$goods.act_id}">

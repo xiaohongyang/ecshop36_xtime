@@ -59,10 +59,23 @@ footer dl.current a,footer dl a:hover{color:#65C1BD}
 .content .zyliang .orange span.cgoods-money{line-height: 25px;}
 .content .zyliang .orange span.cgoods-money b span.money-starb{color:#333;font-size:13px;font-weight:normal;}
 .content .zyliang dl{width:50%;float:left; background:#FFFFFF; border-bottom:solid 1px #d3d3d3; padding:4px 1px; margin:0px;border-right: solid 1px #CCCCCC;height:255px;}
+.content .zyliang.zyliang-list dl {
+    width: 50%;
+    float: left;
+    background: #FFFFFF;
+    border-bottom: solid 1px #d3d3d3;
+    padding: 10px 1px;
+    margin: 0px;
+    border-right: solid 1px #CCCCCC;
+    height:auto;
+}
+.x-shopprice .x-right{line-height:26px;}
+.content .zyliang.zyliang-list dl dd{line-height:20px;height:16px;}
+.content .zyliang.zyliang-list dl dd span.x-jingpaima{color:#959595}
 .content .zyliang dl:nth-child(2n){border-right:1px solid #fff;}
 .content .zyliang dl dt{text-align:center}
 .content .zyliang dl dd.zyyi,.content .shopcar .carbot dl dd{overflow: hidden;/*display: -webkit-box;*/-webkit-line-clamp: 2;-webkit-box-orient: vertical;word-break: break-all;}
-.content .zyliang dl dd.zyyi{padding-top:10px;font-size:13px;}
+.content .zyliang dl dd.zyyi{height:20px;font-size:14px;}
 .content .zyliang dl dd.orange img{float:right}
 .content .zyliang dl dd .money b{ color:#b32976}
 .content .zyliang dl dd .shoop{ float:right; padding:5px 1px; border:solid 1px #65c1be; border-radius:3px; color:#65c1be; font-size:12px;}
@@ -407,7 +420,7 @@ a {outline: none;text-decoration: none;color: #313131;cursor:pointer;}
 /*****************我的会员********************/
 .wdzh{width:100%;margin-top:10px;background-color:#fff;padding:10px}
 .wdzh dl dt{width:60px;height:60px;border-radius:50%;margin:0 auto;overflow:hidden}
-.wdzh dl dt img{width:100%}
+.wdzh dl dt img{width:100%;height:100%;}
 .wdzh dl dd{height:30px;line-height:30px}
 .wdzh dl{width:50%;margin:0 auto;text-align:center;position:relative}
 .wdzh dl .lvbei{height: 20px;border: 1px solid #61C5C3;background-color: #61C5C3;color: #fff;border-radius: 8px;position: relative;top: -9px;line-height: 12px;display: inline-block;padding: 3px 7px;}
@@ -683,7 +696,7 @@ span.cgoods-money b .cfont-big {font-size: 16px;}
 .x-recoredmian{padding:10px;background:#fff;overflow:hidden}
 .x-recoredmian .x-left{width:30%;}
 .x-recoredmian .x-left img{width:100%;}
-.x-recoredmian .x-right{width:70%;font-size:13px;}
+.x-recoredmian .x-right{width:70%;font-size:13px;padding-left:3%;}
 .x-recoredmian .x-right p{margin:0;}
 .x-fontsmall{font-size:12px;}
 .x-ccc{color:#7E7E7E;}
@@ -692,3 +705,4 @@ span.cgoods-money b .cfont-big {font-size: 16px;}
 .x-recoredtext .x-right span{line-height:50px;font-size:13px;}
 .x-recoredimg{width:48px;height:48px;border-radius:50%;margin-right:10px;}
 .confirmhead a.fenlei img{width:auto;}
+.goods-gallery .slider-box{position: relative;   width: 100%;overflow: hidden;height: 320px!important;}

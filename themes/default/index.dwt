@@ -105,6 +105,52 @@
       <li><a href="javascript:replaceUri('filter', 'by');"{if $filter eq 'by'} class="current"{/if}>包邮商品</a></li>
     </ul>
   </div>
+
+
+
+
+
+
+
+<style type="text/css">
+.dots{
+  position: absolute;
+  bottom: 0;
+  left: 46%;
+}
+.dots li {
+  list-style: none;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  font-size: 0px;
+  border-radius: 50%;
+  color: #E5E5E5;
+  background: #ccc;
+  margin-right: 5px;
+}
+.dots li.active{
+  background: #65C1BD;
+}
+</style>
+
+<script>
+$(function() {
+    var slides = $('.slider-box').unslider({
+        width: 1,
+        height: 200,
+        speed: 500,               //  The speed to animate each slide (in milliseconds)
+        delay: 3000,              //  The delay between slide animations (in milliseconds)
+        complete: function() {},  //  A function that gets called after every slide animation
+        keys: true,               //  Enable keyboard (left, right) arrow shortcuts
+        dots: true,               //  Display dot navigation
+        fluid: false              //  Support responsive design. May break non-responsive designs
+    });
+
+});
+
+</script>
+
   <script>
   $(document).ready(function() {
     $(".san").click(function() {

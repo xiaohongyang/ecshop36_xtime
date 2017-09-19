@@ -78,12 +78,32 @@ class Flow extends \zd\Controller {
     public function updateCartAction() {
         global $_LANG;
 
+        $goodsNumber = $_POST['goods_number'];
+        $checkMsg = $this->checkGoods($goodsNumber);
+        if($checkMsg != '')
+            Helper::failure($checkMsg);
 
         if (isset($_POST['goods_number']) && is_array($goodsNumber)) {
             Cart::updateCart($goodsNumber);
             Helper::success($_LANG['update_cart_notice']);
         }
         Helper::failure('更新失败！');
+    }
+
+    protected function checkGoods($goods) {
+
+        $result = "";
+        if(is_array($goods) && count($goods)) {
+            $keys = array_keys($goods);
+            $values = array_values($goods);
+            foreach ($values as $item) {
+                if($item > 99) {
+                    $result = "数量不能超过99";
+                    break;
+                }
+            }
+        }
+        return $result;
     }
 
     public function infoAction() {

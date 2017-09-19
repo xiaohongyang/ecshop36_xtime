@@ -84,13 +84,15 @@
                     scrollTop: 0
                 }, 500);
             });
-            var showCart = function() {
-                $.get('flow.php?step=info', function(html) {
-                    $("#cat-info").html(html);
-                });
-            };
+
             showCart();
        });
+
+       var showCart = function() {
+           $.get('flow.php?step=info', function(html) {
+               $("#cat-info").html(html);
+           });
+       };
    </script>
 </body>
 </html>

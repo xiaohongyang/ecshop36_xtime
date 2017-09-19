@@ -254,14 +254,15 @@ $(document).ready(function () {
         var max = numberEle.attr('max');
         if (max) {
             if (num > max) {
-                Dialog.tip('不能大于库存数');
+                // Dialog.tip('不能大于库存数');
             }
-            num = Math.min(num, parseInt(max));
+            // num = Math.min(num, parseInt(max));
 
-            if(num > 99) {
-                Dialog.tip("数量不能大于99");
-                num = 99;
-            }
+
+            // if(num > 99) {
+            //     Dialog.tip("数量不能大于99");
+            //     num = 99;
+            // }
         }
 
 
@@ -275,9 +276,9 @@ $(document).ready(function () {
         var minusEle = $this.parents('.number-group').find('.minus');
         var num = Math.max(1, parseInt($this.val()));
         var max = $this.attr('data-max');
-        if (max && max > 1) {
-            num = Math.min(max, num);
-        }
+        // if (max && max > 1) {
+        //     num = Math.min(max, num);
+        // }
         $this.val(num);
         if (num > 1) {
             minusEle.removeClass('disable');

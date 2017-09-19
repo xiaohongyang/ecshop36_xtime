@@ -54,26 +54,26 @@
                 <button>竞拍已结束</button>
             </div>
             {else}
-            {if $my_bid >= $auction.current_price && $my_bid > 0}
-            <div class="cauctioning1-btn">
-                        <button> <img src="/pc/themes/default/img/cimage57.png" alt="">暂不可叫价</button>
-                        <span class="caucting-price corder-pad">你的当前叫价：{$my_bid|price}</span>
-                        <p class="corder-red">
-                            * 需等其他人叫价之后才能再次叫价
-                        </p>
-                    </div>
-            {else}
-            <div class="cauctioning-btn">
-                <button> 
-                    <a href="auction.php?act=bid&id={$auction.act_id}">
-                        <img src="/pc/themes/default/img/cimage56.png" alt="">立即加价
-                    </a>
-                </button>
-                {if $my_bid}
-                <span class="caucting-price corder-pad">你的当前叫价：{$my_bid|price}</span>
+                {if $auction.last_bid.bid_user eq $user_id}
+                <div class="cauctioning1-btn">
+                            <button> <img src="/pc/themes/default/img/cimage57.png" alt="">暂不可叫价</button>
+                            <span class="caucting-price corder-pad">你的当前叫价：{$my_bid|price}</span>
+                            <p class="corder-red">
+                                * 需等其他人叫价之后才能再次叫价
+                            </p>
+                        </div>
+                {else}
+                <div class="cauctioning-btn">
+                    <button>
+                        <a href="auction.php?act=bid&id={$auction.act_id}">
+                            <img src="/pc/themes/default/img/cimage56.png" alt="">立即加价
+                        </a>
+                    </button>
+                    {if $my_bid}
+                    <span class="caucting-price corder-pad">你的当前叫价：{$my_bid|price}</span>
+                    {/if}
+                </div>
                 {/if}
-            </div>
-            {/if}
             {/if}
         </div>
         <div class="clear"></div>

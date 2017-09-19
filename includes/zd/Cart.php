@@ -127,24 +127,27 @@ class Cart {
             //查询：系统启用了库存，检查输入的商品数量是否有效
             if (intval($GLOBALS['_CFG']['use_storage']) > 0 && $goods['extension_code'] != 'package_buy')
             {
-                if ($row['goods_number'] < $val)
-                {
-                    Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
-                        $row['goods_number'], $row['goods_number']));
-                    exit;
-                }
+
                 if ($val >= 99) {
                     Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
                         $row['goods_number'], $row['goods_number']));
                     exit;
-                }
-                if ($val < 1) {
+                } else if ($val < 1) {
                     Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
                         $row['goods_number'], $row['goods_number']));
                     exit;
                 }
-                /* 是货品 */
                 $goods['product_id'] = trim($goods['product_id']);
+                if(empty($goods['product_id'])) {
+                    if ($row['goods_number'] < $val)
+                    {
+                        Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
+                            $row['goods_number'], $row['goods_number']));
+                        exit;
+                    }
+                }
+
+                /* 是货品 */
                 if (!empty($goods['product_id']))
                 {
                     $sql = "SELECT product_number FROM " .$GLOBALS['ecs']->table('products'). " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $goods['product_id'] . "'";

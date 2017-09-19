@@ -150,10 +150,11 @@ class Cart {
                     $sql = "SELECT product_number FROM " .$GLOBALS['ecs']->table('products'). " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $goods['product_id'] . "'";
 
                     $product_number = $GLOBALS['db']->getOne($sql);
+                   
                     if ($product_number < $val)
                     {
                         Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
-                            $product_number['product_number'], $product_number['product_number']));
+                            $product_number, $product_number));
                         exit;
                     }
                     if ($val > 99)

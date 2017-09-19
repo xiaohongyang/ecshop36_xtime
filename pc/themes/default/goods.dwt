@@ -107,7 +107,7 @@
         <div class="clear"></div>
     </div><!--details-con-->
 </div>
-<script src="/pc/themes/default/js/flow.js"></script>
+<!--<script src="/pc/themes/default/js/flow.js"></script>-->
 <script>
     $(document).ready(function () {
 

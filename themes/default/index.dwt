@@ -24,6 +24,8 @@
     </header>
     <div class="banner">
       {insert name='ads' id=1 num=6}
+
+
     </div>
     <ul class="nav navlist">
       <!-- {if $sort eq "total"} -->
@@ -145,6 +147,15 @@ $(function() {
         keys: true,               //  Enable keyboard (left, right) arrow shortcuts
         dots: true,               //  Display dot navigation
         fluid: false              //  Support responsive design. May break non-responsive designs
+    });
+
+
+    /*banner滚动图片*/
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        slidesPerView: 1,
+        loop: true,
+        autoplay : 2000
     });
 
 });

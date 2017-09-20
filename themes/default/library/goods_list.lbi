@@ -5,7 +5,7 @@
         {foreach from=$goods_list item=item}
         <dl>
             <dt><a href="{$item.url}">
-          <span class="citem-img" style="background:url({$item.goods_thumb});  background-position: center;
+          <span class="citem-img" style="background:url({$item.goods_thumb|picsrc});  background-position: center;
         background-size: cover;"></span>
             </a></dt>
             <dd class="zyyi">{$item.goods_name}</dd>
@@ -22,7 +22,7 @@
         {foreach from=$goods_list item=item}
         <dl>
             <dt><a href="{$item.url}">
-          <span class="citem-img" style="background:url({$item.goods_thumb});  background-position: center;
+          <span class="citem-img" style="background:url({$item.goods_thumb|picsrc});  background-position: center;
         background-size: cover;"></span>
             </a></dt>
             <dd class="zyyi">{$item.goods_name}</dd>

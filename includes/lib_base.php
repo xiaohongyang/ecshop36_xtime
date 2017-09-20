@@ -1301,15 +1301,21 @@ function write_static_cache($cache_name, $caches)
 function picsrc($str)
 {
 
-    if(strpos($str,'http') !== false){
-        return $str;
-    } else if(strpos($str,'/')===0){
-        return $str;
+    if(strpos($str,'/')===0){
+//        return $str;
     } else if(strlen($str)){
-        return '/' . $str;
+        $str = '/' . $str;
     } else {
-        return "";
+        $str = "";
     }
+
+    if(strpos($str,'http') === false){
+
+        $str = !is_file(ROOT_PATH . $str) ? "/images/no_picture.gif" : $str;
+        //$str = "/images/no_picture.gif";
+    }
+
+    return $str;
 }
 
 function replace($search, $replaceString='', $str){

@@ -7,7 +7,7 @@
             <div class="collection-thing"  data-id="{$goods.rec_id}">
                 <div class="collection-left collection-img">
                     <a href="{$goods.url}">
-                         <img src="{$goods.goods_thumb}" alt="">
+                         <img src="{$goods.goods_thumb|picsrc}" alt="">
                     </a>
                    
                 </div>

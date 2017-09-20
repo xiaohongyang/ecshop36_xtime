@@ -27,13 +27,13 @@
 <div class="box box1">
         <div class="content">
             <div class="contents">
-                <h1 class="title"><img src="/pc/themes/default/img/9.png"></h1>
+                <h1 class="title"><img src="/pc/themes/default/img/BIDDINGS.png"></h1>
                 <div class="screen">
                     <div class="sort-btn
                     {if $sort eq 'price' && $order eq 'asc'} sort-asc {/if}
                     {if $sort eq 'price' && $order eq 'desc'} sort-desc {/if}
                     ">
-                        <a href="javascript:;" data-sort-column="price">价格</a>
+                        <a href="javascript:;" data-sort-column="price">进度</a>
                         <i class="asc-btn"></i>
                         <i class="desc-btn"></i>
 
@@ -42,7 +42,7 @@
                     {if $sort eq 'sales' && $order eq 'asc'} sort-asc {/if}
                     {if $sort eq 'sales' && $order eq 'desc'} sort-desc {/if}
                     ">
-                                <a href="javascript:;" data-sort-column="sales">销量</a>
+                                <a href="javascript:;" data-sort-column="sales">叫价</a>
                                 <i class="asc-btn"></i>
                                 <i class="desc-btn"></i>
                             </div>
@@ -60,31 +60,33 @@
                     {foreach from=$auction_list item=goods}
                     <div>
                         <dl>
-                            <dt><img src="{$goods.goods_thumb|picsrc}"></dt>
+                            <dt><a href="{$goods.url}"><img src="{$goods.goods_thumb|picsrc}"></a></dt>
                             <dd class="one"><a href="{$goods.url}">{$goods.goods_name}</a></dd>
-                            <dd class="two"><a href="{$goods.url}">周边商品</a></dd>
+                            <dd class="two">周边商品</dd>
                             <dd class="three">当前参与人数：<em class="produce-purple">{$goods.user_count}</em></dd>
                             <dd class="four corder-paddt"><span class="produce-purple">*</span>截止时间：<span class="produce-purple">{$goods.formated_end_time}</span></dd>
                             <dd class="five corder-paddt">当前叫价：<span class="produce-purple prdouce-weight"><em class="produce-big">{$goods.current_price}</em></span>星辉币</dd>
+                            <dd class="auction-deji">
                             {if $goods.user_rank==''}
-
+                          
                                 {foreach from=$user_rank_list item=rank}
-                                    <dd class="{if $rank.rank_id == 1}ssr{/if}
+                                    <span class="{if $rank.rank_id == 1}ssr{/if}
                                                 {if $rank.rank_id == 2}new{/if}
                                                 {if $rank.rank_id == 3}ur{/if}
                                                 {if $rank.rank_id == 4}sr{/if}
-                                                {if $rank.rank_id == 5}r{/if} rank{$rank.rank_name}">{$rank.rank_name}</dd>
+                                                {if $rank.rank_id == 5}r{/if} rank{$rank.rank_name}">{$rank.rank_name}</span>
                                 {/foreach}
 
                             {else}
                                 {foreach from=$goods.rank_list item=rank}
-                                    <dd class="{if $rank.rank_id == 1}ssr{/if}
+                                    <span class="{if $rank.rank_id == 1}ssr{/if}
                                                 {if $rank.rank_id == 2}new{/if}
                                                 {if $rank.rank_id == 3}ur{/if}
                                                 {if $rank.rank_id == 4}sr{/if}
-                                                {if $rank.rank_id == 5}r{/if} rank{$rank.rank_name}">{$rank.rank_name}</dd>
+                                                {if $rank.rank_id == 5}r{/if} rank{$rank.rank_name}">{$rank.rank_name}</span>
                                 {/foreach}
                             {/if}
+                            </dd>
                             <!--<dd class="new"><a href="{$goods.url}">NEW</a></dd>
                             <dd class="ssr"><a href="{$goods.url}">SSR</a></dd>-->
                             <p class="clear"></p>

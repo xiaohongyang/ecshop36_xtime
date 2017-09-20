@@ -46,7 +46,7 @@
                         </p>
                         <div class="corder-details">
                             <div class="corder-top">
-                                <table class="top-table">
+                                <table class="top-table cart-table">
                                     <tbody>
                                         {foreach from=$goods_list item=goods}
                                         <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" class="goods-item" >
@@ -88,7 +88,7 @@
                                             <p class="amount">{$goods.subtotal|price}</p>
                                             <p>+0积分</p>    
                                         </td>
-                                        <td class="delete">X</td>
+                                        <td class="delete"><img src="themes/default/img/Delete Icon.png" alt=""></td>
                                     </tr>
                                     {/foreach}
                                 </tbody>

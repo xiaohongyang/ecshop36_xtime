@@ -44,10 +44,9 @@ li {
 }
 
 .header .head .tou {
-    height: 35px;
     line-height: 35px;
     border-bottom: 1px solid #F6F6FA;
-    padding-bottom: 10px
+    padding: 5px 0px;
 }
 
 .header .head .tou span.order-left {
@@ -63,11 +62,12 @@ li {
 }
 
 .header .head .tou .toudiv img {
-    vertical-align: middle
+    vertical-align: middle;
 }
 
 .header .head .logo {
-    float: left
+    float: left;
+    padding:10px;
 }
 
 .header .head .search {
@@ -182,7 +182,10 @@ li {
     width: 100%;
     height: 470px
 }
-
+.main_image li img{
+    width:100%;
+    height:100%;
+}
 .main_image li a {
     display: block;
     width: 100%;
@@ -321,7 +324,7 @@ div.flicking_con a.on {
 
 .yunfei {
     overflow: hidden;
-    margin-top: 10px;
+    margin-top: 35px;
 }
 
 .content .contents .pro div dl dt {
@@ -345,7 +348,7 @@ div.flicking_con a.on {
     line-height: 40px
 }
 
-.content .contents .pro div dl .two a {
+.content .contents .pro div dl .two  {
     font-size: 12px;
     color: #BBC0CF;
     height: 50px;
@@ -658,6 +661,7 @@ button.user-dealDone-close {width: 16px; height: 16px;border: 1px solid #aeaeae;
 .corder-member-img img {
     width: 100%;
     border-radius: 7px;
+    height:100%;
 }
 
 .corder-ssr {
@@ -726,10 +730,12 @@ button.user-dealDone-close {width: 16px; height: 16px;border: 1px solid #aeaeae;
 .corder-main-header .corder-main-ul li {
     float: left;
     border: 2px solid #e4e8ef;
-    padding: 5px 20px;
     border-right: none;
 }
-
+.corder-main-header .corder-main-ul li a{
+    display: inline-block;
+    padding: 5px 20px;
+}
 .corder-main-header .corder-main-ul li:first-child {
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
@@ -809,7 +815,7 @@ input:focus {
 }
 
 .corder-main-mains span:nth-child(2) {
-    width: 12%;
+    width: 14%;
 }
 
 .corder-main-mains span:nth-child(3) {
@@ -842,7 +848,7 @@ em {
     background: #fff;
     box-shadow: 0px 5px 15px #ccc;
     width: 120px;
-    left: 20px;
+    left: 50px;
     text-align: left;
     top: 38px;
     border: 1px solid #eee;
@@ -879,7 +885,6 @@ em {
 }
 
 .corder-details .corder-top table tr {
-    border-bottom: 1px solid #F4F4F4;
     width: 100%;
     display: inline-block;
 }
@@ -995,19 +1000,25 @@ em {
     font-size: 20px;
     font-weight: 800;
     text-align: center;
-    margin-top: 140px;
-    color: #666
+    margin-top: 48px;
+    color: #666;
+    letter-spacing: 4px;
 }
 
 .corder-details .corder-top .you p.again {
     text-align: center;
-    color: #666666
+    color: #666666;
+    line-height: 25px;
+    font-size: 13px;
 }
 
 .corder-details .corder-top .you p.again img {
     vertical-align: middle
 }
 
+.corder-pagg span.corder-right a.remove-order{
+    border:none;
+}
 .corder-details .corder-top .you p.buy a {
     width: 102px;
     height: 30px;
@@ -1018,9 +1029,23 @@ em {
     line-height: 30px;
     border-radius: 5px;
     display: block;
-    margin: 3px auto
+    margin: 3px auto;
 }
-
+.corder-details .corder-top .you p.buy.order-confirm{
+    margin-top:55px;
+}
+.corder-details .corder-top .you p.buy.order-confirm a {
+    width: 102px;
+    height: 30px;
+    border: 1px solid #1AB3C5;
+    background-color: #1AB3C5;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 12px;
+    display: block;
+    margin: 3px auto;
+}
 .corder-details .corder-top .you p.lan a {
     border: 1px solid #1AB3C5;
     background-color: #1AB3C5;
@@ -1041,7 +1066,8 @@ em {
     width: 270px;
     float: right;
     padding: 15px 25px;
-    border-left: 1px solid #C5DDDE
+    border-left: 1px solid #C5DDDE;
+    margin-top:8px;
 }
 
 .corder-details .corder-bot .right p {
@@ -1253,7 +1279,7 @@ em {
     text-align: center;
     line-height: 40px;
     color: #fff;
-    font-size: 14px;
+    font-size: 18px;
     margin: 0 10px
 }
 
@@ -1489,7 +1515,8 @@ em {
 }
 
 .product .pro-detais .guige p {
-    color: #B8BBCC
+    color: #B8BBCC;
+    line-height:25px;
 }
 
 .product .pro-detais .guige span {
@@ -1592,32 +1619,46 @@ em {
     height: 50px;
     line-height: 50px;
     text-align: center;
-    border-bottom: 1px solid #DBDBDB
+    border-bottom: 1px solid #DBDBDB;
+    box-sizing:border-box;
 }
 
+.details-con .details-left .auction_list{overflow: hidden}
 .details-con .details-left dl {
-    border-bottom: 1px solid #DBDBDB
+    border-bottom: 1px solid #DBDBDB;
+    overflow: hidden;
+    padding:10px;
 }
 
 .details-con .details-left dl dt {
     float: left;
-    width: 60%;
+    width: 27%;
+    margin-top:10px;
 }
 
 .details-con .details-left dl dt img {
-    width: 100%;
+    width:58px;
+    height: 58px;
+    border-radius:50%;
 }
 
 .details-con .details-left dl dd {
-    line-height: 30px;
+    width:73%;
     float: left;
-    overflow: hidden;
+    
 }
-
-.details-con .details-left dl:last-of-type {
-    border-bottom: none;
+.caucting-price span.cgoods-money b{
+    color:#CC3C6D;
+    font-size: 18px;
 }
-
+.details-con .details-left dl dd span{
+    display: block;
+    font-size: 12px;
+    line-height: 25px;
+}
+.details-con .details-left dl dd span.hui span{
+    display: inline-block
+}
 .details-con .details-left dl .hui {
     color: #A7AAB3
 }
@@ -1804,7 +1845,7 @@ em {
     padding: 20px;
     position: absolute;
     top: 15px;
-    right: 0px;
+    right: -25px;
     z-index: 999;
     display: none;
 }
@@ -1812,7 +1853,7 @@ em {
 .nicheng dl {
     width: 180px;
     margin: 0 auto;
-    margin-top: 50px;
+    margin-top: 40px;
     text-align: center;
     position: relative
 }
@@ -1828,7 +1869,7 @@ em {
 }
 
 .nicheng ul {
-    width: 180px;
+    width: 240px;
 }
 
 .nicheng ul li {
@@ -1854,7 +1895,7 @@ em {
     color: #fff;
     border: 1px solid #61C1BF;
     border-radius: 5px;
-    margin: 20px auto
+    margin: 15px auto;
 }
 
 .nicheng p {
@@ -1877,24 +1918,52 @@ em {
     display: none;
     left: -10px;
 }
-
+.shopcar::-webkit-scrollbar{
+    height:6px;
+    width:6px;
+    margin-right:5px;
+    background: #f5f5f5;
+    transition:all 0.3s ease-in-out;
+    border-radius:0px
+}
+.shopcar::-webkit-scrollbar-track { 
+    -webkit-border-radius: 5px;
+    border-radius: 0px;
+}
+.shopcar::-webkit-scrollbar-thumb{
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    background: rgba(95,192,188,0.5); 
+       
+    }
+.shopcar::-webkit-scrollbar-thumb:hover{
+    background:rgba(95,192,188,0.6);
+}
+.shopcar::-webkit-scrollbar-thumb:active{
+    background:rgba(95,192,188,0.8);
+}
+.shopcar::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(95,192,188,0.4);
+}
 .shopcar .yifu {
     width: 270px;
     border-bottom: 1px solid #F4F5F9;
-    margin: 0 auto;
+    margin: 0px auto;
     margin-top: 20px;
+    padding-bottom: 5px;
 }
 
 .shopcar .yifu h1 {
     float: left;
     width: 110px;
-    text-align: center
+    text-align: center;
+    margin-top: 13px;
 }
 
 .shopcar .yifu .yifu-deta {
     float: left;
-    margin-top: 20px;
-    width: 155px
+    margin-top: 10px;
+    width: 155px;
 }
 
 .shopcar .yifu .yifu-deta .bold {
@@ -1908,8 +1977,8 @@ em {
 
 .shopcar .yifu .yifu-deta .but {
     border: 2px solid #E5E8F0;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
     border-radius: 25px;
     width: 100px;
 }
@@ -2089,12 +2158,13 @@ button:focus {
 }
 
 .caddress-modal {
-    position: absolute;
+    position: relative;
     width: 1200px;
     height: 498px;
-    left: 300px;
-    top: 400px;
+    left:0px;
+    top: -280px;
     display: none;
+    margin:0 auto;
 }
 
 .caddress-modal-cystem {
@@ -2189,6 +2259,11 @@ button:focus {
     margin-bottom: 15px;
     background: #fff;
     padding: 5px;
+}
+
+.caddress-modal-right button.saveBtn{
+    background:#61CCCD;
+    color:#fff;
 }
 
 .caddress-list {
@@ -2524,7 +2599,10 @@ button:focus {
 }
 
 .back {
-    background: url(../img/1.jpg) no-repeat center
+    background: url(../img/1.jpg) no-repeat 20px -82px;
+    background-size: 100%;
+    width: 1200px;
+    margin: 0 auto;
 }
 
 .onload {
@@ -2536,7 +2614,10 @@ button:focus {
 .onload h1 {
     text-align: center
 }
-
+.onload h1 img{
+    margin-left: -80px;
+    margin-bottom: 20px;
+}
 .onload form {
     width: 520px
 }
@@ -2544,7 +2625,8 @@ button:focus {
 .onload form div {
     width: 460px;
     margin: 20px auto;
-    position: relative
+    position: relative;
+    clear:both;
 }
 
 .onload form div input {
@@ -2552,11 +2634,14 @@ button:focus {
     height: 58px;
     line-height: 58px;
     border: 1px solid #EBECF1;
-    border-radius: 5px;
+    border-radius: 20px;
     background-color: #F1F2F7;
     padding-left: 50px;
 }
-
+.onload form div  a{
+    font-size:13px;
+    padding-left:10px;
+}
 .onload form div img.zuo {
     position: absolute;
     left: 10px;
@@ -2568,12 +2653,22 @@ button:focus {
     right: 210px;
     top: 20px
 }
-
+.onload form div  a.register-btn{
+    letter-spacing:10px;
+}
 .onload form div img.yanzheng {
     position: absolute;
-    right: 74px
+    right: 74px;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
 }
-
+.onload form div label.error{
+    float: left;
+    line-height: 30px;
+    color: #f00;
+    padding-left: 10px;
+    font-size:12px;
+}
 .onload form div .onloadin {
     width: 270px;
     height: 50px;
@@ -2586,7 +2681,7 @@ button:focus {
     font-weight: bold;
     padding: 0;
     text-align: center;
-    margin-left: 70px
+    margin-left: 50px
 }
 
 
@@ -2636,7 +2731,9 @@ form .register>div>span {
     height: 40px;
     line-height: 40px;
     padding-right: 5px;
-    color: #BABECD
+    color: #BABECD;
+    font-size: 12px;
+    letter-spacing: 5px;
 }
 
 form .register div select {
@@ -2663,7 +2760,7 @@ form .register div input.fang {
     border: 1px solid #EDF1F6;
     height: 40px;
     line-height: 40px;
-    border-radius: 10px
+    border-radius: 5px
 }
 
 form .register div p {
@@ -2679,7 +2776,7 @@ form .register div .jiao {
     top: -20px;
     border: 1px solid #BFD8D7;
     width: 110px;
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 5px 5px 0;
     background-color: #BFD8D7;
     text-align: center
 }
@@ -2694,30 +2791,48 @@ form .register div .jiao span {
 .registerr {
     width: 520px;
     margin: 0 auto;
-    margin-top: 150px
+    margin-top: 50px;
 }
 
 .registerr h3 {
-    text-align: center
+    text-align: center;
+    line-height: 30px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    font-size: 17px;
 }
 
 .registerr .green {
     color: #8AB8B5;
-    text-align: center
+    text-align: center;
+    line-height: 25px;
+    font-size: 12px;
 }
 
 .registerr {
-    width: 520px
+    width: 520px;
 }
 
 .registerr div {
     width: 460px;
-    margin: 20px auto;
-    position: relative
+    margin: 10px auto;
+    position: relative;
+    margin-bottom:0;
 }
-
+.registerr div p.register-member{
+    display: inline-block;
+    float:left;
+    width:270px;
+    padding:0;
+    line-height: 25px;
+}
+.registerr div p.register-member input{
+    width:15px;
+    height:15px;
+    margin:16px 5px;
+}
 .registerr div .onloadin {
-    width: 270px;
+   width: 270px;
     height: 50px;
     line-height: 50px;
     background-color: #65C1BE;
@@ -2728,7 +2843,10 @@ form .register div .jiao span {
     font-weight: bold;
     padding: 0;
     text-align: center;
-    margin-left: 70px
+    float: initial;
+    margin-top: 20px;
+    letter-spacing: 5px;
+ 
 }
 
 .registerr div>span {
@@ -2739,7 +2857,9 @@ form .register div .jiao span {
     line-height: 24px;
     padding-right: 5px;
     margin: 10px 0;
-    color: #BABECD
+    color: #BABECD;
+    letter-spacing: 5px;
+    font-size: 12px;
 }
 
 .registerr div select {
@@ -2756,7 +2876,7 @@ form .register div .jiao span {
     width: 270px;
     float: left;
     border: 1px solid #EDF1F6;
-    height: 26px;
+    height: 15px;
     line-height: 26px;
     border-radius: 25px;
     margin: 10px 0
@@ -2798,19 +2918,22 @@ form .register div .jiao span {
 
 .registerr div.dis {
     width: 350px;
-    text-align: center
+    text-align: center;
+    clear:both;
 }
 
 .registerr div.dis .check {
-    width: 40px;
-    margin-top: 0;
+    width: 15px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    float: initial;
 }
-
+.registerr div.dis a{
+    color: #BABECD;
+    display: inline-block;
+}
 .registerr div.dis p {
-    width: 65%;
     padding: 0;
-    margin-top: 60px;
-    text-align: right;
     color: #427A77;
     font-size: 12px
 }
@@ -2818,7 +2941,7 @@ form .register div .jiao span {
 .registerr div.dis p span {
     background-color: #1F4244;
     color: #fff;
-    padding: 0 3px;
+    padding: 0 5px;
     border: 1px solid #1F4244;
     border-radius: 15px;
     margin-left: 5px;
@@ -2852,13 +2975,16 @@ form .register div .jiao span {
     height: 50px;
     line-height: 50px
 }
-
+.information .zuodiv p img{
+    vertical-align: middle;
+}
 .information .zuodiv p span {
     display: block;
     width: 80px;
     text-align: right;
     padding-right: 10px;
-    float: left
+    float: left;
+    letter-spacing: 3px;
 }
 
 .information .zuodiv p input {
@@ -2878,6 +3004,9 @@ form .register div .jiao span {
     margin-top: 20px
 }
 
+.information dl dd{
+    text-align:center;
+}
 .information dl dd a {
     width: 115px;
     height: 33px;
@@ -2886,15 +3015,16 @@ form .register div .jiao span {
     border-radius: 20px;
     background-color: #62CCCC;
     color: #fff;
-    display: block;
+    display: inline-block;
     text-align: center;
-    margin-left: 50px;
     margin-top: 10px
 }
 
 .information .zuodiv p a {
     color: #4169E9;
-    margin-left: 10px
+    margin-left: 10px;
+    font-size: 12px;
+    text-decoration: underline;
 }
 
 .information .youdiv {
@@ -2913,7 +3043,8 @@ form .register div .jiao span {
     width: 80px;
     text-align: right;
     padding-right: 10px;
-    float: left
+    float: left;
+    letter-spacing: 3px;
 }
 
 .information .youdiv p input {
@@ -2930,16 +3061,22 @@ form .register div .jiao span {
 
 .information .youdiv p a {
     color: #4169E9;
-    margin-left: 10px
+    margin-left: 10px;
+    font-size:12px;
+    text-decoration: underline;
 }
 
 .corder-pagg span.corder-left {
-    font-size: 20px;
+    font-size: 16px;
     letter-spacing: 1px;
+    color: #3E425B;
 }
-
+.corder-pagg span.corder-left em input[type='checkbox']{
+    width:15px;
+    height:15px;
+}
 .corder-pagg span.corder-right a {
-    border: 1px solid #61CECD;
+    border: 2px solid #61CECD;
     color: #61CECD;
     background: #fff;
     height: 20px;
@@ -2964,6 +3101,8 @@ form .register div .jiao span {
 
 .information dl.cinfo-right dt img {
     width: 100%;
+    height:100%;
+    border-radius: 10px;
 }
 
 .cinfo-center {
@@ -3104,18 +3243,23 @@ form .register div .jiao span {
 
 .corder-main-mainmain .incheck {
     height: 40px;
-    line-height: 40px
+    line-height: 40px;
+
 }
 
 .corder-main-mainmain .incheck input {
     margin-right: 5px;
-    vertical-align: middle
+    vertical-align: middle;
+        width: 15px;
+    height: 15px;
 }
 
 .corder-details .corder-top table td input {
     margin-top: 50px;
     float: left;
-    margin-left: 10px
+    margin-left: 5px;
+    width: 15px;
+    height: 15px;
 }
 
 .corder-details .corder-top table td .shixiao {
@@ -3139,13 +3283,13 @@ form .register div .jiao span {
     float: left
 }
 
-.corder-details .corder-top table.top-table td {
+.corder-details .corder-top table.top-table tr {
     border-bottom: 1px solid #F4F4F4
 }
 
 .corder-details .corder-top table.top-table .dlkuan {
-    width: 470px;
-    float: left
+    width: 460px;
+    float: left;
 }
 
 .corder-details .corder-top table.top-table .dlkuan h1 {
@@ -3253,7 +3397,10 @@ form .register div .jiao span {
 .corder-details .corder-top table.top-table p.jiajian {
     overflow: hidden;
     height: 40px;
-    line-height: 40px
+    line-height: 40px;
+    text-align: center;
+    margin: 0 auto;
+    display: inline-block;
 }
 
 .corder-details .corder-top table.top-table p.jiajian span {
@@ -3262,13 +3409,14 @@ form .register div .jiao span {
 }
 
 .corder-details .corder-top table.top-table p.jiajian input {
-    width: 28px;
+    width: 40px;
     height: 20px;
     line-height: 20px;
     float: left;
     margin-top: 10px;
     border-radius: 3px;
-    border: 1px solid #ccc
+    border: 1px solid #ccc;
+    text-align: center;
 }
 
 .corder-details .corder-top table.top-table p.orange span {
@@ -3311,7 +3459,9 @@ form .register div .jiao span {
 
 .dibu .zuo input {
     float: left;
-    margin: 18px 10px 0 10px
+    margin: 18px 10px 0 10px;
+    width: 15px;
+    height: 15px;
 }
 
 .dibu .zuo span {
@@ -3348,7 +3498,9 @@ form .register div .jiao span {
     height: 50px;
     line-height: 50px;
     border: 1px solid #62CCCC;
-    margin-left: 10px
+    margin-left: 10px;
+    font-size: 20px;
+    letter-spacing: 3px;
 }
 
 
@@ -3891,8 +4043,8 @@ td.confirm-tdblock span {
 
 .cauction-over-btn button {
     width: 150px;
-    height: 35px;
-    line-height: 30px;
+    height: 40px;
+    line-height: 35px;
     color: #fff;
     background: #707070;
     color: #fff;
@@ -3900,6 +4052,7 @@ td.confirm-tdblock span {
     border: 1px solid #707070;
     border-radius: 20px;
     margin-left: 30px;
+    font-size: 14px;
 }
 
 .corder-pre {
@@ -3930,7 +4083,8 @@ td.confirm-tdblock span {
     width: 40px;
     height: 17px;
     float: left;
-    box-sizing: border-box
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .caution-input {
@@ -3950,6 +4104,7 @@ td.confirm-tdblock span {
 
 .cauctioning-btn img {
     vertical-align: middle;
+    margin-right:12px;
 }
 
 .cauctioning-btn button {
@@ -3963,11 +4118,14 @@ td.confirm-tdblock span {
     border: 1px solid #FF6766;
     border-radius: 20px;
     margin-left: 30px;
+    font-size:15px;
 }
-
+.cauctioning-btn button  a{
+    color:#fff;
+}
 .caucting-price em {
-    font-size: 20px;
-    color: #CE886A;
+    font-size: 22px;
+    color: #CC3C6D;
 }
 
 
@@ -3979,12 +4137,13 @@ td.confirm-tdblock span {
 
 .cauctioning1-btn img {
     vertical-align: middle;
+    margin-right:10px;
 }
 
 .cauctioning1-btn button {
     width: 150px;
-    height: 35px;
-    line-height: 30px;
+    height: 40px;
+    line-height: 35px;
     color: #fff;
     background: #999999;
     color: #fff;
@@ -3992,6 +4151,7 @@ td.confirm-tdblock span {
     border: 1px solid #999999;
     border-radius: 20px;
     margin-left: 30px;
+    font-size: 14px;
 }
 
 .corder-red {
@@ -4019,23 +4179,20 @@ td.confirm-tdblock span {
 }
 
 .content .contents .pro div dl .new {
-    position: absolute;
-    left: 22px;
-    top: 36px;
     width: 46px;
     height: 22px;
-    background-color: #CA3366;
-    border: 1px solid #CA3366;
+    background-color: #68CBD1;
+    border: 1px solid #68CBD1;
     border-radius: 3px;
     line-height: 22px;
-}
-
-.content .contents .pro div dl .new a {
+    display: inline-block;
     color: #fff;
+    margin-bottom:5px;
 }
 
 .produce-purple {
     color: #E0819F;
+    font-weight:600;
 }
 
 .corder-paddt {
@@ -4057,20 +4214,17 @@ td.confirm-tdblock span {
 }
 
 .content .contents .pro div dl .ur {
-    position: absolute;
-    left: 22px;
-    top: 63px;
     width: 46px;
     height: 22px;
-    background-color: #FA553D;
-    border: 1px solid #FA553D;
+    background-color: #008375;
+    border: 1px solid #008375;
     border-radius: 3px;
     line-height: 22px;
+    color: #fff;
+    display: inline-block;
+    margin-bottom:5px;
 }
 
-.content .contents .pro div dl .ur a {
-    color: #fff;
-}
 
 .content .contents .pro div dl .ssr.srr {
     position: absolute;
@@ -4085,31 +4239,27 @@ td.confirm-tdblock span {
 }
 
 .content .contents .pro div dl .sr {
-    position: absolute;
-    left: 22px;
-    top: 117px;
     width: 46px;
     height: 22px;
     background-color: #A0A0A0;
     border: 1px solid #A0A0A0;
     border-radius: 3px;
     line-height: 22px;
-}
-
-.content .contents .pro div dl .sr a {
+    display: inline-block;
     color: #fff;
+    margin-bottom:5px;
 }
 
 .content .contents .pro div dl .r {
-    position: absolute;
-    left: 22px;
-    top: 144px;
     width: 46px;
     height: 22px;
-    background-color: #008375;
-    border: 1px solid #008375;
+    background-color: #FFCD68;
+    border: 1px solid #FFCD68;
     border-radius: 3px;
     line-height: 22px;
+    color: #fff;
+    display: inline-block;
+    margin-bottom:5px;
 }
 
 .content .contents .pro div dl .r a {
@@ -4156,7 +4306,7 @@ td.confirm-tdblock span {
 }
 
 .dd-details img {
-    vertical-align: middle;
+    vertical-align:baseline;
 }
 
 .ddkuan1 {
@@ -4180,11 +4330,12 @@ td.confirm-tdblock span {
 
 .corder-blockspan span {
     display: block;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
+    font-size: 13px;
 }
 
 .corder-blockspan img {
-    vertical-align: middle
+    vertical-align: bottom;
 }
 
 .corder-red1 {
@@ -4343,7 +4494,18 @@ table.jiaoyi tr td.active {
     width: 15%;
 }
 
+.jiaoyi2 tr td:nth-child(1) {
+    width: 31%;
+}
 
+.jiaoyi2 tr td:nth-child(2) {
+    width: 20%;
+}
+
+.jiaoyi2 tr td:nth-child(3),
+.jiaoyi2 tr td:nth-child(4) {
+    width: 15%;
+}
 /******************************忘记密码***********************  */
 
 .forget-password {
@@ -4636,12 +4798,71 @@ table.jiaoyi tr td.active {
 
 .asc-btn {
     background-image: url(../img/1-1.png);
+    vertical-align: middle;
 }
 
 .sort-asc .asc-btn {
     background-image: url(../img/19.png);
+    vertical-align: initial;
 }
 
 .sort-desc .desc-btn {
     background-image: url(../img/2-1.png);
+    vertical-align:middle;
+}
+
+.register-back{
+   background: url(../img/login-bg.png) no-repeat 20px 9px;
+}
+
+.pro-nav{overflow: hidden;}
+.product .pro-detais .guige.spec_li .spec_lilist span input[type="radio"]{
+    display:none;
+}
+.product .pro-detais .guige.spec_li .spec_lilist span label{padding:5px 10px;border:2px solid #E4E8EB;color:#000; margin-right: 10px;border-radius: 5px;}
+.product .pro-detais .guige.spec_li input:checked + label{color:#fff; background:#65C1BE;border:2px solid #65C1BE;}
+.spec_lilist{overflow:hidden;}
+.product .pro-detais .guige div.spec_lilist span{width:auto;border:none;padding:0;}
+.nicheng dl dt:nth-child(1){width:80px;height:80px;margin:0 auto;}
+.nicheng dl dt img.avatar{width: 100%;height: 100%;margin: 0 auto;border-radius: 5px;}
+.dd-details .corder-top .dlkuan img{width:100px;height:100px;}
+
+
+.corder-details .corder-top.corder-top-details table td:first-of-type {width: 45%;}
+.corder-details .corder-top.corder-top-details table td:nth-child(2) {width:12%;text-align:center}
+.corder-details .corder-top.corder-top-details table td:nth-child(3) {width: 12%;text-align: center}
+.corder-details .corder-top.corder-top-details table td:nth-child(4) {width: 18%;text-align: center}
+.corder-details .corder-top.corder-top-details table td:nth-child(5) {width: 8%;text-align: center}
+
+
+.corder-details .corder-top table.top-table.cart-table td:nth-of-type(2){width: 14%;text-align: center;}
+.corder-details .corder-top table.top-table.cart-table td:nth-of-type(3){width: 12%;text-align: center;}
+.corder-details .corder-top table.top-table.cart-table td:nth-of-type(4){width: 12%;text-align: center;}
+.corder-details .corder-top table.top-table.cart-table td:nth-of-type(5){width: 15%;text-align: center;}
+.corder-details .corder-top table.top-table.cart-table td:nth-of-type(6){width: 5%;text-align: center;}
+
+.find-back{background: url(../img/login-bg.png) no-repeat center;width: 1200px;margin: 0 auto;}
+.register h3{
+        line-height: 35px;
+    text-align: center;
+    font-size: 25px;
+    margin: 20px 10px 30px 10px;
+    font-weight: 500;
+    letter-spacing: 8px;
+}
+
+.corder-main-mains.corder-main-mainss span:first-child {
+    width: 38%;
+}
+
+.content .contents .pro div dl dd.auction-deji {
+    position: absolute;
+    left: 22px;
+    top: 36px;
+    width: 46px;
+    height:auto;
+}
+
+.corder-details .corder-top table.corder-width td.corder-blockspan span span.cgoods-money{
+    display: inline-block;
 }

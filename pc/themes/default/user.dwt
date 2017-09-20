@@ -8,7 +8,7 @@
 
 
        <div class="information">
-                <p class="bor">基本信息</p>
+                <p class="bor"><img src="themes/default/img/member-info.png" alt=""></p>
                 <div class="zuodiv">
                     <p>
                         <span>用户名:</span>{$user_info.user_name}
@@ -87,7 +87,7 @@
                 <div class="clear"></div>
             </div>
             <div class="information">
-                <p class="bor">注册信息与账户安全</p>
+                <p class="bor"><img src="themes/default/img/member-info1.png" alt=""></p>
                 <div class="zuodiv">
                     <p>
                         <span>真实姓名:</span>{$user_info.real_name}<a href="javascript:;" class="cinfo-edit">修改</a>

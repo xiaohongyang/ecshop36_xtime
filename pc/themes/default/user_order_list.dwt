@@ -19,7 +19,7 @@
                 </form>
             </div>
             <div class="corder-main-mainmain" style="min-height: 250px">
-                <div class="corder-main-mains">
+                <div class="corder-main-mains corder-main-mainss">
                     <span>项目</span>
                     <span>单价</span>
                     <span>数量</span>
@@ -50,12 +50,12 @@
                                 <a href="javascript:void(0)" class="remove-order" data-order-id ='{$order.order_id}'>
                                     <img src="themes/default/img/cimage7.png" alt="">
                                 </a>
-                            </span> {$order.order_status}
+                            </span> 
                         {/if}
 
                     </p>
                     <div class="corder-details">
-                        <div class="corder-top">
+                        <div class="corder-top corder-top-details">
                             <table>
                                 {foreach from=$order.goods_list item=goods}
                                 <tr>
@@ -100,6 +100,7 @@
                                     <td>{$goods.goods_price}</td>
                                     <td>{$goods.goods_number}</td>
                                     <td>{$goods.goods_sub_price}</td>
+                                    <td>{$order.order_status}</td>
                                     {if $order.status eq 0}
                                     <td>退款/退货</td>
                                     {/if}
@@ -122,7 +123,7 @@
                                 {/if}
 
                                 {if $order.shipping_status==1 && $order.pay_status==2}
-                                    <p class="buy"><a href="user.php?act=affirm_received&order_id={$order.order_id}">收货</a></p>
+                                    <p class="buy order-confirm"><a href="user.php?act=affirm_received&order_id={$order.order_id}">确认收货</a></p>
                                 {/if}
 
 

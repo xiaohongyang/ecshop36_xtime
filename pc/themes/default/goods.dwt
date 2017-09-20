@@ -11,7 +11,6 @@
                 <a href="category.php?id={$cat.cat_id}">{$cat.cat_name}</a>
                 <span>&gt;</span>
                 <a href="javascript:;" class="current">商品详情</a>
-                <div class="clear"></div>
             </p>
             <div>
                 <p>
@@ -30,7 +29,7 @@
                     <span>0</span>
                 </div>
             </div>
-            <p class="clear" style="height:0"></p>
+           
         </div>
         <!-- #BeginLibraryItem "/library/goods_gallery.lbi" --><!-- #EndLibraryItem -->
 
@@ -52,19 +51,23 @@
             <!-- {foreach from=$specification item=spec key=spec_key} -->
             <div class="guige spec_li" data-attr-name='{$spec.name}'>
                 <p>{$spec.name}</p>
+                <div class="spec_lilist">
                 <!-- {foreach from=$spec.values item=value key=key} -->
-                <label for="spec_value_{$value.id}">
-                    <input type="radio" class="spec" name="spec_{$spec_key}" value="{$value.id}"
+                <span>
+                     <input type="radio" class="spec" name="spec_{$spec_key}" value="{$value.id}"
                     id="spec_value_{$value.id}"   />
-                    {$value.label} </label>
+                    <label for="spec_value_{$value.id}"> {$value.label} </label>
+                </span>
+               
                 <!-- {/foreach} -->
+                </div>
                 <div class="clear"></div>
             </div>
             <!-- {/foreach} -->
             <div class="yunfei">
                 <div class="shang">
                     <p>{if $goods.is_shipping}运费：包邮{/if}</p>
-                    <div class="number-group>
+                    <div class="number-group">
                         <span style="float:left">数量</span>
                         <div class="num number-box">
                             <span class="number-minus">-</span>

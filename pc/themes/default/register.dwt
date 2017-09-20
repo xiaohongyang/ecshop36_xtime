@@ -25,7 +25,7 @@
 <body>
 
 
-    <div class="box back">
+    <div class="box register-back">
         <div class="header">
             <div class="head">
                 <div class="tou">
@@ -61,12 +61,12 @@
                 </div>
                 <div>
                     <span>设置密码:</span>
-                    <input type="password" name="password" required placeholder="设置密码">
+                    <input type="password" name="password" required >
                     <div class="clear"></div>
                 </div>
                 <div>
                     <span>确认密码:</span>
-                    <input type="password" name="confirm_password" required placeholder="确认密码" class="fang">
+                    <input type="password" name="confirm_password" required  class="fang">
                     <div class="clear"></div>
                 </div>
         </div>
@@ -97,9 +97,11 @@
 	<!-- {/foreach} -->
                 <div>
                     <span>性别:</span>
-                    <a style="float:left;padding-top:10px">男</a><input checked=checked type="radio" name="sex" value="1" style="width:34px; vertical-align: middle">
-                    <a style="float:left;padding-top:10px">女</a><input type="radio" name="sex"  value="2" style="width:34px; vertical-align: middle">
-                    <div class="clear"></div>
+                    <p class="register-member">
+                        <a style="float:left;padding-top:10px">男</a><input checked=checked type="radio" name="sex" value="1">
+                        <a style="float:left;padding-top:10px">女</a><input type="radio" name="sex"  value="2" >
+                    </p>
+                   
                 </div>
                 <div class="dis">
                     <input type="checkbox" class="check" name="agreement" value="1" checked=checked><a>已经阅读并且同意《星辉俱乐部注册协议》</a>
@@ -108,6 +110,7 @@
                     <a href="user.php">登录</a>    
                     </span></p>
                 </div>
+                
 
         </div>
             </form>
@@ -178,4 +181,3 @@ $(document).ready(function () {
     });
 });
 </script>
-<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

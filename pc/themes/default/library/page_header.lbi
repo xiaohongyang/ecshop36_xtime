@@ -34,7 +34,7 @@
                     <p class="clear"></p>
                 </div>
                 <h1 class="logo">
-                    <a href="index.php"><img src="themes/default/img/1.png" /></a>    
+                    <a href="index.php"><img src="themes/default/img/LOGO.png" /></a>    
                 </h1><!--logo-->
                 <div class="search">
                     {if $auction_name=='auction'}

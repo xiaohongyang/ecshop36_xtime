@@ -40,22 +40,17 @@
                   
                 </div>
                 <div class="corder-main-mainmain">
-                    <div class="corder-main-mains corder-main-mains2">
+                    <div class="corder-main-mains corder-main-mains3">
                         <span>时间</span>
                         <span>操作类型</span>
                         <span class="corder-rel">项目 
-                            <img src="/pc/themes/default/img/cimage29.png" alt="" class="corder-pad">
-                            <div class="corder-manager">
-                                <ul>
-                                    <li><a href="javascript:;">订单号|Order No.</a></li>
-                                    <li><a href="javascript:;">竞拍号|AH No.</a></li>
-                                </ul>
-                            </div>
+                            
+                            
                         </span>
                         <span>积分</span>
                         <span class="corder-status-releative">交易状态</span>
                     </div>
-                    <table class="jiaoyi">
+                    <table class="jiaoyi jiaoyi2">
                         {foreach from=$log_list item=log}
                         <tr>
                             <td>{$log.change_time|datetime}</td>

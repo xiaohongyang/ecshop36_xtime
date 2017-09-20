@@ -1,12 +1,13 @@
 {if $user_info}
 
-<img src="{$user_info2.avatar}"  width="50" height="50" class="avatar"/>{$user_info.user_name}
+<img src="{$user_info2.avatar}"  width="40" height="40" class="avatar" style
+="border-radius:50%;"/>{$user_info.user_name}
 
 <div class="nicheng">
     <dl>
-        <dt><img src="{$user_info.avatar}" class="avatar"  /></dt>
+        <dt><img src="{$user_info2.avatar}" class="avatar"  /></dt>
         <dt class="posi"><img src="themes/default/img/23.png" /></dt>
-        <dd>{$user_info.nick_name}</dd>
+        <dd>{$user_info.user_name}</dd>
     </dl>
     <ul>
         <li>

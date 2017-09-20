@@ -38,7 +38,7 @@
                             <div class="corder-left"></div>
                             <div class="corder-confirm-addlist corder-undefind">
                                 <div class="corder-left corder-address-dede">
-                                    <span class="caddress-circle {if $address.address_id==$consignee.address_id} caddress-active {/if}" data-id='{$address.address_id}' ></span>
+                                    <span class="caddress-circle {if $address.address_id eq $user_info.address_id}caddress-active{/if}" data-id='{$address.address_id}' ></span>
                                 </div>
                                 <div class="corder-left corder-padr">
                                     <p>

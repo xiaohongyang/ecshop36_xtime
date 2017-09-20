@@ -115,7 +115,7 @@ class Auction extends \zd\Controller {
         $this->assign('top_goods',  get_top10());           // 销售排行
         $this->assign('promotion_info', get_promotion_info());
         $this->assign('goods', $goods);
-
+        $this->assign('user_id', $this->userId());
         assign_dynamic('auction');
         $this->show();
     }
@@ -196,17 +196,24 @@ class Auction extends \zd\Controller {
             if ($auction['bid_user_count'] == 0) {
                 /* 第一次要大于等于起拍价 */
                 $min_price = $auction['start_price'];
+
+                if ($bid_price < $min_price) {
+                    Helper::failure(sprintf($_LANG['au_your_lowest_price'], price_format($min_price, false)));
+                }
+
             } else {
                 /* 非第一次出价要大于等于最高价加上加价幅度，但不能超过一口价 */
                 $min_price = $auction['last_bid']['bid_price'] + $auction['amplitude'];
                 if ($auction['end_price'] > 0) {
                     $min_price = min($min_price, $auction['end_price']);
                 }
+
+                if ($bid_price < $min_price || $bid_price==$auction['end_price']) {
+                    Helper::failure(sprintf($_LANG['au_your_lowest_price'], price_format($min_price, false)));
+                }
             }
 
-            if ($bid_price < $min_price) {
-                Helper::failure(sprintf($_LANG['au_your_lowest_price'], price_format($min_price, false)));
-            }
+
         }
 
         /* 检查联系两次拍卖人是否相同 */

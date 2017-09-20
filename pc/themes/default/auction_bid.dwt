@@ -45,7 +45,7 @@
                             <div class="corder-left"></div>
                             <div class="corder-confirm-addlist corder-undefind">
                                 <div class="corder-left corder-address-dede">
-                                    <span class="caddress-circle"></span>
+                                    <span class="caddress-circle {if $address.address_id eq $user_info.address_id}caddress-active{/if}"  data-id = '{$address.address_id}'></span>
                                 </div>
                                 <div class="corder-left corder-padr">
                                     <p>
@@ -136,7 +136,7 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="address_id" value="{$auction_address.address_id}" required>
+        <input type="hidden" name="address_id" value="{$user_info.address_id}" required>
         <input type="hidden" name="id" value="{$auction.act_id}">
     </form>
 </div>
@@ -158,6 +158,14 @@
             }, 'json');
             return false;
         });
+
+
+        $('body').on('click','.caddress-circle', function(){
+            $('.caddress-active').removeClass('caddress-active');
+            $(this).addClass('caddress-active');
+
+            $('input[name=address_id]').val($('.caddress-active').attr('data-id'))
+        })
     });
 </script>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

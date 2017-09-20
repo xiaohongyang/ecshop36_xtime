@@ -104,6 +104,8 @@ if ($_REQUEST['act'] == 'advanced_search')
     $smarty->assign('action',     'form');
     $smarty->assign('use_storage', $_CFG['use_storage']);
 
+    $smarty->assign('from_page', $_REQUEST['from_page']);
+
     $smarty->display('search.dwt');
 
     exit;
@@ -545,7 +547,7 @@ else
     $smarty->assign('promotion_info', get_promotion_info());
 
 
-
+    $smarty->assign('from_page', $_REQUEST['from_page']);
     $smarty->display('search.dwt');
 }
 

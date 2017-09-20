@@ -3,10 +3,11 @@
 <div class="box">
     <header class="navbar navbar-default navbar-header navbar-fixed-top">
         <h1>
-            <span class="san"></span>
+            <!--<span class="san"></span>-->
             <form class="searchForm" action="search.php" >
                 <input type="hidden" name="type" value="auction"/>
                 <span class="fang"></span>
+                <input type=hidden name='from_page' value='/auction.php' />
                 <input type="text" name="keywords"  class="radius">
             </form>
         </h1>
@@ -27,17 +28,17 @@
         {insert name='ads' id=1 num=6}
     </div>
     <ul class="nav">
-        <!-- {if !$sort} -->
+        <!-- {if $sort eq "total"} -->
         <li>
-            <a href="auction.php?order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
+            <a href="auction.php?sort=total&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
                 综合
-                <img src="/themes/default/img/top{if $order eq 'desc'}1{/if}.png" width="10px" class="top" />
-                <img src="/themes/default/img/bot{if $order eq 'asc'}1{/if}.png" width="10px" class="bot" />
+                <img src="/themes/default/img/top{if $order eq 'asc'}1{/if}.png" width="10px" class="top" />
+                <img src="/themes/default/img/bot{if $order eq 'desc'}1{/if}.png" width="10px" class="bot" />
             </a>
         </li>
         <!-- {else}-->
         <li>
-            <a href="auction.php?order=asc">综合
+            <a href="auction.php?sort=total&order=desc">综合
                 <img src="/themes/default/img/top.png" width="10px" class="top" />
                 <img src="/themes/default/img/bot.png" width="10px" class="bot" /></a>
         </li>
@@ -46,13 +47,13 @@
         <li>
             <a href="auction.php?sort=process&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
                 进度
-                <img src="/themes/default/img/top{if $order eq 'desc'}1{/if}.png" width="10px" class="top" />
-                <img src="/themes/default/img/bot{if $order eq 'asc'}1{/if}.png" width="10px" class="bot" />
+                <img src="/themes/default/img/top{if $order eq 'asc'}1{/if}.png" width="10px" class="top" />
+                <img src="/themes/default/img/bot{if $order eq 'desc'}1{/if}.png" width="10px" class="bot" />
             </a>
         </li>
         <!-- {else}-->
         <li>
-            <a href="auction.php?sort=process&order=asc">进度
+            <a href="auction.php?sort=process&order=desc">进度
                 <img src="/themes/default/img/top.png" width="10px" class="top" />
                 <img src="/themes/default/img/bot.png" width="10px" class="bot" /></a>
         </li>
@@ -77,13 +78,13 @@
         <li>
             <a href="auction.php?sort=time&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
                 上架时间
-                <img src="/themes/default/img/top{if $order eq 'desc'}1{/if}.png" width="10px" class="top" />
-                <img src="/themes/default/img/bot{if $order eq 'asc'}1{/if}.png" width="10px" class="bot" />
+                <img src="/themes/default/img/top{if $order eq 'asc'}1{/if}.png" width="10px" class="top" />
+                <img src="/themes/default/img/bot{if $order eq 'desc'}1{/if}.png" width="10px" class="bot" />
             </a>
         </li>
         <!-- {else}-->
         <li>
-            <a href="auction.php?sort=time&order=asc">上架时间
+            <a href="auction.php?sort=time&order=desc">上架时间
                 <img src="/themes/default/img/top.png" width="10px" class="top" />
                 <img src="/themes/default/img/bot.png" width="10px" class="bot" />
             </a>
@@ -95,7 +96,7 @@
             {foreach from=$auction_list item=goods}
             <dl>
                 <dt><a href="auction.php?act=view&id={$goods.act_id}">
-                    <img src="{$goods.goods_thumb}" width="100%;"></a></dt>
+                    <img src="{$goods.goods_thumb|picsrc}" width="100%;"></a></dt>
                 <dd class="zyyi">{$goods.goods_name}</dd>
                 <dd><span class="x-jingpaima">
                     {foreach from=$goods.user_rank item=rank}

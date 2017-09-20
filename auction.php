@@ -66,10 +66,17 @@ if ($_REQUEST['act'] == 'list')
         if ($count > 0)
         {
             /* 取得当前页的拍卖活动 */
-            $auction_list = auction_list($size, $page);
+
+            $sort = \zd\Helper::get('sort', 'total');
+            $defaultOrder = 'desc';
+            $defaultOrder = $sort == 'price' ? 'asc' : $defaultOrder;
+
+            $order = \zd\Helper::get('order', $defaultOrder);
+
+            $auction_list = auction_list($size, $page, $sort, $order);
 
             $smarty->assign('auction_list',  $auction_list);
-            // 综合排序
+            /*// 综合排序
             if ($sort == 'process') {
                 $time = gmtime();
                 if ($order != 'asc') {
@@ -133,7 +140,7 @@ if ($_REQUEST['act'] == 'list')
                     }
                     return $a['start_time'] > $b['start_time'] ? 1 : -1;
                 });
-            }
+            }*/
 
             /* 设置分页链接 */
 //            $pager = get_pager('auction.php', array('act' => 'list'), $count, $page, $size);
@@ -597,17 +604,72 @@ function auction_count()
  * @param   int     $page   当前页
  * @return  array
  */
-function auction_list()
+function auction_list($size=10, $page=1, $sort=null, $order=null)
 {
+
+    $sort = is_null($sort) ? 'total' : $sort;
+    $order = is_null($order) ? 'desc' : $order;
+
+    //$orderByString = "ORDER BY a.act_id DESC";
+
+    $deOrder = $order == 'desc' ? 'asc' : 'desc';
+
+    switch ($sort) {
+        case 'process' :
+            $orderByString = " ORDER BY a.is_finished {$order} , a.end_time {$order} ";
+            break;
+        case 'price' :
+
+            $orderByString = " ORDER BY al.bid_price  {$order}";
+            break;
+
+        case 'time' :
+
+            $orderByString = " ORDER BY a.act_id  {$order}";
+            break;
+
+        default :
+            $orderByString = " ORDER BY al_count.count  {$order} , 
+                                al.bid_price  {$deOrder},
+                                a.act_id  {$order} ";
+            breakk;
+
+    }
+
     $auction_list = array();
-    $auction_list['finished'] = $auction_list['finished'] = array();
+//    $auction_list['finished'] = $auction_list['finished'] = array();
 
     $now = gmtime();
-    $sql = "SELECT a.*, IFNULL(g.goods_thumb, '') AS goods_thumb, g.user_rank " .
+    $sql = "SELECT IFNULL(al_count.count, 0)total_bid_count,  IFNULL(al.bid_price,0) bid_price, a.*, IFNULL(g.goods_thumb, '') AS goods_thumb, g.user_rank " .
             "FROM " . $GLOBALS['ecs']->table('goods_activity') . " AS a " .
-                "LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS g ON a.goods_id = g.goods_id " .
+            "LEFT JOIN ( ".
+                "select ".
+                "a.act_id, max(l.bid_price) as bid_price ".
+                "from ecs_goods_activity a ".
+                "join ecs_auction_log l on a.act_id=l.act_id ".
+                "group by act_id ".
+                ")  ".
+                "AS al ON a.act_id = al.act_id " ;
+
+    $sql .= <<<STD
+        LEFT JOIN ( 
+                select 
+                        a.act_id, count(l.act_id) as count
+                from ecs_goods_activity a
+                join ecs_auction_log l on a.act_id=l.act_id
+                group by l.act_id
+         )  
+        AS al_count ON a.act_id = al_count.act_id 
+STD;
+
+
+
+
+    $sql =  $sql . " LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS g ON a.goods_id = g.goods_id " .
             "WHERE a.act_type = '" . GAT_AUCTION . "' " .
-            " AND a.is_finished < 2 ORDER BY a.act_id DESC";
+            " AND a.is_finished < 2  {$orderByString} ";
+
+
     $res = \zd\Sql::create($sql)->query();
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
@@ -630,17 +692,19 @@ function auction_list()
         $auction['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
         $auction['url'] = build_uri('auction', array('auid'=>$auction['act_id']));
 
-        if($auction['status_no'] < 2)
+        /*if($auction['status_no'] < 2)
         {
             $auction_list['under_way'][] = $auction;
         }
         else
         {
             $auction_list['finished'][] = $auction;
-        }
+        }*/
+
+        $auction_list[] = $auction;
     }
 
-    $auction_list = @array_merge($auction_list['under_way'], $auction_list['finished']);
+//    $auction_list = @array_merge($auction_list['under_way'], $auction_list['finished']);
 
     require_once(dirname(__FILE__) . '/admin/includes/lib_goods.php');
     $rankTmpList = get_user_rank_list();

@@ -2,13 +2,19 @@
 <div class="box">
     <header class="navbar navbar-default  sear" style="background-color: #fff; opacity: 1; height: 40px; line-height: 40px; margin-bottom: 10px;">
         <h1>
+            {if $from_page}
             <span class="san" style="padding-top: 5px;padding-right: 6px;" 
+                  onclick="javascrtpt:window.location.href='{$from_page}'">取消</span>
+            {else}
+            <span class="san" style="padding-top: 5px;padding-right: 6px;"
                   onclick="javascrtpt:window.location.href='/'">取消</span>
+            {/if}
             <form class="searchForm" action="search.php">
                 {if $search_type}
                 <input type="hidden" name="type" value="auction" />
                 {/if}
                 <span class="fang"></span>
+                <input type=hidden name='from_page' value='{$from_page}' />
                 <input type="text" name="keywords" value="{$key}" class="radius" />
             </form>
 

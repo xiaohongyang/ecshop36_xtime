@@ -37,10 +37,10 @@ class Auction {
         $orderString = " ORDER BY $sort $order ";
 
         $now = gmtime();
-        $sql = "SELECT a.*, IFNULL(g.goods_thumb, '') AS goods_thumb, g.user_rank " .
+        $sql = "SELECT IFNULL(al.bid_price,0) bid_price,a.*, IFNULL(g.goods_thumb, '') AS goods_thumb, g.user_rank " .
             "FROM " . $GLOBALS['ecs']->table('goods_activity') . " AS a " .
             "LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS g ON a.goods_id = g.goods_id " .
-            "JOIN ( 
+            "LEFT JOIN ( 
                     select 
                         a.act_id, max(l.bid_price) as bid_price
                     from ecs_goods_activity a

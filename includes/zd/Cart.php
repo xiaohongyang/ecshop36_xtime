@@ -128,7 +128,7 @@ class Cart {
             if (intval($GLOBALS['_CFG']['use_storage']) > 0 && $goods['extension_code'] != 'package_buy')
             {
 
-                if ($val >= 99) {
+                if ($val > 99) {
                     Helper::failure(sprintf($GLOBALS['_LANG']['stock_insufficiency'], $row['goods_name'],
                         $row['goods_number'], $row['goods_number']));
                     exit;

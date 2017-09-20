@@ -2407,7 +2407,7 @@ function flow_update_cart($arr)
         //查询：系统启用了库存，检查输入的商品数量是否有效
         if (intval($GLOBALS['_CFG']['use_storage']) > 0 && $goods['extension_code'] != 'package_buy')
         {
-            if ($val >= 99) {
+            if ($val > 99) {
                 Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
                 exit;
             } else if ($val < 1) {

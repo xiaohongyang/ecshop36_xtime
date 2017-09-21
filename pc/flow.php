@@ -735,6 +735,10 @@ class Flow extends \zd\Controller {
     }
 
     public function init() {
+
+        $helps = get_shop_help();       // 网店帮助
+        $this->assign('helps', $helps);
+
         $this->assign('action', static::$action);
         if (!empty($_SESSION['user_id'])) {
             include_once ROOT_PATH.'includes/lib_order.php';

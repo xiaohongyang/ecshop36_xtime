@@ -11,6 +11,19 @@ use zd\Helper;
 
 class Search extends \zd\Controller {
 
+    public function init() {
+        global $user;
+        $this->assign('action', static::$action);
+        $this->user = $user;
+        if (!empty($_SESSION['user_id'])) {
+            include_once ROOT_PATH.'includes/lib_order.php';
+            $userInfo = user_info($_SESSION['user_id']);
+            $this->assign('user_info', $userInfo);
+            $this->assign('user_info2', $userInfo);
+            $this->assign('headpic', $userInfo['avatar']);
+        }
+    }
+
     public function indexAction() {
         global $_CFG, $ecs, $db, $_LANG;
         $key = implode('-', $this->get('sort,order,page'));

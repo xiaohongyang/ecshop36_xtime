@@ -257,6 +257,7 @@ $(document).ready(function () {
                 return;
             } else if (data.status=='success') {
                 Dialog.tip('添加成功');
+                showCart()
                 return;
             }
             Dialog.tip(data.msg);

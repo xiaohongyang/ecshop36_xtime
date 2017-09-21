@@ -43,7 +43,8 @@
     <!--header-->
     <div class="onload">
         <h1><img src="/pc/themes/default/img/1.png"></h1>
-        <form method="POST" class="ajax-form">
+        <form method="POST" class="ajax-form"> 
+            <input type="text" name='back_act' value= '{$referer}' /> 
             <div>
                 <img src="/pc/themes/default/img/32.png" class="zuo">
                 <input type="text" name="username" required placeholder="用户名">

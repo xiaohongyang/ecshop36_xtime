@@ -662,6 +662,9 @@ class User extends \zd\Controller {
 
     public function init() {
         global $user;
+
+        $this->assign('referer', $_SERVER['HTTP_REFERER']);
+
         $this->assign('action', static::$action);
         $this->user = $user;
         if (!empty($_SESSION['user_id'])) {

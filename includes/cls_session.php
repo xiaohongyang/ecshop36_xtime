@@ -267,7 +267,8 @@ class cls_session
         /* ECSHOP 自定义执行部分 */
         if (!empty($GLOBALS['ecs']))
         {
-            $this->db->query('DELETE FROM ' . $GLOBALS['ecs']->table('cart') . " WHERE session_id = '$this->session_id'");
+            //退出不删除购物车
+            //$this->db->query('DELETE FROM ' . $GLOBALS['ecs']->table('cart') . " WHERE session_id = '$this->session_id'");
         }
         /* ECSHOP 自定义执行部分 */
 

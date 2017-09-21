@@ -79,12 +79,12 @@
             {foreach from=$goods_list item=goods}
             <div>
                 <dl>
-                    <dt><img class="lazy" data-original="/{$goods.goods_thumb}" /></dt>
+                    <dt><a href="{$goods.url}"><img class="lazy" data-original="/{$goods.goods_thumb}" /></a></dt>
                     <dd>
                         <p class="one"><a href="{$goods.url}">{$goods.goods_name}</a></p>
-                        <p class="two"><a href="{$goods.url}">{$goods.goods_brief}</a></p>
-                        <p class="three"><a href="{$goods.url}">原价:<span>{$goods.market_price|price}</span></a></p>
-                        <p class="four"><a href="{$goods.url}">现价:<span>{$goods.shop_price|price}</span></a></p>
+                        <p class="two"><a href="javascript:;">{$goods.goods_brief}</a></p>
+                        <p class="three"><a href="javascript:;">原价:<span>{$goods.market_price|price}</span></a></p>
+                        <p class="four"><a href="javascript:;">现价:<span>{$goods.shop_price|price}</span></a></p>
                         <p class="five"><a href="{$goods.url}"><img src="themes/default/img/16.png" />加入购物车</a></p>
                     </dd>
                     

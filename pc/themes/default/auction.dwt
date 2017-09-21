@@ -29,6 +29,9 @@
             <div class="contents">
                 <h1 class="title"><img src="/pc/themes/default/img/BIDDINGS.png"></h1>
                 <div class="screen">
+                    <div class="sort-btn">
+                        <a href="javascript:;" >综合</a>
+                    </div>
                     <div class="sort-btn
                     {if $sort eq 'price' && $order eq 'asc'} sort-asc {/if}
                     {if $sort eq 'price' && $order eq 'desc'} sort-desc {/if}

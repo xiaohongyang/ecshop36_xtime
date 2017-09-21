@@ -58,11 +58,13 @@ li {
 .header .head .tou .toudiv {
     float: right;
     display: block;
-    position: relative
+    position: relative;
+    cursor:pointer;
 }
 
 .header .head .tou .toudiv img {
     vertical-align: middle;
+    margin-right:10px;
 }
 
 .header .head .logo {
@@ -99,7 +101,8 @@ li {
     line-height: 68px;
     text-align: center;
     border: 1px solid #5FC0BC;
-    border-radius: 0 5px 5px 0
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
 }
 
 .header .head .shopping {
@@ -231,17 +234,20 @@ div.flicking_con a.on {
 
 #btn_prev {
     background: url(../img/17.png) no-repeat left top;
-    left: 561px;
-    top: 258px;
+    left:10px;
 }
 
 #btn_next {
     background: url(../img/18.png) no-repeat right top;
-    right: 361px;
-    top: 258px;
+    right:10px;
 }
 
-
+.nicheng ul li span.left{
+    float:left;
+}
+.nicheng ul li span.left span{
+    padding-left:5px;
+}
 /* main_image banner切换结束*/
 
 .main_visual .posi {
@@ -545,7 +551,7 @@ div.flicking_con a.on {
 .erweima div {
     margin-left: 100px;
     float: left;
-    margin-top: 70px
+    padding-top: 70px
 }
 
 .erweima div p {
@@ -791,6 +797,7 @@ input:focus {
 
 .corder-search-icon img {
     vertical-align: middle;
+    cursor: pointer;
 }
 
 .corder-main-mainmain {
@@ -1187,7 +1194,8 @@ em {
     border: 2px solid #60CCCE;
     border-radius: 3px;
     text-align: center;
-    background-color: #fff
+    background-color: #fff;
+    cursor: pointer;
 }
 
 .corder-div {
@@ -1896,6 +1904,7 @@ em {
     border: 1px solid #61C1BF;
     border-radius: 5px;
     margin: 15px auto;
+    cursor: pointer;
 }
 
 .nicheng p {
@@ -2029,9 +2038,13 @@ em {
     border: 1px solid #61C2BF;
     border-radius: 25px;
     margin: 20px auto;
-    display: block
+    display: block;
+    cursor:pointer;
 }
 
+.collection-my{
+    padding-left:4px;
+}
 
 /**********************右侧定位**********************/
 
@@ -2101,8 +2114,14 @@ button:focus {
     color: #61C1BE;
     background: #fff;
     padding: 5px;
+    cursor: pointer;
 }
-
+.edit{
+    cursor: pointer;
+}
+.delete{
+    cursor:pointer;
+}
 .caddress-list-details {
     overflow: hidden;
     padding: 20px;
@@ -2118,6 +2137,7 @@ button:focus {
     height: 20px;
     display: inline-block;
     background: url("../img/cimage26.png")no-repeat center;
+    cursor: pointer;
 }
 
 .caddress-circle.caddress-active {
@@ -2259,6 +2279,7 @@ button:focus {
     margin-bottom: 15px;
     background: #fff;
     padding: 5px;
+    cursor: pointer;
 }
 
 .caddress-modal-right button.saveBtn{
@@ -2681,7 +2702,8 @@ button:focus {
     font-weight: bold;
     padding: 0;
     text-align: center;
-    margin-left: 50px
+    margin-left: 50px;
+    cursor: pointer;
 }
 
 
@@ -2785,7 +2807,8 @@ form .register div .jiao span {
     display: block;
     height: 40px;
     line-height: 40px;
-    font-size: 12px
+    font-size: 12px;
+    cursor: pointer;
 }
 
 .registerr {
@@ -2846,8 +2869,10 @@ form .register div .jiao span {
     float: initial;
     margin-top: 20px;
     letter-spacing: 5px;
+    cursor: pointer;
  
 }
+.details-con p img{width:100%;}
 
 .registerr div>span {
     width: 130px;
@@ -2977,6 +3002,7 @@ form .register div .jiao span {
 }
 .information .zuodiv p img{
     vertical-align: middle;
+    cursor: pointer;
 }
 .information .zuodiv p span {
     display: block;
@@ -2996,7 +3022,8 @@ form .register div .jiao span {
     color: #fff;
     text-align: center;
     background-color: #66CCCC;
-    margin-left: 50px
+    margin-left: 50px;
+    cursor:pointer;
 }
 
 .information dl {
@@ -3161,8 +3188,11 @@ form .register div .jiao span {
     background: #fff;
     padding: 5px 10px;
     border-radius: 5px;
+    cursor: pointer;
 }
-
+.cinfo-close1{
+    cursor: pointer;
+}
 .cinfo-modal1 {
     position: absolute;
     top: 5%;
@@ -3190,6 +3220,7 @@ form .register div .jiao span {
     background: #fff;
     padding: 5px 10px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .information .zuodiv .caddress-modal-text p {
@@ -3583,7 +3614,7 @@ form .register div .jiao span {
 }
 
 .corder-confirm-listover {
-    height: 500px;
+    /* height: 500px; */
     overflow-y: auto;
 }
 
@@ -4431,6 +4462,7 @@ td.confirm-tdblock span {
     line-height: 35px;
     border-radius: 20px;
     text-align: center;
+    cursor: pointer;
 }
 
 .corder-main-mains.corder-main-mains2 span:nth-child(1) {
@@ -4865,4 +4897,15 @@ table.jiaoyi tr td.active {
 
 .corder-details .corder-top table.corder-width td.corder-blockspan span span.cgoods-money{
     display: inline-block;
+}
+.posi .corder-ssrr{
+        background: #fff;
+    border: 2px solid #ffcf0d;
+    color: #d8ae03;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    display: inline-block;
+    line-height: 25px;
 }

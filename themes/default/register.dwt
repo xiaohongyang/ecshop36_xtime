@@ -62,7 +62,21 @@ function checkSubmit() {
         result = false
     }
 
-    return false;
+    var mobile_code = $('input[name=mobile_code]').val();
+    var url = 'index.php?act=get_code'
+    $.ajax({
+        url : url,
+        async : false,
+        data : {},
+        dataType : 'json',
+        success : function(json){
+            result = json.code == mobile_code
+            if(!result)
+                Dialog.tip("验证码不正确")
+        }
+    })
+
+    return result;
 }
 $(document).ready(function () {
     $('[name=username]').blur(function () {

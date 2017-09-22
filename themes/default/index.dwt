@@ -30,22 +30,22 @@
     <ul class="nav navlist">
       <!-- {if $sort eq "total"} -->
       <li>
-        <a href="/index.php?sort=total&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
-        综合
+        <a href="/index.php?sort=total&order={if $order eq 'asc'}desc{else}asc{/if}{if $filter}&filter={$filter}{/if}" class="current">
+        综合{$filter}
         <img src="/themes/default/img/top{if $order eq 'desc'}1{/if}.png" width="10px" class="top" />
           <img src="/themes/default/img/bot{if $order eq 'asc'}1{/if}.png" width="10px" class="bot" />
         </a>
       </li>
       <!-- {else}-->
       <li>
-        <a href="/index.php?sort=total&order=asc">综合
+        <a href="/index.php?sort=total&order=asc{if $filter}&filter={$filter}{/if}">综合
         <img src="/themes/default/img/top.png" width="10px" class="top" />
           <img src="/themes/default/img/bot.png" width="10px" class="bot" /></a>
       </li>
       <!--{/if}-->
       <!-- {if $sort eq "sale"} -->
       <li>
-        <a href="/index.php?sort=sale&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
+        <a href="/index.php?sort=sale&order={if $order eq 'asc'}desc{else}asc{/if}{if $filter}&filter={$filter}{/if}" class="current">
         销量
         <img src="/themes/default/img/top{if $order eq 'desc'}1{/if}.png" width="10px" class="top" />
           <img src="/themes/default/img/bot{if $order eq 'asc'}1{/if}.png" width="10px" class="bot" />
@@ -53,14 +53,14 @@
       </li>
       <!-- {else}-->
       <li>
-        <a href="/index.php?sort=sale&order=asc">销量
+        <a href="/index.php?sort=sale&order=asc{if $filter}&filter={$filter}{/if}">销量
         <img src="/themes/default/img/top.png" width="10px" class="top" />
           <img src="/themes/default/img/bot.png" width="10px" class="bot" /></a>
       </li>
       <!--{/if}-->
      <!-- {if $sort eq "price"} -->
       <li>
-        <a href="/index.php?sort=price&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
+        <a href="/index.php?sort=price&order={if $order eq 'asc'}desc{else}asc{/if}{if $filter}&filter={$filter}{/if}" class="current">
         价格
         <img src="/themes/default/img/top{if $order neq 'desc'}1{/if}.png" width="10px" class="top" />
           <img src="/themes/default/img/bot{if $order neq 'asc'}1{/if}.png" width="10px" class="bot" />
@@ -68,7 +68,7 @@
       </li>
       <!-- {else}-->
       <li>
-        <a href="/index.php?sort=price&order=asc">价格
+        <a href="/index.php?sort=price&order=asc{if $filter}&filter={$filter}{/if}">价格
         <img src="/themes/default/img/top.png" width="10px" class="top" />
           <img src="/themes/default/img/bot.png" width="10px" class="bot" /></a>
       </li>
@@ -76,7 +76,7 @@
 
       <!-- {if $sort eq "time"} -->
       <li>
-        <a href="/index.php?sort=time&order={if $order eq 'asc'}desc{else}asc{/if}" class="current">
+        <a href="/index.php?sort=time&order={if $order eq 'asc'}desc{else}asc{/if}{if $filter}&filter={$filter}{/if}" class="current">
         上架时间
         <img src="/themes/default/img/top{if $order eq 'desc'}1{/if}.png" width="10px" class="top" />
           <img src="/themes/default/img/bot{if $order eq 'asc'}1{/if}.png" width="10px" class="bot" />
@@ -84,7 +84,7 @@
       </li>
       <!-- {else}-->
       <li>
-        <a href="/index.php?sort=time&order=asc">上架时间
+        <a href="/index.php?sort=time&order=asc{if $filter}&filter={$filter}{/if}">上架时间
         <img src="/themes/default/img/top.png" width="10px" class="top" />
           <img src="/themes/default/img/bot.png" width="10px" class="bot" />
         </a>

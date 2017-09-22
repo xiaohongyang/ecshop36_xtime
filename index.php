@@ -90,6 +90,10 @@ if ($act == 'cat_rec')
     $smarty->assign('cat_rec_sign', 1);
     $result['content'] = $smarty->fetch('library/recommend_' . $rec_array[$rec_type] . '.lbi');
     die($json->encode($result));
+} else if($act == 'get_code') {
+
+    $result = json_encode(['code' =>key_exists('sms_mobile_code', $_SESSION) ? $_SESSION["sms_mobile_code"] : '']);
+    die($result);
 }
 
 /*------------------------------------------------------ */
@@ -272,6 +276,12 @@ if (!$smarty->is_cached('index.dwt', $cache_id))
 
 
     uasort($goods, $sort.'_'.$order);
+
+    $filter = key_exists('filter', $_REQUEST) ? $_REQUEST['filter'] : '';
+
+
+    $smarty->assign('filter', $filter);
+
 
     $smarty->assign('goods_list', $goods);
     $smarty->assign('sort', $sort);

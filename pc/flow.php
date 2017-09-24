@@ -79,9 +79,17 @@ class Flow extends \zd\Controller {
         global $_LANG;
 
         $goodsNumber = $_POST['goods_number'];
-        $checkMsg = $this->checkGoods($goodsNumber);
+        if(count($goodsNumber)){
+
+            foreach ($goodsNumber as $k=>$number){
+                if($number > 99)
+                    Helper::failure("最多购买数量不能超过99。");
+            }
+                $checkMsg = $this->checkGoods($goodsNumber);
+        }
         if($checkMsg != '')
             Helper::failure($checkMsg);
+
 
         if (isset($_POST['goods_number']) && is_array($goodsNumber)) {
             Cart::updateCart($goodsNumber);
@@ -98,7 +106,7 @@ class Flow extends \zd\Controller {
             $values = array_values($goods);
             foreach ($values as $item) {
                 if($item > 99) {
-                    $result = "数量不能超过99";
+                    //$result = "数量不能超过99";
                     break;
                 }
             }

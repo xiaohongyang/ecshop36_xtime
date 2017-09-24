@@ -7,7 +7,7 @@
     <div class="yifu-deta goods-item" data-rec="{$goods.rec_id}" data-price="{$goods.goods_price">
         <p class="bold">{$goods.goods_name}</p>
         <p class="hui">{$goods.goods_price}</p>
-        <p class="but number-box">
+        <p class="but number-box ">
             <span class="number-minus">-</span>
             <input type="text" class="number-input" value="{$goods.cart_number}" data-max="{$goods.goods_number}" placeholder="1" />
             <span class="number-plus">+</span>

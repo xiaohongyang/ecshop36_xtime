@@ -1,9 +1,9 @@
 <div class="nav">
-    <dl>
+    <dl {if $nav!='auction'}class='active'{/if}>
         <dt><a href="index.php"><img src="themes/default/img/3.png" /></a></dt>
         <dd><a href="index.php">主题周边</a></dd>
     </dl>
-    <dl>
+    <dl {if $nav=='auction'}class='active'{/if}>
         <dt><a href="auction.php"><img src="themes/default/img/4.png" /></a></dt>
         <dd><a href="auction.php">热门竞拍</a></dd>
     </dl>

@@ -202,6 +202,10 @@ $(document).ready(function () {
             return;
         }
 
+        if(typeof data.msg != undefined && data.msg && data.msg.indexOf('99')!=-1){
+            $('.number-box .number').val(99)
+        }
+
         var url = "flow.php?step=add_goods&goods_id=" + data.goods_id + "&num=" + data.number + "&spec="+ data.spec
         if(data.flow_type)
             url += '&flow_type=' + data.flow_type
@@ -260,6 +264,10 @@ $(document).ready(function () {
                 showCart()
                 return;
             }
+
+            if(typeof data.msg != undefined && data.msg && data.msg.indexOf('99')!=-1){
+                $('.number-box .number').val(99)
+            }
             Dialog.tip(data.msg);
         });
     });
@@ -286,6 +294,9 @@ $(document).ready(function () {
         addCart(param, function (data) {
             if (data.code == 0) {
                 window.location.href = "flow.php?step=checkout&cart_value=" + data.data + "&flow_type=buy_now";
+            }
+            if(typeof data.msg != undefined && data.msg && data.msg.indexOf('99')!=-1){
+                $('.number-box .number').val(99)
             }
             Dialog.tip(data.msg);
         });
@@ -456,6 +467,20 @@ $(document).ready(function () {
             Dialog.tip(data.msg);
         }, 'json');
     });
+
+    $('body').on('change', '.number-input, .number-box .number', function(){
+        var max = $(this).attr('max') ? $(this).attr('max') : 1;
+        if ($(this).val()  > 99)
+            $(this).val( max )
+    })
+
+    $('body').on('focusin', '.number-input, .number-box .number', function(){
+        if ($(this).val()  > 99)
+            $(this).val( $(this).attr('max') )
+
+        $(this).data('val', $(this).val());
+    })
+
 
     var time = 60;
     var refreshTime = function() {

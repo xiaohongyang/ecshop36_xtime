@@ -1252,13 +1252,13 @@ function auction_info($act_id, $config = false)
     $tmpRank = $auction['user_rank'];
     $tmpRank = trim($tmpRank, ',');
     $tmpRank = explode(',', $tmpRank);
+    $auction['user_rank'] = [];
     if(count($tmpRank)) {
         foreach ($tmpRank as $rankId) {
-            $rank[] = $rank_list[$rankId];
+            if($rankId)
+                $rank[] = $rank_list[$rankId];
         }
         $auction['user_rank'] = $rank;
-    } else {
-        $auction['user_rank'] = [];
     }
 
     return $auction;

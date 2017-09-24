@@ -8,12 +8,12 @@
             <div class="coffer-all-main">
                 <div class="coffer-all-left">
                     <div class="corder-offer-all corder-left">
-                        <img src="{$goods.goods_thumb}" alt="">
+                        <img src="{$goods.goods_thumb|picsrc}" alt="">
                     </div>
                     <div class="corder-left corder-pad corder-offerp">
                         <p>商品名称：{$goods.goods_name}</p>
-                        <p>当前叫价：{$goods.formated_current_price}</p>
-                        <p>最低加价幅度：{$goods.formated_deposit}</p>
+                        <p>当前叫价：{$auction.last_bid.formated_bid_price}</p>
+                        <p>最低加价幅度：{$auction.amplitude}</p>
                     </div>
                 </div>
                 <div class="coffer-all-sr corder-clear">
@@ -22,8 +22,8 @@
                     <span>星辉币</span>
                 </div>
                 <p class="corder-clear corder-clp">
-                    <span>上回叫价：{$last_price}星辉币</span>
-                    <span>当前余额：{$user_info.user_money}</span>
+                    <span>上回叫价：{$last_price|price}</span>
+                    <span>当前余额：{$user.user_money}</span>
                 </p>
             </div>
         </div>
@@ -63,12 +63,7 @@
                                 {if $address.address_id eq $default_address}
                                 <a href="javascript:;" class="caddress-morenadd corder-confirm-raduis">默认地址</a>
                                 {/if}
-                                <span class="corder-pad1 corder-open1">
-                                    <img src="/pc/themes/default/img/cimage24.png" alt="">
-                                </span>
-                                <span class="corder-pad1">
-                                    <img src="/pc/themes/default/img/cimage25.png" alt="">
-                                </span>
+
                             </div>
                         </div>
                         {/foreach}
@@ -136,7 +131,7 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" name="address_id" value="{$user_info.address_id}" required>
+        <input type="hidden" name="address_id" value="{foreach from=$address_list item=address}{if $address.address_id eq $user_info.address_id}{$user_info.address_id}{/if}{/foreach}" required>
         <input type="hidden" name="id" value="{$auction.act_id}">
     </form>
 </div>

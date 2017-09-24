@@ -159,7 +159,9 @@ class Auction extends \zd\Controller {
         $address_list = UserAddress::all();
 
         $page_title = '竞拍';
-        $this->show(compact('address_list', 'goods', 'auction', 'page_title', 'default_address'));
+        $consignee = get_consignee($this->userId());
+        $user_info = $this->userInfo();
+        $this->show(compact('address_list', 'goods', 'auction', 'page_title', 'default_address', 'consignee', 'user_info'));
     }
 
     public function bidActionPost() {
@@ -274,7 +276,17 @@ class Auction extends \zd\Controller {
         return $this->info;
     }
 
+    private function renderHelper(){
+        $helps = get_shop_help();       // 网店帮助
+        $this->assign('helps', $helps);
+    }
+
+
     public function init() {
+
+        $this->assign('nav', 'auction');
+        $this->renderHelper();
+
         global $user;
         $this->assign('action', static::$action);
         $this->user = $user;

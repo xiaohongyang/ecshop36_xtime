@@ -1,7 +1,6 @@
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
         </div>
 
-<script src="/pc/themes/default/js/cloud-zoom.1.0.2.min.js" type="text/javascript"></script>
 <div class="box">
     <div id="goods-box" class="product cartGoods" data-goods="{$goods.goods_id}">
         <div class="pro-nav">
@@ -29,7 +28,7 @@
                     <span>0</span>
                 </div>
             </div>
-           
+
         </div>
         <!-- #BeginLibraryItem "/library/goods_gallery.lbi" --><!-- #EndLibraryItem -->
 
@@ -58,7 +57,7 @@
                     id="spec_value_{$value.id}"   />
                     <label for="spec_value_{$value.id}"> {$value.label} </label>
                 </span>
-               
+
                 <!-- {/foreach} -->
                 </div>
                 <div class="clear"></div>
@@ -69,7 +68,7 @@
                     <p>{if $goods.is_shipping}运费：包邮{/if}</p>
                     <div class="number-group">
                         <span style="float:left">数量</span>
-                        <div class="num number-box">
+                        <div class="num number-box goods-item" data-rec="{$goods.goods_id}" >
                             <span class="number-minus">-</span>
                             <input type="text" value="1" min="1" class="number-input number" max="{$goods.goods_number}" placeholder="1" />
                             <span class="number-plus">+</span>

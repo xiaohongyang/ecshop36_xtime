@@ -29,7 +29,7 @@
         <div class="clear"></div>
     </p>
 </div>
-<input type="button" value="结算购物车" onclick="location.href = 'flow.php?step=checkout';"/>
+<input type="button" value="结算购物车" onclick="cartFlush($(this))"/>
 {else}
 <div class="cshopcar-empty">
     <img src="./themes/default/img/shopcar-empty.png" alt="">
@@ -42,4 +42,23 @@
 
 <script type="text/javascript">
 
+var cartFlush = function(obj){
+    var checkNumber = true;
+    var wrap = obj.closest('.shopcar')
+    if(wrap.length) {
+        wrap.find('.number-input').each(function(){
+            if($(this).val() > 99){
+                checkNumber = false;
+                return false;
+            }
+        })
+    }
+    if(!checkNumber){
+
+        Dialog.tip('最多购买数量不能超过99。')
+        return false;
+    } else{
+        location.href = 'flow.php?step=checkout';
+    }
+}
 </script>

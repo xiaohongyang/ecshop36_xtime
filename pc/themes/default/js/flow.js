@@ -1,4 +1,9 @@
+
+
 $(document).ready(function() {
+
+
+
     var toNumber = function (price) {
         price = price.replace(',', '').match(/[\d\.]+/);
         if (!price) {
@@ -74,23 +79,51 @@ $(document).ready(function() {
         });
     };
 
-    $('body').on('change',".number-box .number-input", function () {
-        var $this = $(this);
+    var uploadCartTarget = function (obj){
+        var $this = obj.closest('div').find('.number-input');
         var minusEle = $this.parents('.number').find('.number-minus');
         var num = Math.max(1, parseInt($this.val()));
         var max = $this.attr('data-max');
 //        if (max && max > 1) {
 //            num = Math.min(max, num);
 //        }
-        $this.val(num);
+        //$this.val(num);
         if (num > 1) {
             minusEle.removeClass('disable');
         } else {
             minusEle.addClass('disable');
         }
-        var goods = $(this).parents('.goods-item');
-        uploadCart(goods, num);
+        var goods = $this.parents('.goods-item');
+        if(!$this.hasClass('number')) {
+
+            uploadCart(goods, num);
+        }
+    }
+    $.fn.uploadCartTarget = uploadCartTarget
+
+    $('body').on('change',".number-box .number-input", function () {
+
     });
+
+
+    $('body').on('keyup', ".number-box .number-input", function(){
+        if($(this).hasClass('.number')) {
+
+            var $this = $(this);
+            $.fn.uploadCartTarget($this)
+        } else {
+            $this = $(this)
+            var numberEle = $this.parents('.number-box').find('.number-input');
+            var num = parseInt(numberEle.val());
+            if (num < 1) {
+                Dialog.tip('不能少于1');
+                num = 1;
+            }
+            numberEle.val(num);
+            $.fn.uploadCartTarget($(this))
+        }
+    })
+
     $(".goods-item .delete").click(function () {
         var goods = $(this).parents('.goods-item');
         dropGoods(goods.attr('data-id'), function () {
@@ -160,8 +193,9 @@ function getSelectedAttributes(ele) {
 $(document).ready(function () {
 
     $('body').on('keyup','.number-box .number',function(){
-        var value = $(this).val()
-        $(this).val(value.replace(/\D/g,''))
+
+            var value = $(this).val()
+            $(this).val(value.replace(/\D/g,''))
     })
 
     var showCartCount = function () {
@@ -203,8 +237,9 @@ $(document).ready(function () {
         }
 
         if(typeof data.msg != undefined && data.msg && data.msg.indexOf('99')!=-1){
-            $('.number-box .number').val(99)
+            //$('.number-box .number').val(99)
         }
+
 
         var url = "flow.php?step=add_goods&goods_id=" + data.goods_id + "&num=" + data.number + "&spec="+ data.spec
         if(data.flow_type)
@@ -250,6 +285,7 @@ $(document).ready(function () {
             return false;
         }
 
+
         var dialog = Dialog.loading();
         var $this = $(this);
         addCart(getGoodsAttr($("#goods-box"), $this.attr('data-goods'), 1), function (data) {
@@ -266,7 +302,7 @@ $(document).ready(function () {
             }
 
             if(typeof data.msg != undefined && data.msg && data.msg.indexOf('99')!=-1){
-                $('.number-box .number').val(99)
+                //$('.number-box .number').val(99)
             }
             Dialog.tip(data.msg);
         });
@@ -296,7 +332,7 @@ $(document).ready(function () {
                 window.location.href = "flow.php?step=checkout&cart_value=" + data.data + "&flow_type=buy_now";
             }
             if(typeof data.msg != undefined && data.msg && data.msg.indexOf('99')!=-1){
-                $('.number-box .number').val(99)
+                //$('.number-box .number').val(99)
             }
             Dialog.tip(data.msg);
         });
@@ -380,7 +416,7 @@ $(document).ready(function () {
         var numberEle = $this.parents('.number-group').find('.number');
         var num = parseInt(numberEle.val()) - 1;
         numberEle.val(num);
-        numberEle.trigger('change');
+        $.fn.uploadCartTarget($(this))
     });
 
     $(".number-group .plus").click(function () {
@@ -388,7 +424,7 @@ $(document).ready(function () {
         var numberEle = $this.parents('.number-group').find('.number');
         var num = parseInt(numberEle.val()) + 1;
         numberEle.val(num);
-        numberEle.trigger('change');
+        $.fn.uploadCartTarget($(this))
     });
     $("body").on("click", ".number-box .number-minus", function () {
         var $this = $(this);
@@ -402,7 +438,7 @@ $(document).ready(function () {
             num = 1;
         }
         numberEle.val(num);
-        numberEle.trigger('change');
+        $.fn.uploadCartTarget($(this))
     });
 
     $('body').on('click', ".number-box .number-plus", function () {
@@ -427,7 +463,7 @@ $(document).ready(function () {
 
         num = num == 0 ? 1 : num;
         numberEle.val(num);
-        numberEle.trigger('change');
+        $.fn.uploadCartTarget($(this))
     });
     $('body').on("change", ".number-box .number-input", function () {
         var $this = $(this);
@@ -470,13 +506,13 @@ $(document).ready(function () {
 
     $('body').on('change', '.number-input, .number-box .number', function(){
         var max = $(this).attr('max') ? $(this).attr('max') : 1;
-        if ($(this).val()  > 99)
-            $(this).val( max )
+        // if ($(this).val()  > 99)
+        //     $(this).val( max )
     })
 
     $('body').on('focusin', '.number-input, .number-box .number', function(){
-        if ($(this).val()  > 99)
-            $(this).val( $(this).attr('max') )
+        // if ($(this).val()  > 99)
+        //     $(this).val( $(this).attr('max') )
 
         $(this).data('val', $(this).val());
     })
@@ -493,3 +529,25 @@ $(document).ready(function () {
         setTimeout(refreshTime, 1000);
     }
 });
+
+
+
+var cartFlush = function(obj){
+    var checkNumber = true;
+    var wrap = obj.closest('.shopcar')
+    if(wrap.length) {
+        wrap.find('.number-input').each(function(){
+            if($(this).val() > 99){
+                checkNumber = false;
+                return false;
+            }
+        })
+    }
+    if(!checkNumber){
+
+        Dialog.tip('最多购买数量不能超过99。')
+        return false;
+    } else{
+        location.href = 'flow.php?step=checkout';
+    }
+}

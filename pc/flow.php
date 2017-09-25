@@ -38,7 +38,7 @@ class Flow extends \zd\Controller {
 
         if ($_REQUEST['flow_type'] == 'buy_now') {
             if($num > 99) {
-                Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
+                //Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
             }
             $goods_id = intval($_GET['goods_id']);
             $num = intval(Helper::get('num', 1));
@@ -52,7 +52,7 @@ class Flow extends \zd\Controller {
             Helper::failure(is_array($msg) ? current($msg) : $msg);
         }  else {
             if($num > 99) {
-                Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
+                //Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
             }
             $goods_id = intval($_GET['goods_id']);
             $num = intval(Helper::get('num', 1));

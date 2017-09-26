@@ -16,7 +16,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="corder-main-mainmain">
+                <div class="corder-main-mainmain ">
                     <p class="incheck check-all"><input type="checkbox">全选</p>
                     <div class="corder-main-mains">
                         <span>项目</span>
@@ -49,7 +49,74 @@
                                 <table class="top-table cart-table">
                                     <tbody>
                                         {foreach from=$goods_list item=goods}
+                                        <!-- {if $goods.is_on_sale==1} -->
                                         <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" class="goods-item" >
+                                            <td>
+                                                <input type="checkbox">
+                                                <div class="dlkuan">
+                                                    <h1><img src="{$goods.goods_thumb|picsrc}"></h1>
+                                                    <div class="ddkuan">
+                                                        <p>{$goods.goods_name}</p>
+                                                        <!--<p><span class="hse">规格:</span>S/M;黑色;套装/单买;50*60MM/70*70MM</p>
+                                                        <p>
+                                                            <span class="hong">UR专享</span>
+                                                            <span class="huang">SSR专享</span>
+                                                            <span class="hui">SR专享</span>
+                                                            <span class="lv">R专享</span>
+                                                            <span class="lan">N专享</span>
+                                                            <div class="clear"></div>
+                                                        </p>-->
+                                                    </div><!--ddkuan-->
+                                                    <div class="clear"></div>
+                                                </div><!--dlkuan-->
+                                            </td>
+                                            <td>{$goods.goods_attr}</td>
+                                            <td>
+                                                <p class="price">{$goods.goods_price|price}</p>
+                                                <p>+0积分</p>
+                                            </td>
+                                            <td>
+                                                <p class="huise">每人限购99件</p>
+                                                <p class="jiajian number-box">
+                                                    <span class="number-minus">-</span>
+                                                    <input type="text" class="number-input" data-rec="{$goods.rec_id}" max="{$goods.goods_number}" value="{$goods.cart_number}">
+                                                    <span class="number-plus">+</span>
+                                                    </p><div class="clear"></div>
+                                                <p></p>
+                                                <!--<p class="hongse">*库存紧张</p>-->
+                                            </td>
+                                            <td>
+                                                <p class="amount">{$goods.subtotal|price}</p>
+                                                <p>+0积分</p>
+                                            </td>
+                                            <td class="delete"><img src="themes/default/img/Delete Icon.png" alt=""></td>
+                                        </tr>
+                                        <!-- {/if} -->
+                                    {/foreach}
+                                </tbody>
+                            </table>
+                            </div><!--corder-top-->
+                            
+                        </div>
+                    </div><!--dd-details-->
+
+
+
+                    {if $hasExpire}
+                    <div class="dd-details expire-wrap">
+                        <p class="corder-overflow corder-pagg">
+                            <span class="corder-left check-all">
+                                <em><input type="checkbox"></em>
+                                <span class="corder-pad">失效商品</span>
+                            </span>
+                        </p>
+                        <div class="corder-details">
+                            <div class="corder-top">
+                                <table class="top-table cart-table">
+                                    <tbody>
+                                    {foreach from=$goods_list item=goods}
+                                    <!-- {if $goods.is_on_sale==0} -->
+                                    <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" class="goods-item" >
                                         <td>
                                             <input type="checkbox">
                                             <div class="dlkuan">
@@ -72,7 +139,7 @@
                                         <td>{$goods.goods_attr}</td>
                                         <td>
                                             <p class="price">{$goods.goods_price|price}</p>
-                                            <p>+0积分</p>    
+                                            <p>+0积分</p>
                                         </td>
                                         <td>
                                             <p class="huise">每人限购99件</p>
@@ -80,313 +147,33 @@
                                                 <span class="number-minus">-</span>
                                                 <input type="text" class="number-input" data-rec="{$goods.rec_id}" max="{$goods.goods_number}" value="{$goods.cart_number}">
                                                 <span class="number-plus">+</span>
-                                                </p><div class="clear"></div>
+                                            </p><div class="clear"></div>
                                             <p></p>
                                             <!--<p class="hongse">*库存紧张</p>-->
                                         </td>
                                         <td>
                                             <p class="amount">{$goods.subtotal|price}</p>
-                                            <p>+0积分</p>    
+                                            <p>+0积分</p>
                                         </td>
                                         <td class="delete"><img src="themes/default/img/Delete Icon.png" alt=""></td>
                                     </tr>
+                                    <!-- {/if} -->
                                     {/foreach}
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
                             </div><!--corder-top-->
-                            
-                        </div>
-                    </div><!--dd-details-->
 
-                    {if $exchange_goods}
-                    <div class="dd-details">
-                        <p class="corder-overflow corder-pagg">
-                            <span class="corder-left">
-                                <em><input type="checkbox"></em>
-                                <span class="corder-pad">积分商城商品</span>
-                            </span>
-                        </p>
-                        <div class="corder-details">
-                            <div class="corder-top">
-                                <table class="top-table">
-                                    <tbody><tr>
-                                        <td>
-                                            <input type="checkbox">
-                                            <div class="dlkuan">
-                                                <h1><img src="/pc/themes/default/img/cimage8.png"></h1>
-                                                <div class="ddkuan">
-                                                    <p>我事拿来卖的快来买我快来买我快来买我快来买我</p>
-                                                    <!--<p><span class="hse">规格:</span>S/M;黑色;套装/单买;50*60MM/70*70MM</p>
-                                                    <p>
-                                                        <span class="hong">UR专享</span>
-                                                        <span class="huang">SSR专享</span>
-                                                        <span class="hui">SR专享</span>
-                                                        <span class="lv">R专享</span>
-                                                        <span class="lan">N专享</span>
-                                                        <div class="clear"></div>
-                                                    </p>-->
-                                                </div><!--ddkuan-->
-                                                <div class="clear"></div>
-                                            </div><!--dlkuan-->
-                                        </td>
-                                        <td>S;白色;蛇皮</td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>    
-                                        </td>
-                                        <td>
-                                            <p class="huise">每人限购10件</p>
-                                            <p class="jiajian">
-                                                <span>-</span>
-                                                <input type="text">
-                                                <span>+</span>
-                                                </p><div class="clear"></div>
-                                            <p></p>
-                                            <p class="hongse">*库存紧张</p>    
-                                        </td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>    
-                                        </td>
-                                        <td>X</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                            <div class="dlkuan">
-                                                <h1><img src="/pc/themes/default/img/cimage8.png"></h1>
-                                                <div class="ddkuan">
-                                                    <p>我事拿来卖的快来买我快来买我快来买我快来买我</p>
-                                                    <!--<p><span class="hse">规格:</span>S/M;黑色;套装/单买;50*60MM/70*70MM</p>
-                                                    <p>
-                                                        <span class="hong">UR专享</span>
-                                                        <span class="huang">SSR专享</span>
-                                                        <span class="hui">SR专享</span>
-                                                        <span class="lv">R专享</span>
-                                                        <span class="lan">N专享</span>
-                                                        <div class="clear"></div>
-                                                    </p>-->
-                                                </div><!--ddkuan-->
-                                                <div class="clear"></div>
-                                            </div><!--dlkuan-->
-                                        </td>
-                                        <td>S;白色;蛇皮</td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p class="orange"><span>SSR</span></p>    
-                                        </td>
-                                        <td>
-                                            <p class="huise">每人限购10件</p>
-                                            <p class="jiajian">
-                                                <span>-</span>
-                                                <input type="text">
-                                                <span>+</span>
-                                                </p><div class="clear"></div>
-                                            <p></p>
-                                            <p class="hongse">*库存紧张</p>    
-                                        </td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>    
-                                        </td>
-                                        <td>X</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="checkbox">
-                                            <div class="dlkuan">
-                                                <h1><img src="/pc/themes/default/img/cimage8.png"></h1>
-                                                <div class="ddkuan">
-                                                    <p>我事拿来卖的快来买我快来买我快来买我快来买我</p>
-                                                    <!--<p><span class="hse">规格:</span>S/M;黑色;套装/单买;50*60MM/70*70MM</p>
-                                                    <p>
-                                                        <span class="hong">UR专享</span>
-                                                        <span class="huang">SSR专享</span>
-                                                        <span class="hui">SR专享</span>
-                                                        <span class="lv">R专享</span>
-                                                        <span class="lan">N专享</span>
-                                                        <div class="clear"></div>
-                                                    </p>-->
-                                                </div><!--ddkuan-->
-                                                <div class="clear"></div>
-                                            </div><!--dlkuan-->
-                                        </td>
-                                        <td>S;白色;蛇皮</td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>
-                                            <p class="red"><span>VR</span></p>    
-                                        </td>
-                                        <td>
-                                            <p class="huise">每人限购10件</p>
-                                            <p class="jiajian">
-                                                <span>-</span>
-                                                <input type="text">
-                                                <span>+</span>
-                                                </p><div class="clear"></div>
-                                            <p></p>
-                                            <p class="hongse">*库存紧张</p>    
-                                        </td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>    
-                                        </td>
-                                        <td>X</td>
-                                    </tr>
-                                </tbody></table>
-                            </div><!--corder-top-->
-                            
                         </div>
                     </div><!--dd-details-->
                     {/if}
 
-                    {if $expire_goods}
-                    <div class="dd-details">
-                        <p class="corder-overflow corder-pagg">
-                            <span class="corder-left">
-                                <em></em>
-                                <span class="corder-pad">失效商品</span>
-                            </span>
-                        </p>
-                        <div class="corder-details">
-                            <div class="corder-top">
-                                <table class="top-table">
-                                    <tbody><tr>
-                                        <td>
-                                            <span class="shixiao">失效</span>
-                                            <div class="dlkuan">
-                                                <h1><img src="/pc/themes/default/img/cimage8.png"></h1>
-                                                <div class="ddkuan">
-                                                    <p>我事拿来卖的快来买我快来买我快来买我快来买我</p>
-                                                    <!--<p><span class="hse">规格:</span>S/M;黑色;套装/单买;50*60MM/70*70MM</p>
-                                                    <p>
-                                                        <span class="hong">UR专享</span>
-                                                        <span class="huang">SSR专享</span>
-                                                        <span class="hui">SR专享</span>
-                                                        <span class="lv">R专享</span>
-                                                        <span class="lan">N专享</span>
-                                                        <div class="clear"></div>
-                                                    </p>-->
-                                                </div><!--ddkuan-->
-                                                <div class="clear"></div>
-                                            </div><!--dlkuan-->
-                                        </td>
-                                        <td>S;白色;蛇皮</td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>    
-                                        </td>
-                                        <td>
-                                            <p class="huise">每人限购10件</p>
-                                            <p class="jiajian">
-                                                <span>-</span>
-                                                <input type="text">
-                                                <span>+</span>
-                                                </p><div class="clear"></div>
-                                            <p></p>
-                                            <p class="hongse">*库存紧张</p>    
-                                        </td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>    
-                                        </td>
-                                        <td>X</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span class="shixiao">失效</span>
-                                            <div class="dlkuan">
-                                                <h1><img src="/pc/themes/default/img/cimage8.png"></h1>
-                                                <div class="ddkuan">
-                                                    <p>我事拿来卖的快来买我快来买我快来买我快来买我</p>
-                                                    <!--<p><span class="hse">规格:</span>S/M;黑色;套装/单买;50*60MM/70*70MM</p>
-                                                    <p>
-                                                        <span class="hong">UR专享</span>
-                                                        <span class="huang">SSR专享</span>
-                                                        <span class="hui">SR专享</span>
-                                                        <span class="lv">R专享</span>
-                                                        <span class="lan">N专享</span>
-                                                        <div class="clear"></div>
-                                                    </p>-->
-                                                </div><!--ddkuan-->
-                                                <div class="clear"></div>
-                                            </div><!--dlkuan-->
-                                        </td>
-                                        <td>S;白色;蛇皮</td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p class="orange"><span>SSR</span></p>    
-                                        </td>
-                                        <td>
-                                            <p class="huise">每人限购10件</p>
-                                            <p class="jiajian">
-                                                <span>-</span>
-                                                <input type="text">
-                                                <span>+</span>
-                                                </p><div class="clear"></div>
-                                            <p></p>
-                                            <p class="hongse">*库存紧张</p>    
-                                        </td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>    
-                                        </td>
-                                        <td>X</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <span class="shixiao">失效</span>
-                                            <div class="dlkuan">
-                                                <h1><img src="/pc/themes/default/img/cimage8.png"></h1>
-                                                <div class="ddkuan">
-                                                    <p>我事拿来卖的快来买我快来买我快来买我快来买我</p>
-                                                    <!--<p><span class="hse">规格:</span>S/M;黑色;套装/单买;50*60MM/70*70MM</p>
-                                                    <p>
-                                                        <span class="hong">UR专享</span>
-                                                        <span class="huang">SSR专享</span>
-                                                        <span class="hui">SR专享</span>
-                                                        <span class="lv">R专享</span>
-                                                        <span class="lan">N专享</span>
-                                                        <div class="clear"></div>
-                                                    </p>-->
-                                                </div><!--ddkuan-->
-                                                <div class="clear"></div>
-                                            </div><!--dlkuan-->
-                                        </td>
-                                        <td>S;白色;蛇皮</td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>
-                                            <p class="red"><span>VR</span></p>    
-                                        </td>
-                                        <td>
-                                            <p class="huise">每人限购10件</p>
-                                            <p class="jiajian">
-                                                <span>-</span>
-                                                <input type="text">
-                                                <span>+</span>
-                                                </p><div class="clear"></div>
-                                            <p></p>
-                                            <p class="hongse">*库存紧张</p>    
-                                        </td>
-                                        <td>
-                                            <p>1200.99星辉</p>
-                                            <p>+200000积分</p>    
-                                        </td>
-                                        <td>X</td>
-                                    </tr>
-                                </tbody></table>
-                            </div><!--corder-top-->
-                            
-                        </div>
-                    </div><!--dd-details-->
-                    {/if}
+
                     <div class="dibu">
                         <div class="zuo check-all">
                             <input type="checkbox">
                             <span>全选</span>
-                            <span>删除</span>
-                            <span>消除失效宝贝</span>
+                            <span><a href="javascript:void(0)" class="drop-rec">删除</a></span>
+                            <span><a href="javascript:void(0)" class="drop-expire">消除失效宝贝</a></span>
                             <div class="clear"></div>
                         </div>
                         <div class="you">
@@ -404,6 +191,55 @@
             </div>
     </div>
 </div>
+
+<script type="text/javascript">
+$('body').on('click', '.drop-rec', function(){
+    var rec_id = []
+    $('.goods-item').find('input:checked').each(function(){
+        rec_id.push($(this).closest('.goods-item').attr('data-rec'))
+    })
+    if(rec_id.length < 1)
+        Dialog.tip('请选择要删除的商品');
+    var url = '/pc/flow.php?step=drop_goods&id=' + rec_id.join(',')
+    $.ajax({
+        url : url,
+        data : {},
+        dataType : 'json',
+        type: 'get',
+        async : false,
+        success :function (json) {
+            if(json.status == 'success') {
+                $('.goods-item').find('input:checked').each(function(){
+                    $(this).closest('.goods-item').remove()
+                })
+                $('.corder-main-mainmain').find('input:checked').prop('checked', false)
+            }
+        }
+    })
+})
+
+$('body').on('click', '.drop-expire', function(){
+    var rec_id = []
+    var t = $(this)
+    $('.expire-wrap .goods-item').each(function(){
+        rec_id.push($(this).attr('data-rec'))
+    })
+
+    var url = '/pc/flow.php?step=drop_goods&id=' + rec_id.join(',')
+    $.ajax({
+        url : url,
+        data : {},
+        dataType : 'json',
+        type: 'get',
+        async : false,
+        success :function (json) {
+            if(json.status == 'success') {
+                $('.expire-wrap').remove()
+            }
+        }
+    })
+})
+</script>
 
 <!--<script src="/pc/themes/default/js/flow.js"></script>-->
 <script>

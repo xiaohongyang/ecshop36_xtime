@@ -729,15 +729,18 @@ function get_same_attribute_goods($attr)
  */
 function get_goods_gallery($goods_id)
 {
-    $sql = 'SELECT img_id, img_url, thumb_url, img_desc' .
-        ' FROM ' . $GLOBALS['ecs']->table('goods_gallery') .
-        " WHERE goods_id = '$goods_id' LIMIT " . $GLOBALS['_CFG']['goods_gallery_number'];
+    $sql = 'SELECT b.goods_img, a.img_id, a.img_url, a.thumb_url, a.img_desc' .
+        ' FROM ' . $GLOBALS['ecs']->table('goods_gallery')  .
+        "a join {$GLOBALS['ecs']->table('goods')} b on a.goods_id=b.goods_id WHERE a.goods_id = '$goods_id' LIMIT " . $GLOBALS['_CFG']['goods_gallery_number'];
     $row = $GLOBALS['db']->getAll($sql);
+
     /* 格式化相册图片路径 */
     foreach($row as $key => $gallery_img)
     {
         $row[$key]['img_url'] = get_image_path($goods_id, $gallery_img['img_url'], false, 'gallery');
         $row[$key]['thumb_url'] = get_image_path($goods_id, $gallery_img['thumb_url'], true, 'gallery');
+        $row[$key]['goods_img']   = $gallery_img['goods_img'];
+        echo $gallery_img['goods_img'];
     }
     return $row;
 }

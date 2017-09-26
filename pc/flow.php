@@ -26,7 +26,15 @@ class Flow extends \zd\Controller {
     public function cartAction() {
         $goods_list = Cart::all();
         $page_title = '我的购物车';
-        $this->show(compact('goods_list', 'page_title'));
+        $hasExpire = 0;
+        if(count($goods_list)) {
+            foreach ($goods_list as $item){
+                if(!is_null($item['is_on_sale']) && !$item['is_on_sale']){
+                    $hasExpire = 1;
+                }
+            }
+        }
+        $this->show(compact('goods_list', 'page_title', 'hasExpire'));
     }
 
     public function addGoodsAction() {
@@ -70,7 +78,12 @@ class Flow extends \zd\Controller {
         global $err;
 
         $rec_id = intval($this->get('id'));
-        $this->flow_drop_cart_goods($rec_id);
+        $recArray = explode(',', $rec_id);
+        if(count($recArray)) {
+            foreach ($recArray as $item) {
+                $this->flow_drop_cart_goods($item);
+            }
+        }
 
         Helper::success();
     }

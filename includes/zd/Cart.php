@@ -42,6 +42,11 @@ class Cart {
             if ($value['extension_code'] == 'package_buy') {
                 $arr[$key]['package_goods_list'] = get_package_goods($value['goods_id']);
             }
+            if($value['cart_number'] > $value['goods_number']  ) {
+                $arr[$key]['is_on_sale'] = false;
+            } else {
+                $arr[$key]['is_on_sale'] = true;
+            }
         }
         return $arr;
     }

@@ -79,7 +79,7 @@
                                                 <p class="huise">每人限购99件</p>
                                                 <p class="jiajian number-box">
                                                     <span class="number-minus">-</span>
-                                                    <input type="text" class="number-input" data-rec="{$goods.rec_id}" max="{$goods.goods_number}" value="{$goods.cart_number}">
+                                                    <input type="text" class="number-input" data-rec="{$goods.rec_id}" data-old-value={$goods.cart_number} max="{$goods.goods_number}" value="{$goods.cart_number}">
                                                     <span class="number-plus">+</span>
                                                     </p><div class="clear"></div>
                                                 <p></p>

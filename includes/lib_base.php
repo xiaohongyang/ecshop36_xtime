@@ -1301,8 +1301,11 @@ function write_static_cache($cache_name, $caches)
 function picsrc($str)
 {
 
+    if(is_null($str) || empty($str))
+        return "/images/no_picture.gif";
+
     if(strpos($str,'/')===0){
-//        return $str;
+
     } else if(strlen($str)){
         $str = '/' . $str;
     } else {
@@ -1312,7 +1315,7 @@ function picsrc($str)
     if(strpos($str,'http') === false){
 
         $str = !is_file(ROOT_PATH . $str) ? "/images/no_picture.gif" : $str;
-        //$str = "/images/no_picture.gif";
+//        $str = "/images/no_picture.gif";
     }
 
     return $str;

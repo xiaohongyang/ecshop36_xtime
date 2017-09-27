@@ -1,12 +1,11 @@
 {if $user_info}
 
-<img src="{$user_info2.avatar}"  width="40" height="40" class="avatar" style
-="border-radius:50%;"/>{$user_info2.nick_name}
+<img src="{$user_info2.avatar|picsrc}"  width="40" height="40" class="avatar" style ="border-radius:50%;"/>{$user_info2.nick_name}
 
 <div class="nicheng">
     <dl>
-        <dt><img src="{$user_info2.avatar}" class="avatar"  /></dt>
-        <dt class="posi"><span class="corder-ssrr">SR</span></dt>
+        <dt><img src="{$user_info2.avatar|picsrc}" class="avatar"  /></dt>
+        <dt class="posi"><span class="corder-ssrr">{$user_info2.rank_name}</span></dt>
         <dd>{$user_info2.nick_name}</dd>
     </dl>
     <ul>

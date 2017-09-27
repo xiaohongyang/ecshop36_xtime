@@ -39,6 +39,18 @@ class Auction extends \zd\Controller {
         if (empty($auction)) {
             Helper::redirect('index.php');
         }
+
+        if($_SESSION['user_id'])
+            $userInfo = user_info($_SESSION['user_id']);
+        $auction['has_rank'] = true;
+        if(is_array($auction['user_rank']) && count($auction['user_rank'])) {
+            $auction['has_rank'] = false;
+            foreach ($auction['user_rank'] as $item) {
+                if($item['rank_id'] == $userInfo['user_rank'])
+                    $auction['has_rank'] = true;
+            }
+        }
+
         $cache_id = $_CFG['lang'] . '-' . $id . '-' . $auction['status_no'];
         if ($auction['status_no'] == UNDER_WAY)
         {

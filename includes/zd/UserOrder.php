@@ -162,7 +162,7 @@ class UserOrder {
 
     public static function get_user_rank_list(){
         $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('user_rank') .
-            " ORDER BY min_points";
+            " ORDER BY min_points desc";
 
         return $GLOBALS['db']->getAll($sql);
     }

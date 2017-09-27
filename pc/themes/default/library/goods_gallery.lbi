@@ -3,12 +3,21 @@
 <div align="center" class="previewcen">
     <div id="preview">
         <div class="jqzoom" id="spec-n1">
-            <!-- {foreach from=$pictures item=picture key=index}-->
+
+            {if $pictures}
+            <!--{foreach from=$pictures item=picture key=index}-->
             <img class = "cloudzoom pic-index-{$index}" {if $index==0}{else}style='display:none'{/if} src = "/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}"
                  width="450"
                  height="450"
                  data-cloudzoom = "zoomImage: '/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}'" />
             <!--{/foreach}-->
+            {else}
+            <img class = "cloudzoom pic-index-0" src = "{$afd|picsrc}"
+                 width="450"
+                 height="450"
+                 data-cloudzoom = "zoomImage: '{$afd|picsrc}'" />
+            {/if}
+
         </div>
         <div id=spec-n5>
             <div class=control id=spec-left>
@@ -16,11 +25,17 @@
             </div>
             <div id=spec-list>
                 <ul class=list-h>
-                   <!-- {foreach from=$pictures item=picture key=index}-->
-                   <li><a href="javascript:void(0);"
-                          data-class="pic-index-{$index}">
-                       <img src="/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
-                   <!--{/foreach}-->
+                    {if $pictures}
+                       <!-- {foreach from=$pictures item=picture key=index}-->
+                       <li><a href="javascript:void(0);"
+                              data-class="pic-index-{$index}">
+                           <img src="/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
+                       <!--{/foreach}-->
+                    {else}
+                        <li><a href="javascript:void(0);"
+                               data-class="pic-index-0">
+                            <img src="{$afd|picsrc}" width="100%" alt=""></a></li>
+                    {/if}
                 </ul>
             </div>
             <div class=control id=spec-right>

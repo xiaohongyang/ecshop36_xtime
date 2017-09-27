@@ -91,12 +91,13 @@
     <div class="details-con">
         <div class="details-left">
             <h1><img src="themes/default/img/product8.png" /></h1>
-            {foreach from=$goods_list item=godos}
+
+            {foreach from=$goods_list item=item}
             <dl>
-                <dt><img class="lazy" data-original="/{$goods.goods_thumb}" /></dt>
+                <dt><a href="{$item.url}"><img class="lazy" data-original="{$item.goods_thumb|picsrc}" /></a></dt>
                 <dd>
-                    <p style="margin-top:20px">{$goods.goods_name}</p>
-                    <p class="hui">{$goods.shop_price|price}</p>
+                    <p style="margin-top:20px"><a href="{$item.url}">{$item.goods_name}</a></p>
+                    <p class="hui">{$item.shop_price|price}</p>
                 </dd>
 
                 <div class="clear"></div>

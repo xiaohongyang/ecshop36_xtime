@@ -66,31 +66,24 @@
                                                 <p>{$goods.goods_name}</p>
                                                 <p><span class="hse">规格:</span>{$goods.goods_attr}</p>
                                                 <p>
-                                                    {if $goods.user_rank == ''}
-                                                        <span class="hong">UR专享</span>
-                                                        <span class="huang">SSR专享</span>
-                                                        <span class="hui">SR专享</span>
-                                                        <span class="lv">R专享</span>
-                                                        <span class="lan">N专享</span>
-                                                    {else}
-                                                        {foreach from=$goods.rank_list item=rank}
 
-                                                            {foreach from=$user_rank_list item=rank_item key=key}
-                                                                {if $rank_item.rank_id== $rank.rank_id}
-                                                                    <span class="
-                                                                                {if $rank.rank_id == 1}lan{/if}
-                                                                                {if $rank.rank_id == 1}lv{/if}
-                                                                                {if $rank.rank_id == 1}hui{/if}
-                                                                                {if $rank.rank_id == 1}huang{/if}
-                                                                                {if $rank.rank_id == 1}hong{/if}
-                                                                                "
-                                                                    >{$rank_item.rank_name}</span>
-                                                                {/if}
-                                                            {/foreach}
+                                                    {foreach from=$goods.rank_list item=rank}
 
+                                                        {foreach from=$user_rank_list item=rank_item key=spec_key}
+                                                            {if $rank_item.rank_id== $rank.rank_id}
+                                                                <span class="
+                                                                            {if $spec_key==0}hong{/if}
+                                                                            {if $spec_key==1}huang{/if}
+                                                                            {if $spec_key==2}hui{/if}
+                                                                            {if $spec_key==3}lv{/if}
+                                                                            {if $spec_key==4}lan{/if}
+                                                                            "
+                                                                >{$rank_item.rank_name}</span>
+                                                            {/if}
                                                         {/foreach}
-                                                    {/if}
-                                                        <div class="clear"></div>
+
+                                                    {/foreach}
+                                                    <div class="clear"></div>
 
                                                 </p>
                                             </div><!--ddkuan-->

@@ -72,7 +72,7 @@ class Home extends \zd\Controller {
          
          on g.goods_id = total_table.goods_id
 EOT;
-       
+
 
         $res = Sql::create()->select('g.goods_id,g.goods_brief,  g.goods_name, g.market_price, g.is_vip, g.add_time, g.click_count, g.shop_price AS org_price',
             "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price",

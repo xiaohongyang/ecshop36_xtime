@@ -67,7 +67,11 @@
                 <button>竞拍已结束</button>
             </div>
             {else}
-                {if $auction.last_bid.bid_user eq $user_id}
+                {if $auction.has_rank eq false}
+                    <div class="cauctioning1-btn">
+                        <button> <img src="/pc/themes/default/img/cimage57.png" alt="">没有权限</button>
+                    </div>
+                {elseif $auction.last_bid.bid_user eq $user_id}
                 <div class="cauctioning1-btn">
                             <button> <img src="/pc/themes/default/img/cimage57.png" alt="">暂不可叫价</button>
                             <span class="caucting-price corder-pad">你的当前叫价：{$my_bid|price}</span>

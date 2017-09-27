@@ -4,12 +4,12 @@
     <h1>
         <img src="{$goods.goods_thumb|picsrc}" width=80 height=80 />
     </h1>
-    <div class="yifu-deta goods-item" data-rec="{$goods.rec_id}" data-price="{$goods.goods_price">
+    <div class="yifu-deta goods-item" data-rec="{$goods.rec_id}" data-price="{$goods.goods_price" goods-name="{$goods.goods_name}">
         <p class="bold">{$goods.goods_name}</p>
         <p class="hui">{$goods.goods_price}</p>
         <p class="but number-box ">
             <span class="number-minus">-</span>
-            <input type="text" class="number-input" value="{$goods.cart_number}" data-max="{$goods.goods_number}" placeholder="1" />
+            <input type="text" class="number-input" value="{$goods.cart_number}" data-max="{$goods.goods_number}" max="{$goods.goods_number}" placeholder="1" />
             <span class="number-plus">+</span>
             <div class="clear"></div>
         </p>
@@ -57,8 +57,20 @@ var cartFlush = function(obj){
 
         Dialog.tip('最多购买数量不能超过99。')
         return false;
-    } else{
-        location.href = 'flow.php?step=checkout';
     }
+    var checkMax = true;
+    wrap.find('.number-input').each(function(){
+        var goodsName = $(this).closest('.goods-item').attr('goods-name')
+        if($(this).val() > $(this).attr('max')){
+            Dialog.tip(goodsName + '库存不够,不能超过' + $(this).attr('max'))
+            checkMax = false;
+        }
+    })
+    if(!checkMax){
+
+        return false;
+    }
+    location.href = 'flow.php?step=checkout';
+
 }
 </script>

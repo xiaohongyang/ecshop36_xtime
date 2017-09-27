@@ -50,7 +50,7 @@
                                     <tbody>
                                         {foreach from=$goods_list item=goods}
                                         <!-- {if $goods.is_on_sale==1} -->
-                                        <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" class="goods-item" >
+                                        <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" goods-name="{$goods.goods_name}" class="goods-item" >
                                             <td>
                                                 <input type="checkbox">
                                                 <div class="dlkuan">
@@ -79,7 +79,7 @@
                                                 <p class="huise">每人限购99件</p>
                                                 <p class="jiajian number-box">
                                                     <span class="number-minus">-</span>
-                                                    <input type="text" class="number-input" data-rec="{$goods.rec_id}" data-old-value={$goods.cart_number} max="{$goods.goods_number}" value="{$goods.cart_number}">
+                                                    <input type="text" class="number-input" data-rec="{$goods.rec_id}"   max="{$goods.goods_number}" value="{$goods.cart_number}">
                                                     <span class="number-plus">+</span>
                                                     </p><div class="clear"></div>
                                                 <p></p>
@@ -116,7 +116,7 @@
                                     <tbody>
                                     {foreach from=$goods_list item=goods}
                                     <!-- {if $goods.is_on_sale==0} -->
-                                    <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" class="goods-item" >
+                                    <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" goods-name="{$goods.goods_name}" >
                                         <td>
                                             <input type="checkbox">
                                             <div class="dlkuan">

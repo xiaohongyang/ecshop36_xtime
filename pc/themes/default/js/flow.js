@@ -46,15 +46,8 @@ $(document).ready(function() {
             'goods_number['+rec_id+']=' + number, function (data) {
                 if (data.code == 0) {
                     callback(data);
-                    var newValue = $('div[data-rec='+rec_id+']').find('.number-input').val();
-                    $('div[data-rec='+rec_id+']').find('.number-input').attr('data-old-value', value)
                     showCart();
                 } else if(data.msg){
-
-                    var oldValue = $('div[data-rec='+rec_id+']').find('.number-input').attr('data-old-value');
-                    alert(oldValue)
-                    $('div[data-rec='+rec_id+']').find('.number-input').val(oldValue)
-
                     Dialog.tip(data.msg)
                 }
             }, 'json');
@@ -182,18 +175,29 @@ $(document).ready(function() {
                 return false;
             }
         })
-
         if(!checkNumber) {
 
             Dialog.tip('最多购买数量不能超过99。')
             return false;
-        } else {
-            var url = $(this).attr('href');
-            if (!url) {
-                url = 'flow.php?step=checkout';
-            }
-            window.location.href = url;
         }
+        var checkMax = true;
+        wrap.find('.number-input').each(function(){
+            var goodsName = $(this).closest('.goods-item').attr('goods-name')
+            if($(this).val() > $(this).attr('max')){
+                Dialog.tip(goodsName + '库存不够,不能超过' + $(this).attr('max'))
+                checkMax = false;
+            }
+        })
+        if(!checkMax){
+
+            return false;
+        }
+
+        var url = $(this).attr('href');
+        if (!url) {
+            url = 'flow.php?step=checkout';
+        }
+        window.location.href = url;
     });
     showAmount();
 });

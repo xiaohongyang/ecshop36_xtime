@@ -37,7 +37,6 @@ class Goods extends \zd\Controller {
         $description =  htmlspecialchars($goods['goods_brief']);
 
         $pictures = get_goods_gallery($id);
-        print_r($pictures);
         $position = assign_ur_here($goods['cat_id'], $goods['goods_name']);
 
         /* current position */

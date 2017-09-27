@@ -4,10 +4,10 @@
     <div id="preview">
         <div class="jqzoom" id="spec-n1">
             <!-- {foreach from=$pictures item=picture key=index}-->
-            <img class = "cloudzoom pic-index-{$index}" {if $index==0}{else}style='display:none'{/if} src = "/{if $picture.goods_img}{$picture.goods_img}{else}{$picture.img_url}{/if}"
+            <img class = "cloudzoom pic-index-{$index}" {if $index==0}{else}style='display:none'{/if} src = "/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}"
                  width="450"
                  height="450"
-                 data-cloudzoom = "zoomImage: '/{if $picture.goods_img}{$picture.goods_img}{else}{$picture.img_url}{/if}'" />
+                 data-cloudzoom = "zoomImage: '/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}'" />
             <!--{/foreach}-->
         </div>
         <div id=spec-n5>
@@ -19,7 +19,7 @@
                    <!-- {foreach from=$pictures item=picture key=index}-->
                    <li><a href="javascript:void(0);"
                           data-class="pic-index-{$index}">
-                       <img src="/{if $picture.goods_img}{$picture.goods_img}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
+                       <img src="/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
                    <!--{/foreach}-->
                 </ul>
             </div>

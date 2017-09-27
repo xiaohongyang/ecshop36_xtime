@@ -11,7 +11,7 @@
  * ============================================================================
  * $Author: liubo $
  * $Id: lib_goods.php 17217 2011-01-19 06:29:08Z liubo $
-*/
+ */
 
 if (!defined('IN_ECS'))
 {
@@ -59,8 +59,8 @@ function get_categories_tree($cat_id = 0)
     {
         /* 获取当前分类及其子分类 */
         $sql = 'SELECT cat_id,cat_name ,parent_id,is_show ' .
-                'FROM ' . $GLOBALS['ecs']->table('category') .
-                "WHERE parent_id = '$parent_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC";
+            'FROM ' . $GLOBALS['ecs']->table('category') .
+            "WHERE parent_id = '$parent_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC";
 
         $res = $GLOBALS['db']->getAll($sql);
 
@@ -92,20 +92,20 @@ function get_child_tree($tree_id = 0)
     if ($GLOBALS['db']->getOne($sql) || $tree_id == 0)
     {
         $child_sql = 'SELECT cat_id, cat_name, parent_id, is_show ' .
-                'FROM ' . $GLOBALS['ecs']->table('category') .
-                "WHERE parent_id = '$tree_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC";
+            'FROM ' . $GLOBALS['ecs']->table('category') .
+            "WHERE parent_id = '$tree_id' AND is_show = 1 ORDER BY sort_order ASC, cat_id ASC";
         $res = $GLOBALS['db']->getAll($child_sql);
         foreach ($res AS $row)
         {
             if ($row['is_show'])
 
-               $three_arr[$row['cat_id']]['id']   = $row['cat_id'];
-               $three_arr[$row['cat_id']]['name'] = $row['cat_name'];
-               $three_arr[$row['cat_id']]['url']  = build_uri('category', array('cid' => $row['cat_id']), $row['cat_name']);
+                $three_arr[$row['cat_id']]['id']   = $row['cat_id'];
+            $three_arr[$row['cat_id']]['name'] = $row['cat_name'];
+            $three_arr[$row['cat_id']]['url']  = build_uri('category', array('cid' => $row['cat_id']), $row['cat_name']);
 
-               if (isset($row['cat_id']) != NULL)
-                   {
-                       $three_arr[$row['cat_id']]['cat_id'] = get_child_tree($row['cat_id']);
+            if (isset($row['cat_id']) != NULL)
+            {
+                $three_arr[$row['cat_id']]['cat_id'] = get_child_tree($row['cat_id']);
 
             }
         }
@@ -130,42 +130,42 @@ function get_top10($cats = '')
     {
         case 1: // 一年
             $top10_time = "AND o.order_sn >= '" . date('Ymd', gmtime() - 365 * 86400) . "'";
-        break;
+            break;
         case 2: // 半年
             $top10_time = "AND o.order_sn >= '" . date('Ymd', gmtime() - 180 * 86400) . "'";
-        break;
+            break;
         case 3: // 三个月
             $top10_time = "AND o.order_sn >= '" . date('Ymd', gmtime() - 90 * 86400) . "'";
-        break;
+            break;
         case 4: // 一个月
             $top10_time = "AND o.order_sn >= '" . date('Ymd', gmtime() - 30 * 86400) . "'";
-        break;
+            break;
         default:
             $top10_time = '';
     }
 
     $sql = 'SELECT g.goods_id, g.goods_name, g.shop_price, g.goods_thumb, SUM(og.goods_number) as goods_number ' .
-           'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g, ' .
-                $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
-                $GLOBALS['ecs']->table('order_goods') . ' AS og ' .
-           "WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 $where $top10_time " ;
+        'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g, ' .
+        $GLOBALS['ecs']->table('order_info') . ' AS o, ' .
+        $GLOBALS['ecs']->table('order_goods') . ' AS og ' .
+        "WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 $where $top10_time " ;
     //判断是否启用库存，库存数量是否大于0
     if ($GLOBALS['_CFG']['use_storage'] == 1)
     {
         $sql .= " AND g.goods_number > 0 ";
     }
     $sql .= ' AND og.order_id = o.order_id AND og.goods_id = g.goods_id ' .
-           "AND (o.order_status = '" . OS_CONFIRMED .  "' OR o.order_status = '" . OS_SPLITED . "') " .
-           "AND (o.pay_status = '" . PS_PAYED . "' OR o.pay_status = '" . PS_PAYING . "') " .
-           "AND (o.shipping_status = '" . SS_SHIPPED . "' OR o.shipping_status = '" . SS_RECEIVED . "') " .
-           'GROUP BY g.goods_id ORDER BY goods_number DESC, g.goods_id DESC LIMIT ' . $GLOBALS['_CFG']['top_number'];
-           
+        "AND (o.order_status = '" . OS_CONFIRMED .  "' OR o.order_status = '" . OS_SPLITED . "') " .
+        "AND (o.pay_status = '" . PS_PAYED . "' OR o.pay_status = '" . PS_PAYING . "') " .
+        "AND (o.shipping_status = '" . SS_SHIPPED . "' OR o.shipping_status = '" . SS_RECEIVED . "') " .
+        'GROUP BY g.goods_id ORDER BY goods_number DESC, g.goods_id DESC LIMIT ' . $GLOBALS['_CFG']['top_number'];
+
     $arr = $GLOBALS['db']->getAll($sql);
 
     for ($i = 0, $count = count($arr); $i < $count; $i++)
     {
         $arr[$i]['short_name'] = $GLOBALS['_CFG']['goods_name_length'] > 0 ?
-                                    sub_str($arr[$i]['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $arr[$i]['goods_name'];
+            sub_str($arr[$i]['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $arr[$i]['goods_name'];
         $arr[$i]['url']        = build_uri('goods', array('gid' => $arr[$i]['goods_id']), $arr[$i]['goods_name']);
         $arr[$i]['thumb'] = get_image_path($arr[$i]['goods_id'], $arr[$i]['goods_thumb'],true);
         $arr[$i]['price'] = price_format($arr[$i]['shop_price']);
@@ -200,10 +200,10 @@ function get_recommend_goods($type = '', $cats = '')
         if ($data === false)
         {
             $sql = 'SELECT g.goods_id, g.is_best, g.is_new, g.is_hot, g.is_promote, b.brand_name,g.sort_order ' .
-               ' FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
-               ' LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON b.brand_id = g.brand_id ' .
-               ' WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND (g.is_best = 1 OR g.is_new =1 OR g.is_hot = 1)'.
-               ' ORDER BY g.sort_order, g.last_update DESC';
+                ' FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
+                ' LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON b.brand_id = g.brand_id ' .
+                ' WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND (g.is_best = 1 OR g.is_new =1 OR g.is_hot = 1)'.
+                ' ORDER BY g.sort_order, g.last_update DESC';
             $goods_res = $GLOBALS['db']->getAll($sql);
             //定义推荐,最新，热门，促销商品
             $goods_data['best'] = array();
@@ -288,11 +288,11 @@ function get_recommend_goods($type = '', $cats = '')
 
         //取出所有符合条件的商品数据，并将结果存入对应的推荐类型数组中
         $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
-                "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " .
-                'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
-                "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ";
+            "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+            "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img, RAND() AS rnd " .
+            'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
+            "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+            "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ";
         $type_merge = array_merge($type_array['new'], $type_array['best'], $type_array['hot']);
         $type_merge = array_unique($type_merge);
         $sql .= ' WHERE g.goods_id ' . db_create_in($type_merge);
@@ -319,7 +319,7 @@ function get_recommend_goods($type = '', $cats = '')
             $goods[$idx]['goods_style_name']   = add_style($row['goods_name'],$row['goods_name_style']);
 
             $goods[$idx]['short_name']   = $GLOBALS['_CFG']['goods_name_length'] > 0 ?
-                                               sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
+                sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
             $goods[$idx]['short_style_name']   = add_style($goods[$idx]['short_name'],$row['goods_name_style']);
             $goods[$idx]['market_price'] = price_format($row['market_price']);
             $goods[$idx]['shop_price']   = price_format($row['shop_price']);
@@ -357,15 +357,15 @@ function get_promote_goods($cats = '')
     /* 取得促销lbi的数量限制 */
     $num = get_library_number("recommend_promotion");
     $sql = 'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
-                "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, goods_img, b.brand_name, " .
-                "g.is_best, g.is_new, g.is_hot, g.is_promote, RAND() AS rnd " .
-            'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
-            'LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON b.brand_id = g.brand_id ' .
-            "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
-            'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ' .
-            " AND g.is_promote = 1 AND promote_start_date <= '$time' AND promote_end_date >= '$time' ";
+        "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+        "promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, goods_img, b.brand_name, " .
+        "g.is_best, g.is_new, g.is_hot, g.is_promote, RAND() AS rnd " .
+        'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
+        'LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON b.brand_id = g.brand_id ' .
+        "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+        "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+        'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ' .
+        " AND g.is_promote = 1 AND promote_start_date <= '$time' AND promote_end_date >= '$time' ";
     $sql .= $order_type == 0 ? ' ORDER BY g.sort_order, g.last_update DESC' : ' ORDER BY rnd';
     $sql .= " LIMIT $num ";
     $result = $GLOBALS['db']->getAll($sql);
@@ -420,13 +420,13 @@ function get_category_recommend_goods($type = '', $cats = '', $brand = 0, $min =
     $price_where .= ($max > 0) ? " AND g.shop_price <= $max " : '';
 
     $sql =  'SELECT g.goods_id, g.goods_name, g.goods_name_style, g.market_price, g.shop_price AS org_price, g.promote_price, ' .
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
-                'promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, goods_img, b.brand_name ' .
-            'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
-            'LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON b.brand_id = g.brand_id ' .
-            "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                    "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
-            'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ' . $brand_where . $price_where . $ext;
+        "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+        'promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, goods_img, b.brand_name ' .
+        'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
+        'LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON b.brand_id = g.brand_id ' .
+        "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+        "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+        'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 ' . $brand_where . $price_where . $ext;
     $num = 0;
     $type2lib = array('best'=>'recommend_best', 'new'=>'recommend_new', 'hot'=>'recommend_hot', 'promote'=>'recommend_promotion');
     $num = get_library_number($type2lib[$type]);
@@ -476,7 +476,7 @@ function get_category_recommend_goods($type = '', $cats = '', $brand = 0, $min =
         $goods[$idx]['brief']        = $row['goods_brief'];
         $goods[$idx]['brand_name']   = $row['brand_name'];
         $goods[$idx]['short_name']   = $GLOBALS['_CFG']['goods_name_length'] > 0 ?
-                                       sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
+            sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
         $goods[$idx]['market_price'] = price_format($row['market_price']);
         $goods[$idx]['shop_price']   = price_format($row['shop_price']);
         $goods[$idx]['thumb']        = get_image_path($row['goods_id'], $row['goods_thumb'], true);
@@ -501,19 +501,19 @@ function get_goods_info($goods_id)
 {
     $time = gmtime();
     $sql = 'SELECT g.*, c.measure_unit, b.brand_id, b.brand_name AS goods_brand, m.type_money AS bonus_money, ' .
-                'IFNULL(AVG(r.comment_rank), 0) AS comment_rank, ' .
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS rank_price " .
-            'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
-            'LEFT JOIN ' . $GLOBALS['ecs']->table('category') . ' AS c ON g.cat_id = c.cat_id ' .
-            'LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON g.brand_id = b.brand_id ' .
-            'LEFT JOIN ' . $GLOBALS['ecs']->table('comment') . ' AS r '.
-                'ON r.id_value = g.goods_id AND comment_type = 0 AND r.parent_id = 0 AND r.status = 1 ' .
-            'LEFT JOIN ' . $GLOBALS['ecs']->table('bonus_type') . ' AS m ' .
-                "ON g.bonus_type_id = m.type_id AND m.send_start_date <= '$time' AND m.send_end_date >= '$time'" .
-            " LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                    "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
-            "WHERE g.goods_id = '$goods_id' AND g.is_delete = 0 " .
-            "GROUP BY g.goods_id";
+        'IFNULL(AVG(r.comment_rank), 0) AS comment_rank, ' .
+        "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS rank_price " .
+        'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
+        'LEFT JOIN ' . $GLOBALS['ecs']->table('category') . ' AS c ON g.cat_id = c.cat_id ' .
+        'LEFT JOIN ' . $GLOBALS['ecs']->table('brand') . ' AS b ON g.brand_id = b.brand_id ' .
+        'LEFT JOIN ' . $GLOBALS['ecs']->table('comment') . ' AS r '.
+        'ON r.id_value = g.goods_id AND comment_type = 0 AND r.parent_id = 0 AND r.status = 1 ' .
+        'LEFT JOIN ' . $GLOBALS['ecs']->table('bonus_type') . ' AS m ' .
+        "ON g.bonus_type_id = m.type_id AND m.send_start_date <= '$time' AND m.send_end_date >= '$time'" .
+        " LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+        "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+        "WHERE g.goods_id = '$goods_id' AND g.is_delete = 0 " .
+        "GROUP BY g.goods_id";
     $row = $GLOBALS['db']->getRow($sql);
 
     if ($row !== false)
@@ -575,7 +575,7 @@ function get_goods_info($goods_id)
         $time = gmtime();
         if ($time >= $row['promote_start_date'] && $time <= $row['promote_end_date'])
         {
-             $row['gmt_end_time']  = $row['promote_end_date'];
+            $row['gmt_end_time']  = $row['promote_end_date'];
         }
         else
         {
@@ -617,8 +617,8 @@ function get_goods_properties($goods_id)
 {
     /* 对属性进行重新排序和分组 */
     $sql = "SELECT attr_group ".
-            "FROM " . $GLOBALS['ecs']->table('goods_type') . " AS gt, " . $GLOBALS['ecs']->table('goods') . " AS g ".
-            "WHERE g.goods_id='$goods_id' AND gt.cat_id=g.goods_type";
+        "FROM " . $GLOBALS['ecs']->table('goods_type') . " AS gt, " . $GLOBALS['ecs']->table('goods') . " AS g ".
+        "WHERE g.goods_id='$goods_id' AND gt.cat_id=g.goods_type";
     $grp = $GLOBALS['db']->getOne($sql);
 
     if (!empty($grp))
@@ -628,11 +628,11 @@ function get_goods_properties($goods_id)
 
     /* 获得商品的规格 */
     $sql = "SELECT a.attr_id, a.attr_name, a.attr_group, a.is_linked, a.attr_type, ".
-                "g.goods_attr_id, g.attr_value, g.attr_price " .
-            'FROM ' . $GLOBALS['ecs']->table('goods_attr') . ' AS g ' .
-            'LEFT JOIN ' . $GLOBALS['ecs']->table('attribute') . ' AS a ON a.attr_id = g.attr_id ' .
-            "WHERE g.goods_id = '$goods_id' " .
-            'ORDER BY a.sort_order, g.attr_price, g.goods_attr_id';
+        "g.goods_attr_id, g.attr_value, g.attr_price " .
+        'FROM ' . $GLOBALS['ecs']->table('goods_attr') . ' AS g ' .
+        'LEFT JOIN ' . $GLOBALS['ecs']->table('attribute') . ' AS a ON a.attr_id = g.attr_id ' .
+        "WHERE g.goods_id = '$goods_id' " .
+        'ORDER BY a.sort_order, g.attr_price, g.goods_attr_id';
     $res = $GLOBALS['db']->getAll($sql);
 
     $arr['pro'] = array();     // 属性
@@ -655,10 +655,10 @@ function get_goods_properties($goods_id)
             $arr['spe'][$row['attr_id']]['attr_type'] = $row['attr_type'];
             $arr['spe'][$row['attr_id']]['name']     = $row['attr_name'];
             $arr['spe'][$row['attr_id']]['values'][] = array(
-                                                        'label'        => $row['attr_value'],
-                                                        'price'        => $row['attr_price'],
-                                                        'format_price' => price_format(abs($row['attr_price']), false),
-                                                        'id'           => $row['goods_attr_id']);
+                'label'        => $row['attr_value'],
+                'price'        => $row['attr_price'],
+                'format_price' => price_format(abs($row['attr_price']), false),
+                'id'           => $row['goods_attr_id']);
         }
 
         if ($row['is_linked'] == 1)
@@ -691,14 +691,14 @@ function get_same_attribute_goods($attr)
 
             /* 查找符合条件的商品 */
             $sql = 'SELECT g.goods_id, g.goods_name, g.goods_thumb, g.goods_img, g.shop_price AS org_price, ' .
-                        "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
-                        'g.market_price, g.promote_price, g.promote_start_date, g.promote_end_date ' .
-                    'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
-                    'LEFT JOIN ' . $GLOBALS['ecs']->table('goods_attr') . ' as a ON g.goods_id = a.goods_id ' .
-                    "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                        "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
-                    "WHERE a.attr_id = '$key' AND g.is_on_sale=1 AND a.attr_value = '$val[value]' AND g.goods_id <> '$_REQUEST[id]' " .
-                    'LIMIT ' . $GLOBALS['_CFG']['attr_related_number'];
+                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+                'g.market_price, g.promote_price, g.promote_start_date, g.promote_end_date ' .
+                'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
+                'LEFT JOIN ' . $GLOBALS['ecs']->table('goods_attr') . ' as a ON g.goods_id = a.goods_id ' .
+                "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+                "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+                "WHERE a.attr_id = '$key' AND g.is_on_sale=1 AND a.attr_value = '$val[value]' AND g.goods_id <> '$_REQUEST[id]' " .
+                'LIMIT ' . $GLOBALS['_CFG']['attr_related_number'];
             $res = $GLOBALS['db']->getAll($sql);
 
             foreach ($res AS $row)
@@ -729,18 +729,16 @@ function get_same_attribute_goods($attr)
  */
 function get_goods_gallery($goods_id)
 {
-    $sql = 'SELECT b.goods_img, a.img_id, a.img_url, a.thumb_url, a.img_desc' .
-        ' FROM ' . $GLOBALS['ecs']->table('goods_gallery')  .
-        "a join {$GLOBALS['ecs']->table('goods')} b on a.goods_id=b.goods_id WHERE a.goods_id = '$goods_id' LIMIT " . $GLOBALS['_CFG']['goods_gallery_number'];
+    $sql = 'SELECT img_id, img_url, thumb_url, img_desc, img_original' .
+        ' FROM ' . $GLOBALS['ecs']->table('goods_gallery') .
+        " WHERE goods_id = '$goods_id' LIMIT " . $GLOBALS['_CFG']['goods_gallery_number'];
     $row = $GLOBALS['db']->getAll($sql);
-
     /* 格式化相册图片路径 */
     foreach($row as $key => $gallery_img)
     {
         $row[$key]['img_url'] = get_image_path($goods_id, $gallery_img['img_url'], false, 'gallery');
         $row[$key]['thumb_url'] = get_image_path($goods_id, $gallery_img['thumb_url'], true, 'gallery');
-        $row[$key]['goods_img']   = $gallery_img['goods_img'];
-        echo $gallery_img['goods_img'];
+        $row[$key]['img_original'] = get_image_path($goods_id, $gallery_img['img_original'], true, 'gallery');
     }
     return $row;
 }
@@ -760,13 +758,13 @@ function assign_cat_goods($cat_id, $num = 0, $from = 'web', $order_rule = '')
     $children = get_children($cat_id);
 
     $sql = 'SELECT g.goods_id, g.goods_name, g.market_price, g.shop_price AS org_price, ' .
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
-               'g.promote_price, promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img ' .
-            "FROM " . $GLOBALS['ecs']->table('goods') . ' AS g '.
-            "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                    "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
-            'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND '.
-                'g.is_delete = 0 AND (' . $children . 'OR ' . get_extension_goods($children) . ') ';
+        "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+        'g.promote_price, promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img ' .
+        "FROM " . $GLOBALS['ecs']->table('goods') . ' AS g '.
+        "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+        "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+        'WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND '.
+        'g.is_delete = 0 AND (' . $children . 'OR ' . get_extension_goods($children) . ') ';
 
     $order_rule = empty($order_rule) ? 'ORDER BY g.sort_order, g.goods_id DESC' : $order_rule;
     $sql .= $order_rule;
@@ -794,7 +792,7 @@ function assign_cat_goods($cat_id, $num = 0, $from = 'web', $order_rule = '')
         $goods[$idx]['brief']        = $row['goods_brief'];
         $goods[$idx]['market_price'] = price_format($row['market_price']);
         $goods[$idx]['short_name']   = $GLOBALS['_CFG']['goods_name_length'] > 0 ?
-                                        sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
+            sub_str($row['goods_name'], $GLOBALS['_CFG']['goods_name_length']) : $row['goods_name'];
         $goods[$idx]['shop_price']   = price_format($row['shop_price']);
         $goods[$idx]['thumb']        = get_image_path($row['goods_id'], $row['goods_thumb'], true);
         $goods[$idx]['goods_img']    = get_image_path($row['goods_id'], $row['goods_img']);
@@ -832,12 +830,12 @@ function assign_cat_goods($cat_id, $num = 0, $from = 'web', $order_rule = '')
 function assign_brand_goods($brand_id, $num = 0, $cat_id = 0,$order_rule = '')
 {
     $sql =  'SELECT g.goods_id, g.goods_name, g.market_price, g.shop_price AS org_price, ' .
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
-                'g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img ' .
-            'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
-            "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                    "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
-            "WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND g.brand_id = '$brand_id'";
+        "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
+        'g.promote_price, g.promote_start_date, g.promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img ' .
+        'FROM ' . $GLOBALS['ecs']->table('goods') . ' AS g ' .
+        "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+        "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+        "WHERE g.is_on_sale = 1 AND g.is_alone_sale = 1 AND g.is_delete = 0 AND g.brand_id = '$brand_id'";
 
     if ($cat_id > 0)
     {
@@ -987,9 +985,9 @@ function group_buy_info($group_buy_id, $current_num = 0)
     /* 取得团购活动信息 */
     $group_buy_id = intval($group_buy_id);
     $sql = "SELECT *, act_id AS group_buy_id, act_desc AS group_buy_desc, start_time AS start_date, end_time AS end_date " .
-            "FROM " . $GLOBALS['ecs']->table('goods_activity') .
-            "WHERE act_id = '$group_buy_id' " .
-            "AND act_type = '" . GAT_GROUP_BUY . "'";
+        "FROM " . $GLOBALS['ecs']->table('goods_activity') .
+        "WHERE act_id = '$group_buy_id' " .
+        "AND act_type = '" . GAT_GROUP_BUY . "'";
     $group_buy = $GLOBALS['db']->getRow($sql);
 
     /* 如果为空，返回空数组 */
@@ -1078,20 +1076,20 @@ function group_buy_stat($group_buy_id, $deposit)
 
     /* 取得团购活动商品ID */
     $sql = "SELECT goods_id " .
-           "FROM " . $GLOBALS['ecs']->table('goods_activity') .
-           "WHERE act_id = '$group_buy_id' " .
-           "AND act_type = '" . GAT_GROUP_BUY . "'";
+        "FROM " . $GLOBALS['ecs']->table('goods_activity') .
+        "WHERE act_id = '$group_buy_id' " .
+        "AND act_type = '" . GAT_GROUP_BUY . "'";
     $group_buy_goods_id = $GLOBALS['db']->getOne($sql);
 
     /* 取得总订单数和总商品数 */
     $sql = "SELECT COUNT(*) AS total_order, SUM(g.goods_number) AS total_goods " .
-            "FROM " . $GLOBALS['ecs']->table('order_info') . " AS o, " .
-                $GLOBALS['ecs']->table('order_goods') . " AS g " .
-            " WHERE o.order_id = g.order_id " .
-            "AND o.extension_code = 'group_buy' " .
-            "AND o.extension_id = '$group_buy_id' " .
-            "AND g.goods_id = '$group_buy_goods_id' " .
-            "AND (order_status = '" . OS_CONFIRMED . "' OR order_status = '" . OS_UNCONFIRMED . "')";
+        "FROM " . $GLOBALS['ecs']->table('order_info') . " AS o, " .
+        $GLOBALS['ecs']->table('order_goods') . " AS g " .
+        " WHERE o.order_id = g.order_id " .
+        "AND o.extension_code = 'group_buy' " .
+        "AND o.extension_id = '$group_buy_id' " .
+        "AND g.goods_id = '$group_buy_goods_id' " .
+        "AND (order_status = '" . OS_CONFIRMED . "' OR order_status = '" . OS_UNCONFIRMED . "')";
     $stat = $GLOBALS['db']->getRow($sql);
     if ($stat['total_order'] == 0)
     {
@@ -1204,21 +1202,21 @@ function auction_info($act_id, $config = false)
 
     /* 查询出价用户数和最后出价 */
     $sql = "SELECT COUNT(DISTINCT bid_user) FROM " . $GLOBALS['ecs']->table('auction_log') .
-            " WHERE act_id = '$act_id'";
+        " WHERE act_id = '$act_id'";
     $auction['bid_user_count'] = $GLOBALS['db']->getOne($sql);
 
     /* 查询出价次数 */
     $sql = "SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('auction_log') .
-            " WHERE act_id = '$act_id'";
+        " WHERE act_id = '$act_id'";
     $auction['bid_times'] = $GLOBALS['db']->getOne($sql);
     if ($auction['bid_user_count'] > 0)
     {
         $sql = "SELECT a.*, u.user_name " .
-                "FROM " . $GLOBALS['ecs']->table('auction_log') . " AS a, " .
-                        $GLOBALS['ecs']->table('users') . " AS u " .
-                "WHERE a.bid_user = u.user_id " .
-                "AND act_id = '$act_id' " .
-                "ORDER BY a.log_id DESC";
+            "FROM " . $GLOBALS['ecs']->table('auction_log') . " AS a, " .
+            $GLOBALS['ecs']->table('users') . " AS u " .
+            "WHERE a.bid_user = u.user_id " .
+            "AND act_id = '$act_id' " .
+            "ORDER BY a.log_id DESC";
         $row = $GLOBALS['db']->getRow($sql);
         $row['formated_bid_price'] = price_format($row['bid_price'], false);
         $row['bid_time'] = local_date($GLOBALS['_CFG']['time_format'], $row['bid_time']);
@@ -1229,10 +1227,10 @@ function auction_info($act_id, $config = false)
     if ($auction['status_no'] > 1)
     {
         $sql = "SELECT COUNT(*)" .
-                " FROM " . $GLOBALS['ecs']->table('order_info') .
-                " WHERE extension_code = 'auction'" .
-                " AND extension_id = '$act_id'" .
-                " AND order_status " . db_create_in(array(OS_CONFIRMED, OS_UNCONFIRMED));
+            " FROM " . $GLOBALS['ecs']->table('order_info') .
+            " WHERE extension_code = 'auction'" .
+            " AND extension_id = '$act_id'" .
+            " AND order_status " . db_create_in(array(OS_CONFIRMED, OS_UNCONFIRMED));
         $auction['order_count'] = $GLOBALS['db']->getOne($sql);
     }
     else
@@ -1295,11 +1293,11 @@ function auction_log($act_id, $userId = null)
     $userWhere = is_null($userId) ?  "" : " and u.user_id={$userId}  ";
     $log = array();
     $sql = "SELECT a.*, u.user_name , u.avatar " .
-            "FROM " . $GLOBALS['ecs']->table('auction_log') . " AS a," .
-                      $GLOBALS['ecs']->table('users') . " AS u " .
-            "WHERE a.bid_user = u.user_id " .
-            "AND act_id = '$act_id' {$userWhere}  " .
-            "ORDER BY a.log_id DESC";
+        "FROM " . $GLOBALS['ecs']->table('auction_log') . " AS a," .
+        $GLOBALS['ecs']->table('users') . " AS u " .
+        "WHERE a.bid_user = u.user_id " .
+        "AND act_id = '$act_id' {$userWhere}  " .
+        "ORDER BY a.log_id DESC";
     $res = $GLOBALS['db']->query($sql);
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
@@ -1353,9 +1351,9 @@ function auction_status($auction)
 function goods_info($goods_id)
 {
     $sql = "SELECT g.*, b.brand_name " .
-            "FROM " . $GLOBALS['ecs']->table('goods') . " AS g " .
-                "LEFT JOIN " . $GLOBALS['ecs']->table('brand') . " AS b ON g.brand_id = b.brand_id " .
-            "WHERE g.goods_id = '$goods_id'";
+        "FROM " . $GLOBALS['ecs']->table('goods') . " AS g " .
+        "LEFT JOIN " . $GLOBALS['ecs']->table('brand') . " AS b ON g.brand_id = b.brand_id " .
+        "WHERE g.goods_id = '$goods_id'";
     $row = $GLOBALS['db']->getRow($sql);
     if (!empty($row))
     {
@@ -1379,7 +1377,7 @@ function goods_info($goods_id)
 function favourable_info($act_id)
 {
     $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('favourable_activity') .
-            " WHERE act_id = '$act_id'";
+        " WHERE act_id = '$act_id'";
     $row = $GLOBALS['db']->getRow($sql);
     if (!empty($row))
     {
@@ -1405,7 +1403,7 @@ function favourable_info($act_id)
 function wholesale_info($act_id)
 {
     $sql = "SELECT * FROM " . $GLOBALS['ecs']->table('wholesale') .
-            " WHERE act_id = '$act_id'";
+        " WHERE act_id = '$act_id'";
     $row = $GLOBALS['db']->getRow($sql);
     if (!empty($row))
     {
@@ -1450,10 +1448,10 @@ function get_goods_attr($goods_id)
 {
     $attr_list = array();
     $sql = "SELECT a.attr_id, a.attr_name " .
-            "FROM " . $GLOBALS['ecs']->table('goods') . " AS g, " . $GLOBALS['ecs']->table('attribute') . " AS a " .
-            "WHERE g.goods_id = '$goods_id' " .
-            "AND g.goods_type = a.cat_id " .
-            "AND a.attr_type = 1";
+        "FROM " . $GLOBALS['ecs']->table('goods') . " AS g, " . $GLOBALS['ecs']->table('attribute') . " AS a " .
+        "WHERE g.goods_id = '$goods_id' " .
+        "AND g.goods_type = a.cat_id " .
+        "AND a.attr_type = 1";
     $attr_id_list = $GLOBALS['db']->getCol($sql);
     $res = $GLOBALS['db']->query($sql);
     while ($attr = $GLOBALS['db']->fetchRow($res))
@@ -1470,9 +1468,9 @@ function get_goods_attr($goods_id)
     }
 
     $sql = "SELECT attr_id, goods_attr_id, attr_value " .
-            "FROM " . $GLOBALS['ecs']->table('goods_attr') .
-            " WHERE goods_id = '$goods_id' " .
-            "AND attr_id " . db_create_in($attr_id_list);
+        "FROM " . $GLOBALS['ecs']->table('goods_attr') .
+        " WHERE goods_id = '$goods_id' " .
+        "AND attr_id " . db_create_in($attr_id_list);
     $res = $GLOBALS['db']->query($sql);
     while ($goods_attr = $GLOBALS['db']->fetchRow($res))
     {
@@ -1495,14 +1493,14 @@ function get_goods_fittings($goods_list = array())
     $arr        = array();
 
     $sql = 'SELECT gg.parent_id, ggg.goods_name AS parent_name, gg.goods_id, gg.goods_price, g.goods_name, g.goods_thumb, g.goods_img, g.shop_price AS org_price, ' .
-                "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price ".
-            'FROM ' . $GLOBALS['ecs']->table('group_goods') . ' AS gg ' .
-            'LEFT JOIN ' . $GLOBALS['ecs']->table('goods') . 'AS g ON g.goods_id = gg.goods_id ' .
-            "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
-                    "ON mp.goods_id = gg.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
-            "LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS ggg ON ggg.goods_id = gg.parent_id ".
-            "WHERE gg.parent_id " . db_create_in($goods_list) . " AND g.is_delete = 0 AND g.is_on_sale = 1 ".
-            "ORDER BY gg.parent_id, gg.goods_id";
+        "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price ".
+        'FROM ' . $GLOBALS['ecs']->table('group_goods') . ' AS gg ' .
+        'LEFT JOIN ' . $GLOBALS['ecs']->table('goods') . 'AS g ON g.goods_id = gg.goods_id ' .
+        "LEFT JOIN " . $GLOBALS['ecs']->table('member_price') . " AS mp ".
+        "ON mp.goods_id = gg.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
+        "LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS ggg ON ggg.goods_id = gg.parent_id ".
+        "WHERE gg.parent_id " . db_create_in($goods_list) . " AND g.is_delete = 0 AND g.is_on_sale = 1 ".
+        "ORDER BY gg.parent_id, gg.goods_id";
 
     $res = $GLOBALS['db']->query($sql);
 

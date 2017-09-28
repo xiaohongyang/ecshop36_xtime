@@ -655,6 +655,10 @@ class cls_template
                     case 'picsrc':
                         $p = 'picsrc(' . $p . ")";
                         break;
+                    case 'get_give_integral_by_goods_id':
+                        $s[2] = count($s) > 1 ? $s[2] : 1;
+                    $p = 'get_give_integral_by_goods_id(' . $s[1] .  ,".$s[2].")";
+                        break;
                     case 'replace':
                         $p = 'replace(' . $s[1] . ",$s[2] ,$p)";
                         break;

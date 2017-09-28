@@ -71,11 +71,17 @@ $(document).ready(function() {
             var number = goods.find('.number-input').val()
             number = parseFloat(number)
             var price = goods.attr('data-price')
+            var giveInteger = goods.attr('data-give-integer')
+
             price = parseFloat(price)
+            giveInteger = parseFloat(giveInteger)
 
             var amount = price * number;
+            var giveIntegerAmount = giveInteger * number;
             amount = amount.toFixed(2) + '星辉币'
+
             goods.find('.amount').html(amount)
+            goods.find('.amount').next('p').html(giveIntegerAmount)
         });
     };
 

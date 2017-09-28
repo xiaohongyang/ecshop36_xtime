@@ -1325,4 +1325,30 @@ function replace($search, $replaceString='', $str){
     return str_replace($search, $replaceString, $str);
 }
 
+function get_give_integral_by_goods_id($goodsId, $number=1) {
+
+    $res = \zd\Sql::create()->select('g.goods_id,g.goods_brief, g.give_integral, g.goods_name, g.market_price, g.is_vip, g.add_time, g.click_count, g.shop_price AS org_price',
+        "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price",
+        'g.promote_price, promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img ' )
+         ->from('goods g')
+        ->left('member_price mp', "mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]'")
+        ->where('g.is_on_sale = 1')
+        ->andWhere('g.goods_id=' . $goodsId)
+        ->one();
+
+    $res = is_array($res) && count($res) ? $res : [];
+    if($res && $res['give_integral']==-1){
+        $res['give_integral'] = $res['shop_price'];
+    } else if($res && $res['give_integral']){
+        $res['give_integral'] = $res['give_integral'];
+    } else {
+        $res['give_integral'] = 0;
+    }
+
+    if(is_numeric($number)){
+        $res['give_integral'] = $res['give_integral'] * $number;
+    }
+    return $res['give_integral'];
+}
+
 ?>

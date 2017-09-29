@@ -56,12 +56,14 @@
                                 {if $address.address_id eq $default_address}
                                 <a href="javascript:;" class="caddress-morenadd corder-confirm-raduis">默认地址</a>
                                 {/if}
+                                <!--
                                 <span class="corder-pad1 corder-open1">
                                     <img src="/pc/themes/default/img/cimage24.png" alt="">
                                 </span>
                                 <span class="corder-pad1">
                                     <img src="/pc/themes/default/img/cimage25.png" alt="">
                                 </span>
+                                -->
                             </div>
                         </div>
                         {/foreach}

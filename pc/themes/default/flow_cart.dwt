@@ -50,7 +50,7 @@
                                     <tbody>
                                         {foreach from=$goods_list item=goods}
                                         <!-- {if $goods.is_on_sale==1} -->
-                                        <tr data-rec="{$goods.rec_id}"
+                                        <tr data-rec="{$goods.rec_id}" data-id="{$goods.rec_id}"
                                             data-price="{$goods.goods_price}" data-give-integer="{$goods|get_give_integral_by_goods_id:1}"
                                             goods-name="{$goods.goods_name}" class="goods-item" >
                                             <td>
@@ -118,7 +118,7 @@
                                     <tbody>
                                     {foreach from=$goods_list item=goods}
                                     <!-- {if $goods.is_on_sale==0} -->
-                                    <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" data-give-integer="{$goods|get_give_integral_by_goods_id:1}"
+                                    <tr data-rec="{$goods.rec_id}" data-id="{$goods.rec_id}"  data-price="{$goods.goods_price}" data-give-integer="{$goods|get_give_integral_by_goods_id:1}"
                                     goods-name="{$goods.goods_name}" class="goods-item">
                                         <td>
                                             <input type="checkbox">

@@ -79,6 +79,7 @@ $(document).ready(function() {
             var amount = price * number;
             var giveIntegerAmount = giveInteger * number;
             amount = amount.toFixed(2) + '星辉币'
+            giveIntegerAmount = giveIntegerAmount.toFixed(2)
 
             goods.find('.amount').html(amount)
             goods.find('.amount').next('p').html(giveIntegerAmount)
@@ -121,6 +122,8 @@ $(document).ready(function() {
             $this = $(this)
             var numberEle = $this.parents('.number-box').find('.number-input');
             var num = parseInt(numberEle.val());
+            if(isNaN(num))
+                num=1
             if (num < 1) {
                 Dialog.tip('不能少于1');
                 num = 1;

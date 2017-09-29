@@ -47,6 +47,9 @@ class Cart {
             } else {
                 $arr[$key]['is_on_sale'] = true;
             }
+
+            $goodsGiveIntegral = get_give_integral_by_goods_id($value, 1);
+            $arr[$key]['give_integral'] = $goodsGiveIntegral * $value['cart_number'];
         }
         return $arr;
     }

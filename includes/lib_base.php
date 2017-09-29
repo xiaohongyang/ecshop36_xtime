@@ -1325,9 +1325,10 @@ function replace($search, $replaceString='', $str){
     return str_replace($search, $replaceString, $str);
 }
 
-function get_give_integral_by_goods_id($goodsId, $number=1) {
 
-    $res = \zd\Sql::create()->select('g.goods_id,g.goods_brief, g.give_integral, g.goods_name, g.market_price, g.is_vip, g.add_time, g.click_count, g.shop_price AS org_price',
+function get_give_integral_by_goods_id($cartGoods, $number=1) {
+
+    /*$res = \zd\Sql::create()->select('g.goods_id,g.goods_brief, g.give_integral, g.goods_name, g.market_price, g.is_vip, g.add_time, g.click_count, g.shop_price AS org_price',
         "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price",
         'g.promote_price, promote_start_date, promote_end_date, g.goods_brief, g.goods_thumb, g.goods_img ' )
          ->from('goods g')
@@ -1348,7 +1349,25 @@ function get_give_integral_by_goods_id($goodsId, $number=1) {
     if(is_numeric($number)){
         $res['give_integral'] = $res['give_integral'] * $number;
     }
-    return $res['give_integral'];
+    return $res['give_integral'];*/
+
+    $attr_id = $cartGoods['goods_attr_id'];
+    if(!key_exists('cart_number', $cartGoods)){
+        $cartGoods['cart_number'] = 1;
+    }
+    $number = $number==0 ? $cartGoods['cart_number'] : 1;
+
+    $attr_id    = isset($attr_id) ? explode(',', $attr_id) : array();
+    $shop_price  = get_final_price($cartGoods['goods_id'], 1, true, $attr_id);
+    $shop_price = sprintf("%0.2f",$shop_price * $number) ;
+    return $shop_price;
+}
+
+function get_product_number($goods) {
+    $sql = "SELECT product_number FROM " .$GLOBALS['ecs']->table('products'). " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $goods['product_id'] . "'";
+
+    $product_number = $GLOBALS['db']->getOne($sql);
+    return $product_number;
 }
 
 ?>

@@ -51,7 +51,7 @@
                                         {foreach from=$goods_list item=goods}
                                         <!-- {if $goods.is_on_sale==1} -->
                                         <tr data-rec="{$goods.rec_id}"
-                                            data-price="{$goods.goods_price}" data-give-integer="{$goods.goods_id|get_give_integral_by_goods_id:4}"
+                                            data-price="{$goods.goods_price}" data-give-integer="{$goods|get_give_integral_by_goods_id:1}"
                                             goods-name="{$goods.goods_name}" class="goods-item" >
                                             <td>
                                                 <input type="checkbox">
@@ -75,7 +75,7 @@
                                             <td>{$goods.goods_attr}</td>
                                             <td>
                                                 <p class="price">{$goods.goods_price|price}</p>
-                                                <p>+{$goods.goods_id|get_give_integral_by_goods_id:4}积分</p>
+                                                <p>+{$goods|get_give_integral_by_goods_id:1}积分</p>
                                             </td>
                                             <td>
                                                 <p class="huise">每人限购99件</p>
@@ -89,7 +89,7 @@
                                             </td>
                                             <td>
                                                 <p class="amount">{$goods.subtotal|price}</p>
-                                                <p>+{$goods.goods_id|get_give_integral_by_goods_id:4}积分</p>
+                                                <p>+{$goods|get_give_integral_by_goods_id:0}积分</p>
                                             </td>
                                             <td class="delete"><img src="themes/default/img/Delete Icon.png" alt=""></td>
                                         </tr>
@@ -118,7 +118,8 @@
                                     <tbody>
                                     {foreach from=$goods_list item=goods}
                                     <!-- {if $goods.is_on_sale==0} -->
-                                    <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" data-give-integer="{$goods.goods_id|get_give_integral_by_goods_id:4}" goods-name="{$goods.goods_name}" >
+                                    <tr data-rec="{$goods.rec_id}" data-price="{$goods.goods_price}" data-give-integer="{$goods|get_give_integral_by_goods_id:1}"
+                                    goods-name="{$goods.goods_name}" class="goods-item">
                                         <td>
                                             <input type="checkbox">
                                             <div class="dlkuan">
@@ -141,7 +142,7 @@
                                         <td>{$goods.goods_attr}</td>
                                         <td>
                                             <p class="price">{$goods.goods_price|price}</p>
-                                            <p>+{$goods.goods_id|get_give_integral_by_goods_id:4}积分</p>
+                                            <p>+{$goods|get_give_integral_by_goods_id:1}积分</p>
                                         </td>
                                         <td>
                                             <p class="huise">每人限购99件</p>
@@ -155,7 +156,7 @@
                                         </td>
                                         <td>
                                             <p class="amount">{$goods.subtotal|price}</p>
-                                            <p>+{$goods.goods_id|get_give_integral_by_goods_id:4}积分</p>
+                                            <p>+{$goods|get_give_integral_by_goods_id:0}积分</p>
                                         </td>
                                         <td class="delete"><img src="themes/default/img/Delete Icon.png" alt=""></td>
                                     </tr>

@@ -20,7 +20,7 @@
 <div class="yunfei">
     <p>
         <a href="javascript:;">合计|TOTAL</a>
-        <span>0积分</span>
+        <span class='give-integer'>{$total_give_integral}积分</span>
         <div class="clear"></div>
     </p>
     <p>

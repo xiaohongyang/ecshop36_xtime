@@ -24,7 +24,18 @@ class Flow extends \zd\Controller {
      * 获取购物车的商品
      */
     public function cartAction() {
+
+        include_once ROOT_PATH. 'admin/includes/lib_goods.php';
+
         $goods_list = Cart::all();
+        if(is_array($goods_list) && count($goods_list)) {
+            foreach ($goods_list as $k=>$item) {
+                if($item['product_id']) {
+                    $productInfo = get_product_info($item['product_id']);
+                    $goods_list[$k]['goods_number'] = $productInfo['product_number'];
+                }
+            }
+        }
         $page_title = '我的购物车';
         $hasExpire = 0;
         if(count($goods_list)) {
@@ -134,10 +145,13 @@ class Flow extends \zd\Controller {
             //Helper::success();
         }
         $total = 0;
+        $total_give_integral = 0;
         foreach ($goods_list as $goods) {
             $total += $goods['subtotal'];
+            $total_give_integral += $goods['give_integral'];
+
         }
-        $this->show(compact('goods_list', 'total'));
+        $this->show(compact('goods_list', 'total', 'total_give_integral'));
     }
 
     public function checkoutAction() {

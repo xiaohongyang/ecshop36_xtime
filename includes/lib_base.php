@@ -1363,11 +1363,28 @@ function get_give_integral_by_goods_id($cartGoods, $number=1) {
     return $shop_price;
 }
 
+//从product表中获取product数量
 function get_product_number($goods) {
-    $sql = "SELECT product_number FROM " .$GLOBALS['ecs']->table('products'). " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $goods['product_id'] . "'";
+    $sql = "SELECT product_number FROM " .$GLOBALS['ecs']->table('products').
+        " WHERE goods_id = '" . $goods['goods_id'] . "' AND product_id = '" . $goods['product_id'] . "'";
 
     $product_number = $GLOBALS['db']->getOne($sql);
     return $product_number;
 }
+
+
+//获取购物车 积分
+function get_rec_give_integral($recId) {
+    //1.获取购物车信息
+
+    $recSql = "select * from {$GLOBALS['ecs']->table('cart')} where rec_id='{$recId}'";
+    $recData = $GLOBALS['db']->getRow($recSql);
+    //2.获取商品积分  单个商品积分* 商品数量
+    $data = get_give_integral_by_goods_id($recData, 0);
+    return $data;
+}
+
+
+
 
 ?>

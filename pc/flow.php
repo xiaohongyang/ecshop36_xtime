@@ -185,9 +185,10 @@ class Flow extends \zd\Controller {
         $goods_list = Cart::getSelected($flow_type);
 
         /*
- * 取得订单信息
- */
+         * 取得订单信息
+         */
         $order = flow_order_info();
+
 
         /* 计算折扣 */
         if ($flow_type != CART_EXCHANGE_GOODS && $flow_type != CART_GROUP_BUY_GOODS)
@@ -198,10 +199,15 @@ class Flow extends \zd\Controller {
             $this->assign('your_discount', sprintf($_LANG['your_discount'], $favour_name, price_format($discount['discount'])));
         }
 
+        $integral = $this->getCartIntegral($goods_list);
+        $order['integral']= $integral;
+
         /*
          * 计算订单的费用
          */
         $total = order_fee($order, $goods_list, $consignee);
+
+
 
         $page_title = '确认订单';
 
@@ -230,10 +236,87 @@ class Flow extends \zd\Controller {
         $this->show('done', compact('order', 'page_title'));
     }
 
-    public function doneAction() {
+    public function doPayAction() {
+        $id = intval($this->get('id'));
+        $order = Sql::create()
+            ->from('order_info')
+            ->where('user_id', $this->userId())
+            ->andWhere('order_id', $id)->one();
+        if (empty($order)) {
+            show_message('订单不能存在！');
+        }
+        if ($order['pay_status'] != PS_UNPAYED) {
+            show_message('订单已支付!');
+        }
+        if ($order['order_status'] == OS_RETURNED ||
+            $order['order_status'] == OS_CANCELED || $order['order_status'] == OS_INVALID) {
+            show_message('订单无效！');
+        }
+        $page_title = '支付订单';
+
+        $this->payOrder($order['order_id']);
+
+        Helper::success("支付成功!");
+
+    }
+
+    public function payOrder($order_id){
+
+        $user_money = Sql::create()->select('user_money')->from('users')->where("user_id ='{$_SESSION['user_id']}'  ")->scalar();
+
+        $order = order_info($order_id);
+
+        if($user_money < $order['order_amount'])
+            Helper::failure("用户金额不足!");
+
+        $order_info = $order;
+
+
+        /* 标记订单为已确认、已付款，更新付款时间和已支付金额，如果是货到付款，同时修改订单为“收货确认” */
+        if ($order['order_status'] != OS_CONFIRMED)
+        {
+            $arr['order_status']    = OS_CONFIRMED;
+            $arr['confirm_time']    = gmtime();
+        }
+        $arr['pay_status']  = PS_PAYED;
+        $arr['pay_time']    = gmtime();
+        $arr['money_paid']  = $order['money_paid'] + $order['order_amount'];
+        $arr['order_amount']= 0;
+        $payment = payment_info($order['pay_id']);
+        if ($payment['is_cod'])
+        {
+            $arr['shipping_status'] = SS_RECEIVED;
+            $order['shipping_status'] = SS_RECEIVED;
+        }
+        update_order($order_id, $arr);
+        //订单支付后，创建订单到淘打
+        include_once(ROOT_PATH."includes/cls_matrix.php");
+        $matrix = new matrix();
+        $bind_info = $matrix->get_bind_info(array('taodali'));
+        if($bind_info){
+            $matrix->createOrder($order_info['order_sn'],'taodali');
+        }
+        // 请求crm
+        //update_order_crm($order['order_sn']);
+        /* 记录log */
+        order_action($order['order_sn'], OS_CONFIRMED, $order['shipping_status'], PS_PAYED, "");
+
+
+    }
+
+    public function doneShowAction(){
+
         global $_LANG, $_CFG, $ecs, $db;
         include_once('includes/lib_clips.php');
         include_once('includes/lib_payment.php');
+
+        $this->assign('shipping', $this->get('shipping'));
+        $this->assign('payment', $this->get('payment'));
+        $this->assign('need_sms', $this->get('need_sms'));
+        $this->assign('flow_type', $this->get('flow_type'));
+        $this->assign('bonus_sn', $this->get('bonus_sn'));
+        $this->assign('bonus', $this->get('bonus'));
+        $this->assign('address_id', $this->get('address_id'));
 
         /* 取得购物类型 */
         if($_REQUEST['flow_type'] == 'buy_now'){
@@ -490,7 +573,349 @@ class Flow extends \zd\Controller {
             else
             {
                 $order['surplus'] = $order['order_amount'];
-                $order['order_amount'] = 0;
+                //$order['order_amount'] = 0;
+            }
+        }
+
+        /* 如果订单金额为0（使用余额或积分或红包支付），修改订单状态为已确认、已付款 */
+        if ($order['order_amount'] <= 0)
+        {
+            $order['order_status'] = OS_CONFIRMED;
+            $order['confirm_time'] = gmtime();
+            $order['pay_status']   = PS_PAYED;
+            $order['pay_time']     = gmtime();
+            $order['order_amount'] = 0;
+        }
+
+        $order['integral_money']   = $total['integral_money'];
+        $order['integral']         = $total['integral'];
+
+        if ($order['extension_code'] == 'exchange_goods')
+        {
+            $order['integral_money']   = 0;
+            $order['integral']         = $total['exchange_integral'];
+        }
+
+        $order['from_ad']          = !empty($_SESSION['from_ad']) ? $_SESSION['from_ad'] : '0';
+        $order['referer']          = !empty($_SESSION['referer']) ? addslashes($_SESSION['referer']) : '';
+
+        /* 记录扩展信息 */
+        if ($flow_type != CART_GENERAL_GOODS)
+        {
+            $order['extension_code'] = $_SESSION['extension_code'];
+            $order['extension_id'] = $_SESSION['extension_id'];
+        }
+
+        $affiliate = unserialize($_CFG['affiliate']);
+        if(isset($affiliate['on']) && $affiliate['on'] == 1 && $affiliate['config']['separate_by'] == 1)
+        {
+            //推荐订单分成
+            $parent_id = get_affiliate();
+            if($user_id == $parent_id)
+            {
+                $parent_id = 0;
+            }
+        }
+        elseif(isset($affiliate['on']) && $affiliate['on'] == 1 && $affiliate['config']['separate_by'] == 0)
+        {
+            //推荐注册分成
+            $parent_id = 0;
+        }
+        else
+        {
+            //分成功能关闭
+            $parent_id = 0;
+        }
+        $order['parent_id'] = $parent_id;
+
+
+
+        $totalIntegral = $this->getCartIntegral($cart_goods);
+        $order['integral'] = $totalIntegral;
+
+        $this->assign('order', $order);
+        $this->show('done');
+    }
+
+    protected function getCartIntegral($goods){
+
+        $totalIntegral = 0;
+        if(is_array($goods) && count($goods)) {
+            foreach ($goods as $item) {
+                $integral = get_rec_give_integral($item['rec_id']);
+                $totalIntegral += ($integral * $item['goods_number']);
+            }
+        }
+        return $totalIntegral;
+    }
+
+    public function doneAction() {
+        global $_LANG, $_CFG, $ecs, $db;
+        include_once('includes/lib_clips.php');
+        include_once('includes/lib_payment.php');
+
+
+        $action = $this->get('my_act');
+        if($action != 'do_done') {
+            return $this->doneShowAction();
+        }
+
+        /* 取得购物类型 */
+        if($_REQUEST['flow_type'] == 'buy_now'){
+            $flow_type = CART_BUY_NOW;
+        } else {
+            $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
+        }
+
+        /* 检查购物车中是否有商品 */
+
+        if (Cart::count($flow_type) == 0) {
+            show_message($_LANG['no_goods_in_cart'], '', '', 'warning');
+        }
+
+        /* 检查商品库存 */
+        /* 如果使用库存，且下订单时减库存，则减少库存 */
+        if ($_CFG['use_storage'] == '1' && $_CFG['stock_dec_time'] == SDT_PLACE) {
+            $cart_goods_stock = Cart::getSelected($flow_type);
+            $_cart_goods_stock = array();
+            foreach ($cart_goods_stock as $value)
+            {
+                $_cart_goods_stock[$value['rec_id']] = $value['goods_number'];
+            }
+            Cart::cartStock($_cart_goods_stock);
+            unset($cart_goods_stock, $_cart_goods_stock);
+        }
+
+        /*
+         * 检查用户是否已经登录
+         * 如果用户已经登录了则检查是否有默认的收货地址
+         * 如果没有登录则跳转到登录和注册页面
+         */
+        if (empty($_SESSION['direct_shopping']) && $_SESSION['user_id'] == 0) {
+            /* 用户没有登录且没有选定匿名购物，转向到登录页面 */
+            ecs_header("Location: flow.php?step=login\n");
+            exit;
+        }
+
+//        $consignee = get_consignee($_SESSION['user_id']);
+        $consignee = get_consignee_by_id($_POST['address_id']);
+
+        /* 检查收货人信息是否完整 */
+        if (!check_consignee_info($consignee, $flow_type)) {
+            /* 如果不完整则转向到收货人信息填写界面 */
+            Helper::redirect('user.php?act=address_list');
+            exit;
+        }
+
+        $_POST['how_oos'] = isset($_POST['how_oos']) ? intval($_POST['how_oos']) : 0;
+        $_POST['card_message'] = isset($_POST['card_message']) ? compile_str($_POST['card_message']) : '';
+        $_POST['inv_type'] = !empty($_POST['inv_type']) ? compile_str($_POST['inv_type']) : '';
+        $_POST['inv_payee'] = isset($_POST['inv_payee']) ? compile_str($_POST['inv_payee']) : '';
+        $_POST['inv_content'] = isset($_POST['inv_content']) ? compile_str($_POST['inv_content']) : '';
+        $_POST['postscript'] = isset($_POST['postscript']) ? compile_str($_POST['postscript']) : '';
+
+        $order = array(
+            'shipping_id'     => intval($_POST['shipping']),
+            'pay_id'          => intval($_POST['payment']),
+            'pack_id'         => isset($_POST['pack']) ? intval($_POST['pack']) : 0,
+            'card_id'         => isset($_POST['card']) ? intval($_POST['card']) : 0,
+            'card_message'    => trim($_POST['card_message']),
+            'surplus'         => isset($_POST['surplus']) ? floatval($_POST['surplus']) : 0.00,
+            'integral'        => isset($_POST['integral']) ? intval($_POST['integral']) : 0,
+            'bonus_id'        => isset($_POST['bonus']) ? intval($_POST['bonus']) : 0,
+            'need_inv'        => empty($_POST['need_inv']) ? 0 : 1,
+            'inv_type'        => $_POST['inv_type'],
+            'inv_payee'       => trim($_POST['inv_payee']),
+            'inv_content'     => $_POST['inv_content'],
+            'postscript'      => trim($_POST['postscript']),
+            'how_oos'         => isset($_LANG['oos'][$_POST['how_oos']]) ? addslashes($_LANG['oos'][$_POST['how_oos']]) : '',
+            'need_insure'     => isset($_POST['need_insure']) ? intval($_POST['need_insure']) : 0,
+            'user_id'         => $_SESSION['user_id'],
+            'add_time'        => gmtime(),
+            'lastmodify'      => gmtime(),
+            'order_status'    => OS_UNCONFIRMED,
+            'shipping_status' => SS_UNSHIPPED,
+            'pay_status'      => PS_UNPAYED,
+            'agency_id'       => get_agency_by_regions(array($consignee['country'], $consignee['province'], $consignee['city'], $consignee['district']))
+        );
+
+        /* 扩展信息 */
+        if (isset($_SESSION['flow_type']) && intval($_SESSION['flow_type']) != CART_GENERAL_GOODS)
+        {
+            $order['extension_code'] = $_SESSION['extension_code'];
+            $order['extension_id'] = $_SESSION['extension_id'];
+        } else {
+            $order['extension_code'] = '';
+            $order['extension_id'] = 0;
+        }
+
+        /* 检查积分余额是否合法 */
+        $user_id = $_SESSION['user_id'];
+        if ($user_id > 0) {
+            $user_info = user_info($user_id);
+
+            $order['surplus'] = min($order['surplus'], $user_info['user_money'] + $user_info['credit_line']);
+            if ($order['surplus'] < 0)
+            {
+                $order['surplus'] = 0;
+            }
+
+            // 查询用户有多少积分
+            $flow_points = Cart::availablePoints()[1];  // 该订单允许使用的积分
+            $user_points = $user_info['pay_points']; // 用户的积分总数
+
+            $order['integral'] = min($order['integral'], $user_points, $flow_points);
+            if ($order['integral'] < 0)
+            {
+                $order['integral'] = 0;
+            }
+        }
+        else
+        {
+            $order['surplus']  = 0;
+            $order['integral'] = 0;
+        }
+
+        /* 检查红包是否存在 */
+        if ($order['bonus_id'] > 0)
+        {
+            $bonus = bonus_info($order['bonus_id']);
+
+            if (empty($bonus) || $bonus['user_id'] != $user_id || $bonus['order_id'] > 0 || $bonus['min_goods_amount'] > cart_amount(true, $flow_type))
+            {
+                $order['bonus_id'] = 0;
+            }
+        }
+        elseif (isset($_POST['bonus_sn'])) {
+            $bonus_sn = trim($_POST['bonus_sn']);
+            $bonus = bonus_info(0, $bonus_sn);
+            $now = gmtime();
+            if (empty($bonus) || $bonus['user_id'] > 0 || $bonus['order_id'] > 0 || $bonus['min_goods_amount'] > cart_amount(true, $flow_type) || $now > $bonus['use_end_date'])
+            {
+            }
+            else
+            {
+                if ($user_id > 0)
+                {
+                    Sql::update('user_bonus', [
+                        'user_id' => $user_id,
+                    ], 'bonus_id = '.$bonus['bonus_id']. ' LIMIT 1');
+                }
+                $order['bonus_id'] = $bonus['bonus_id'];
+                $order['bonus_sn'] = $bonus_sn;
+            }
+        }
+
+        /* 订单中的商品 */
+        $cart_goods = cart_goods($flow_type);
+
+        if (empty($cart_goods))
+        {
+            show_message($_LANG['no_goods_in_cart'], $_LANG['back_home'], './', 'warning');
+        }
+
+        /* 检查商品总额是否达到最低限购金额 */
+        if ($flow_type == CART_GENERAL_GOODS && cart_amount(true, CART_GENERAL_GOODS) < $_CFG['min_goods_amount'])
+        {
+            show_message(sprintf($_LANG['goods_amount_not_enough'], price_format($_CFG['min_goods_amount'], false)));
+        }
+
+        /* 收货人信息 */
+        foreach ($consignee as $key => $value)
+        {
+            $order[$key] = addslashes($value);
+        }
+
+        /* 判断是不是实体商品 */
+        foreach ($cart_goods AS $val)
+        {
+            /* 统计实体商品的个数 */
+            if ($val['is_real'])
+            {
+                $is_real_good=1;
+            }
+        }
+        if(isset($is_real_good))
+        {
+            $shipping_id = Sql::create()
+                ->select('shipping_id')
+                ->from('shipping')
+                ->where('shipping_id', $order['shipping_id'])
+                ->andWhere('enabled =1')->scalar();
+            if(empty($shipping_id))
+            {
+                show_message($_LANG['flow_no_shipping']);
+            }
+        }
+        /* 订单中的总额 */
+        $total = order_fee($order, $cart_goods, $consignee);
+        $order['bonus']        = $total['bonus'];
+        $order['goods_amount'] = $total['goods_price'];
+        $order['discount']     = $total['discount'];
+        $order['surplus']      = $total['surplus'];
+        $order['tax']          = $total['tax'];
+
+        // 购物车中的商品能享受红包支付的总额
+        $discount_amout = compute_discount_amount();
+        // 红包和积分最多能支付的金额为商品总额
+        $temp_amout = $order['goods_amount'] - $discount_amout;
+        if ($temp_amout <= 0)
+        {
+            $order['bonus_id'] = 0;
+        }
+
+        /* 配送方式 */
+        if ($order['shipping_id'] > 0)
+        {
+            $shipping = shipping_info($order['shipping_id']);
+            $order['shipping_name'] = addslashes($shipping['shipping_name']);
+        }
+        $order['shipping_fee'] = $total['shipping_fee'];
+        $order['insure_fee']   = $total['shipping_insure'];
+
+        /* 支付方式 */
+        if ($order['pay_id'] > 0)
+        {
+            $payment = payment_info($order['pay_id']);
+            $order['pay_name'] = addslashes($payment['pay_name']);
+        }
+        $order['pay_fee'] = $total['pay_fee'];
+        $order['cod_fee'] = $total['cod_fee'];
+
+        /* 商品包装 */
+        if ($order['pack_id'] > 0)
+        {
+            $pack               = pack_info($order['pack_id']);
+            $order['pack_name'] = addslashes($pack['pack_name']);
+        }
+        $order['pack_fee'] = $total['pack_fee'];
+
+        /* 祝福贺卡 */
+        if ($order['card_id'] > 0)
+        {
+            $card               = card_info($order['card_id']);
+            $order['card_name'] = addslashes($card['card_name']);
+        }
+        $order['card_fee']      = $total['card_fee'];
+
+        $order['order_amount']  = number_format($total['amount'], 2, '.', '');
+
+        /* 如果全部使用余额支付，检查余额是否足够 */
+        if ($payment['pay_code'] == 'balance'
+            && $order['order_amount'] > 0) {
+            if($order['surplus'] >0) //余额支付里如果输入了一个金额
+            {
+                $order['order_amount'] = $order['order_amount'] + $order['surplus'];
+                $order['surplus'] = 0;
+            }
+            if ($order['order_amount'] > ($user_info['user_money'] + $user_info['credit_line']))
+            {
+                show_message($_LANG['balance_not_enough']);
+            }
+            else
+            {
+                $order['surplus'] = $order['order_amount'];
+                //$order['order_amount'] = 0;
             }
         }
 
@@ -749,9 +1174,11 @@ class Flow extends \zd\Controller {
         unset($_SESSION['flow_order']);
         unset($_SESSION['direct_shopping']);
         if ($order['order_amount'] <= 0) {
-            $this->show('success');
+//            $this->show('success');
         }
-        $this->show();
+
+        $this->payOrder($order['order_id']);
+        $this->show('success');
     }
 
     public function successAction() {

@@ -2,6 +2,18 @@
         </div>
 <div class="box">
 <div class="corder-main">
+        <form action="flow.php?step=done" method="POST">
+
+            <input type="hidden" name="my_act" value="do_done"/>
+            <input type="hidden" name="shipping" value="{$shipping}"/>
+            <input type="hidden" name="payment" value="{$payment}"/>
+            <input type="hidden" name="need_sms" value="{$need_sms}"/>
+            <input type="hidden" name="flow_type" value="{$flow_type}"/>
+            <input type="hidden" name="bonus_sn" value="{$bonus_sn}"/>
+            <input type="hidden" name="bonus" value="{$bonus}"/>
+            <input type="hidden" name="address_id" value="{$address_id}"/>
+
+            <input type="hidden" name="id" value="{$order.order_id}" />
 
             <div class="corder-confirm">
                 <div class="corder-confirm-first ">
@@ -65,7 +77,8 @@
                    </div>
                </div>
             </div>
-        
+
+        </form>
         </div>
 </div>
 <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

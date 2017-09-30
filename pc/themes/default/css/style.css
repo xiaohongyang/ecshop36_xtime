@@ -155,7 +155,8 @@ li {
 .main_visual {
     height: 470px;
     border-top: 1px solid #d7d7d7;
-    overflow: hidden;
+    /*类别多的时候显示不出来了*/
+    /*overflow: hidden;*/
     position: relative;
 }
 

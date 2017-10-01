@@ -1,5 +1,5 @@
 <div class="nav">
-    <dl {if $nav!='auction'}class='active'{/if}>
+    <dl {if $nav!='auction'}class='active'{/if} target-nav='index-nav'>
         <dt><a href="index.php"><img src="themes/default/img/3.png" /></a></dt>
         <dd><a href="index.php">主题周边</a></dd>
     </dl>

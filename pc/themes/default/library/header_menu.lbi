@@ -1,0 +1,19 @@
+
+<div class="posi index-nav ">
+    <h3>全部主题周边</h3>
+    <ul class="all">
+        {foreach from=$categories item=cat key=key name=the_cat}
+
+        {if $smarty.foreach.the_cat.index lt 7}
+        <li {if $cat.id eq $smarty.get.id}class="active"{/if} ><a href="{$cat.url}">{$cat.name}</a></li>
+        {/if}
+        {if $smarty.foreach.the_cat.index==7}
+        <li><a href="javascript:void(0);" class="btn-see-all">SEE ALL</a> </li>
+        <li {if $cat.id eq $smarty.get.id}class="active"{/if}><a href="{$cat.url}" >{$cat.name}</a></li>
+        {/if}
+        {if $smarty.foreach.the_cat.index>7}
+        <li {if $cat.id eq $smarty.get.id}class="active"{/if} ><a href="{$cat.url}" >{$cat.name}</a></li>
+        {/if}
+        {/foreach}
+    </ul>
+</div><!--posi-->

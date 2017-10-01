@@ -5,14 +5,8 @@
         <!--banner -->
 <div class="main_visual">
 <div class="box">
-    <div class="posi ">
-        <h3>全部主题周边</h3>
-        <ul class="all">
-            {foreach from=$categories item=cat}
-            <li><a href="{$cat.url}">{$cat.name}</a></li>
-            {/foreach}
-        </ul>
-    </div><!--posi-->
+    <!-- #BeginLibraryItem "/library/header_menu.lbi" --><!-- #EndLibraryItem -->
+
 </div>
 
 <div class="flicking_con">

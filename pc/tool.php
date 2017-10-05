@@ -45,15 +45,16 @@ class Tool extends \zd\Controller {
     }
 
     function smsAction() {
-        session_start();
+//        session_start();
         $send_code = Helper::post('send_code');
+        $check_mobile_exist = Helper::post('check_mobile_exist');
         //防用户恶意请求
         if(empty($_SESSION['send_code']) || $send_code != $_SESSION['send_code']){
             Helper::failure('请求超时，请刷新页面后重试');
         }
         $phone = Helper::post('phone');
 
-        if(strpos($_SERVER['HTTP_REFERER'], 'register') !== false) {
+        if(strpos($_SERVER['HTTP_REFERER'], 'register') !== false || $check_mobile_exist) {
             $u = \zd\Sql::create()
                 ->selectCount()->from('users')
                 ->where('user_name=')->addValue($phone)

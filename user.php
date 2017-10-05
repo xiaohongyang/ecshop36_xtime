@@ -384,10 +384,17 @@ elseif ($action == 'is_registered')
 
     $username = trim($_GET['username']);
     $username = json_str_iconv($username);
-    if ($user->check_user($username) || admin_registered($username)) {
-        Helper::failure('用户已存在！');
+
+    if(key_exists('from', $_GET) && $_GET['from'] && $_GET['from'] == 'pc_validate') {
+
+        exit($user->check_user($username) || admin_registered($username) ?  "false" : "true" );
+
+    } else {
+        if ($user->check_user($username) || admin_registered($username)) {
+            Helper::failure('用户已存在！');
+        }
+        Helper::success();
     }
-    Helper::success();
 }
 
 /* 验证用户邮箱地址是否被注册 */
@@ -582,7 +589,6 @@ elseif ($action == 'profile')
             default:    $extend_info_list[$key]['content'] = empty($temp_arr[$val['id']]) ? '' : $temp_arr[$val['id']] ;
         }
     }
-
     $smarty->assign('extend_info_list', $extend_info_list);
 
     /* 密码提示问题 */

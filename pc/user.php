@@ -64,6 +64,11 @@ class User extends \zd\Controller {
         $page_title = '注册';
         $send_code = $this->random(6,1);
 
+        $sql = 'SELECT * FROM ' . $GLOBALS['ecs']->table('reg_fields') . ' WHERE type < 2 AND display = 1 ORDER BY dis_order, id';
+        $extend_info_list = $GLOBALS['db']->getAll($sql);
+
+        $this->assign('extend_info_list', $extend_info_list);
+
         //开启SESSION
         session_start();
 
@@ -71,6 +76,9 @@ class User extends \zd\Controller {
 
         /* 密码提示问题 */
         $this->assign('passwd_questions', $_LANG['passwd_questions']);
+//        print_r($_LANG['passwd_questions']);
+//        exit;
+
         $this->assign('send_code', $send_code);
         $this->show('/register', compact('page_title'));
     }
@@ -90,8 +98,22 @@ class User extends \zd\Controller {
         $other['office_phone'] = $this->get('extend_field3');
         $other['home_phone'] = $this->get('extend_field4');
         $other['mobile_phone'] = $username;//isset($_POST['extend_field5']) ? $_POST['extend_field5'] : '';
-        $sel_question = $this->get('sel_question');
-        $passwd_answer = $this->get('passwd_answer');
+
+
+        $question = $this->get('question');
+
+        $answer_01 = $this->get('answer_01');
+        $answer_02 = $this->get('answer_02');
+        $answer_03 = $this->get('answer_03');
+
+        $question = implode('|', $question);
+        $answer = $answer_01 . '|' . $answer_02 . '|' . $answer_03;
+
+        $sel_question = $question;
+        $passwd_answer = $answer;
+
+//        $sel_question = $this->get('sel_question');
+//        $passwd_answer = $this->get('passwd_answer');
 
         $mobile_code = $this->get('mobile_code');
 
@@ -568,7 +590,42 @@ class User extends \zd\Controller {
 
     public function passwordAction() {
         $page_title = '修改绑定手机';
+
+        $send_code = $this->random(6,1);
+
+        //开启SESSION
+        //session_start();
+
+        $_SESSION['send_code'] = $send_code;
+
+
+        $this->assign('send_code', $send_code);
+
         $this->show(compact('page_title'));
+    }
+
+    public function passwordActionPost() {
+
+        $password = $this->get('password');
+        $mobile = $this->get('mobile');
+        $code = $this->get('mobile_code');
+
+        $userInfo = $this->userInfo();
+
+        if (!$this->user->check_user($userInfo['user_name'], $password)){
+            //验证密码
+            Helper::failure('密码错误');
+        } else if($code != $_SESSION["send_code"]){
+            //验证验证码是否正确
+            Helper::failure('验证码不正确');
+        }
+
+        Sql::update('users', [
+            'mobile_phone' => $mobile,
+        ], [
+            'user_id' => $this->userId()
+        ]);
+        Helper::success();
     }
 
     public function getPasswordAction(){

@@ -20,6 +20,14 @@
     <script type="text/javascript" src="themes/default/js/jquery.event.drag-1.5.min.js"></script>
     <script type="text/javascript" src="themes/default/js/jquery.touchSlider.js"></script>
 
+    <style type="text/css">
+        form.ajax-form div label{
+            padding-left: 140px;
+            height: 30px;
+            line-height: 30px;
+            color: #EB7A7A;
+        }
+    </style>
 </head>
 
 <body>
@@ -70,77 +78,108 @@
                     <div class="clear"></div>
                 </div>
         </div>
-        <div class="registerr">
+        <div class="register" style="margin-top: 50px;">
             <h3>设置验证问题</h3>
             <p class="green">*提示:请选择别人不太了解的问题以保证个人信息安全</p>
-                       <!-- {foreach from=$extend_info_list item=field} -->
-    <!-- {if $field.id eq 6} -->
+
                 <div>
-                    <span>{$lang.passwd_question}</span>
-                    <select class="fang"  name='sel_question'>
-                        <option value='0'>{$lang.sel_question}</option>
+                    <span>验证问题1:</span>
+                    <select class="fang" name="question[]">
                         {html_options options=$passwd_questions}
                     </select>
-                    <span>{$lang.passwd_answer}</span>
-                    <input type="text" name="passwd_answer">
                     <div class="clear"></div>
-                    <p><!-- {if $field.is_need} --><span style="color:#FF0000"> *</span><!-- {/if} --></p>
                 </div>
-  
-	<!-- {else} -->
                 <div>
-                    <span>{$field.reg_field_name}</span>
-                    <input type="text"  name="extend_field{$field.id}">
+                    <span>答案:</span>
+                    <input type="text" name="answer_01" required minlength="2" />
                     <div class="clear"></div>
                 </div>
-	<!-- {/if} -->
-	<!-- {/foreach} -->
+                <div>
+                    <span>验证问题2:</span>
+                    <select class="fang" name="question[]">
+                        {html_options options=$passwd_questions}
+                    </select>
+                    <div class="clear"></div>
+                </div>
+                <div>
+                    <span>答案:</span>
+                    <input type="text" name="answer_02" required minlength="2" />
+                    <div class="clear"></div>
+                </div>
+                <div>
+                    <span>验证问题3:</span>
+                    <select class="fang" name="question[]">
+                        {html_options options=$passwd_questions}
+                    </select>
+                    <div class="clear"></div>
+                </div>
+                <div>
+                    <span>答案:</span>
+                    <input type="text" name="answer_03" required minlength="2" />
+                    <div class="clear"></div>
+                </div>
                 <div>
                     <span>性别:</span>
-                    <p class="register-member">
-                        <a style="float:left;padding-top:10px">男</a><input checked=checked type="radio" name="sex" value="1">
-                        <a style="float:left;padding-top:10px">女</a><input type="radio" name="sex"  value="2" >
-                    </p>
-                   
+                    <a style="float:left;padding-top:10px">男</a><input checked="checked" type="radio" name="sex" value="=" style="width:34px; vertical-align: middle">
+                    <a style="float:left;padding-top:10px">女</a><input type="radio" name="sex" style="width:34px; vertical-align: middle">
+                    <div class="clear"></div>
                 </div>
-                <div class="dis">
-                    <input type="checkbox" class="check" name="agreement" value="1" checked=checked><a>已经阅读并且同意《星辉俱乐部注册协议》</a>
+
+                <!-- {foreach from=$extend_info_list item=field} -->
+
+                        <div class="hide">
+                            <span>{$field.reg_field_name}:</span>
+                            <input type="text" name="extend_field{$field.id}" required >
+                            <div class="clear"></div>
+                        </div>
+
+                <!-- {/foreach} -->
+
+                <div class="dis" style="margin-bottom: 250px;">
+                    <input type="checkbox" class="check" style="width:70px;" name="agreement"  value="1" checked=checked>
+                    <a>已经阅读并且同意《星辉俱乐部注册协议》</a>
+                    <br/>
                     <input type="submit" value="立即注册" class="onloadin">
-                    <p class="lvgr">已有账号？请<span>
-                    <a href="user.php">登录</a>    
-                    </span></p>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <p class="lvgr">已有账号？请<a href="/pc/user.php">登录</a></p>
+
                 </div>
                 
 
         </div>
             </form>
     </div>
-            
+
+
+    <!-- #BeginLibraryItem "/library/form.lbi" --><!-- #EndLibraryItem -->
+
     <script>
 $(document).ready(function () {
-    $('[name=username]').blur(function () {
-        var phone = $(this).val();
-        if (!phone || phone.length < 11) {
-            Dialog.tip('请输入有效的手机号码！');
-            return;
-        }
-        $.getJSON('/user.php?act=is_registered&username=' + phone, function (data) {
-            if (data.code == 0) {
-                return;
-            }
-            Dialog.tip(data.msg);
-        });
-    });
+//    $('[name=username]').blur(function () {
+//        var phone = $(this).val();
+//        if (!phone || phone.length < 11) {
+//            Dialog.tip('请输入有效的手机号码！');
+//            return;
+//        }
+//        $.getJSON('/user.php?act=is_registered&username=' + phone, function (data) {
+//            if (data.code == 0) {
+//                return;
+//            }
+//            Dialog.tip(data.msg);
+//        });
+//    });
     $(".sendCode").click(function() {
         var $this = $(this);
         if ($this.hasClass('disable')) {
             return;
         }
         var phone = $("input[name=username]").val();
-        if (!phone || phone.length < 11) {
-            Dialog.tip('请输入有效的手机号码！');
-            return;
-        }
+//        if (!phone || phone.length < 11) {
+//            Dialog.tip('请输入有效的手机号码！');
+//            return;
+//        }
         $.post('tool.php?act=sms', {
             phone: phone,
             send_code: '{$send_code}'
@@ -166,18 +205,112 @@ $(document).ready(function () {
         $(".sendCode").val(time);
         setTimeout(refreshTime, 1000);
     };
-    $(".ajax-form").submit(function() {
-        $.post('user.php?act=register', $(this).serialize(), function(data) {
-            if (data.code != 0) {
-                Dialog.tip(data.msg);
-                return;
+
+
+
+//    $(".ajax-form").submit(function() {
+//        $.post('user.php?act=register', $(this).serialize(), function(data) {
+//            if (data.code != 0) {
+//                Dialog.tip(data.msg);
+//                return;
+//            }
+//            Dialog.tip('注册成功！');
+//            setTimeout(function() {
+//                window.location.href = data.data.url ? data.data.url : 'user.php';
+//            }, 1000);
+//        }, 'json');
+//        return false;
+//    });
+
+    var checkMobile = function(value){
+        return new RegExp(/^[\d]{11}$/).test(value)
+    }
+    var checkPassword = function(value){
+        return new RegExp(/^[\da-zA-Z]{8,16}$/).test(value) && new RegExp(/[\d]+/).test(value) && new RegExp(/[a-zA-Z]+/).test(value)
+    }
+    var confirmPassword = function (){
+        return $('input[name=password]').val() == $("input[name='confirm_password']").val();
+    }
+
+    jQuery.validator.addMethod("checkMobile", function(value, element) {
+        console.log(value)
+        console.log(element)
+        return checkMobile(value);
+    }, "请输入正确的手机号");
+    jQuery.validator.addMethod('checkPassword', function (value, element) {
+
+        return checkPassword(value)
+    }, "密码格式不正确(8~16位数,同时包含数字和字母)")
+    jQuery.validator.addMethod('confirmPassword', function (value, element) {
+
+        return confirmPassword()
+    }, "两次输入的密码不一致")
+
+    var refreshCaptcha = function() {
+        $("#captcha").attr('src', 'tool.php?act=captcha&' + Math.random());
+    };
+    $(".ajax-form").validate({
+        errorPlacement : function(error, element) {
+            element.after(error);
+        },
+//            rules:{
+//                username:{
+//                    required:true,
+//                    remote:{
+//                        type:"POST",
+//                        url:"01.php", //请求地址
+//                        data:{
+//                            username:function(){ return $("#username").val(); }
+//                        }
+//                    }
+//                }
+//            },
+        rules : {
+            username : {
+                checkMobile : true,
+                remote : {
+                    type : 'get',
+                    url : "/user.php?act=is_registered&from=pc_validate",
+                    data : {
+                        username : function(){
+                            return $('.ajax-form').find('input[name=username]').val();
+                        }
+                    }
+                }
+            },
+            password : {
+                checkPassword :true
+            },
+            confirm_password : {
+                confirmPassword : true
             }
-            Dialog.tip('注册成功！');
-            setTimeout(function() {
-                window.location.href = data.data.url ? data.data.url : 'user.php';
-            }, 1000);
-        }, 'json');
-        return false;
+        },
+        messages : {
+            username : {
+                remote : "手机号已存在"
+            }
+        },
+        submitHandler: function(form) {
+            //var loading = Dialog.loading();
+
+            $(form).ajaxSubmit({
+                success: function(data) {
+                    if (typeof data != 'object') {
+                        data = JSON.parse(data);
+                    }
+                    //loading.close();
+                    if (data.code == 0) {
+                        Dialog.tip('注册成功！');
+                        setTimeout(function() {
+                            window.location.href = data.data.url ? data.data.url : 'user.php';
+                        }, 1000);
+                    } else {
+                        //refreshCaptcha();
+                    }
+                }
+            });
+            return false;
+        }
     });
 });
 </script>

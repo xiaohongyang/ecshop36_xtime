@@ -6,9 +6,9 @@
     <div class="product">
         <div class="pro-nav">
             <p>
-                <a href="javascript:;">HOME</a>
+                <a href="index.php">HOME</a>
                 <span>&gt;</span>
-                <a href="javascript:;">热门竞拍</a>
+                <a href="auction.php">热门竞拍</a>
                 <span>&gt;</span>
                 <a href="javascript:;" class="current">竞拍商品详情</a>
             </p>

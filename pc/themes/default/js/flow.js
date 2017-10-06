@@ -376,17 +376,36 @@ $(document).ready(function () {
 
     $(".addCollect").click(function () {
         var ele = $(this);
-         $.getJSON('user.php?act=collect&id=' + ele.attr('data-goods'), function (data) {
-            if (data.code == 0) {
-                Dialog.tip(data.data || '收藏成功！');
-                //已收藏
-                $('img.collected_1').show()
-                $('img.collected_0').hide()
-                $(".collecting span").text(parseInt( $(".collecting span").text() ) + 1);
-                return;
+
+        var is_loged = false;
+        $.ajax({
+            url : 'index.php?act=is_guest',
+            data : {},
+            dataType : 'json',
+            type : 'get',
+            async : false,
+            success : function (json) {
+                if(json.code == 0){
+                    is_loged = true;
+                }
             }
-            Dialog.tip(data.msg);
-         });
+        })
+        if(!is_loged){
+            Dialog.tip('尚未登录，请先登录')
+            return;
+        } else {
+            $.getJSON('user.php?act=collect&id=' + ele.attr('data-goods'), function (data) {
+                if (data.code == 0) {
+                    Dialog.tip(data.data || '收藏成功！');
+                    //已收藏
+                    $('img.collected_1').show()
+                    $('img.collected_0').hide()
+                    $(".collecting span").text(parseInt( $(".collecting span").text() ) + 1);
+                    return;
+                }
+                Dialog.tip(data.msg);
+            })
+        }
     });
 
     $(".payment").click(function () {

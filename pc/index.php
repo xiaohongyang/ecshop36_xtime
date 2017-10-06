@@ -50,6 +50,14 @@ class Home extends \zd\Controller {
             'goods_list', 'total'));
     }
 
+    public function isGuestAction(){
+        if ($_SESSION['user_id'] ){
+            echo json_encode(['code'=> 0,'msg'=>'已登录']);exit;
+        }  else {
+            echo json_encode(['code'=> 1,'msg'=>'未登录']);exit;
+        }
+    }
+
     private function _getGoodsList($sort, $order, $page) {
 
         //踪全排序

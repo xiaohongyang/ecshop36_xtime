@@ -1,0 +1,468 @@
+<!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
+    <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
+</div>
+
+<style type="text/css">
+
+    .sendCode_01 , .sendCode_02{
+        right: 43px; top: -20px; border: 1px solid #BFD8D7; width: 110px; border-radius: 0 5px 5px 0; background-color: #BFD8D7; text-align: center; display: inline-block; height: 40px; line-height: 40px; cursor: pointer;
+    }
+
+    .disable{
+        background: #eee;
+        cursor: default;
+    }
+
+    form dl dt label{
+        display: block;
+        color: red;
+        text-align: left;
+        clear: left;
+    }
+
+    .cquestion-main{
+        width: 450px;
+    }
+    .cquestion-footer {
+        width: 750px;
+    }
+    .cquestion-footer label.error{
+        color: red;
+    }
+</style>
+
+<div class="box">
+    <div class="corder-main">
+        <!-- #BeginLibraryItem "/library/user_menu.lbi" -->
+        <!-- #EndLibraryItem -->
+        <div class="corder-main-main">
+
+            <div class="corder-main-mainheader corder-overflow">
+                <div class="corder-left">
+                    <b>修改绑定邮箱</b>
+                </div>
+            </div>
+            <div class="cquestion">
+                <div class="cquestion-head">
+                    <div class="cquestion-first  {if $step eq 1} cquestion-active {/if} ">
+                        <span class="cquest-span">验证身份</span>
+                    </div>
+                    <div class="cquestion-first"><img src="/pc/themes/default/img/cimage31.png" alt=""></div>
+                    <div class="cquestion-first {if $step eq 2} cquestion-active {/if}" >
+                        <span class="cquest-span">修改邮箱</span>
+                    </div>
+                    <div class="cquestion-first"><img src="/pc/themes/default/img/cimage31.png" alt=""></div>
+                    <div class="cquestion-first {if $step eq 3} cquestion-active {/if}" >
+                        <span class="cquest-span">完成</span>
+                    </div>
+                </div>
+                <div class="step-1" {if $step neq 1} style='display: none;' {/if}>
+
+                    <form action="user.php?act=edit_email" method="post" class="ajax-form_01">
+
+                        <input type="hidden" name="step" value="1"/>
+
+                        <div class="cquestion-main">
+
+                        <dl>
+                            <dd>用户名</dd>
+                            <dt><input type="text" name="user_name" class="cquestion-input cquestion-raduis" style="float: left;" required >
+                            </dt>
+                        </dl>
+                        <dl>
+                            <dd>登录密码</dd>
+                            <dt><input type="password" name="password" class="cquestion-input cquestion-raduis" style="float: left;" required >
+                            </dt>
+                        </dl>
+                        <dl>
+                            <dd>原邮箱地址</dd>
+                            <dt><input type="text" name="email" class="cquestion-input cquestion-raduis" style="float: left;" required >
+                            </dt>
+                        </dl>
+
+                        <dl>
+                            <dd>校验码</dd>
+                            <dt>
+                                <span class="cquestion-fspan">
+                                    <input type="text" name="email_code" required class="cquestion-input1"><img src="/pc/themes/default/img/cimage32.png" alt="" class="hide">
+                                </span>
+                                <div class="jiao sendCode_01" style="">
+                                    <span class="">获取验证码</span>
+                                    <span class="sendCode_01_notice" style="display: none;">
+                                        <span class="notice"></span>秒
+                                    </span>
+                                </div>
+
+                            </dt>
+                        </dl>
+                        
+                    </div>
+
+                    <div class="cquestion-btn">
+                        <button>下一步</button>
+                    </div>
+                    </form>
+                </div>
+                <div class="step-2" {if $step neq 2} style='display: none;' {/if} >
+
+                    <form method="post" action="user.php?act=edit_email" class="ajax-form_02">
+                        <div class="cquestion-main">
+
+                            <div class="cquestion-main">
+
+                                <dl>
+                                    <dd>用户名</dd>
+                                    <dt><input type="text" name="user_name_02" class="cquestion-input cquestion-raduis" style="float: left;" required >
+                                    </dt>
+                                </dl>
+                                <dl>
+                                    <dd>新邮箱</dd>
+                                    <dt><input type="text" name="email_02" class="cquestion-input cquestion-raduis" style="float: left;" required >
+                                    </dt>
+                                </dl>
+
+                                <dl>
+                                    <dd>邮箱校验码</dd>
+                                    <dt>
+                                <span class="cquestion-fspan">
+                                    <input type="text" name="email_code_02" required class="cquestion-input1"><img src="/pc/themes/default/img/cimage32.png" alt="" class="hide">
+                                </span>
+                                        <div class="jiao sendCode_02" style="">
+                                            <span class="">获取验证码</span>
+                                            <span class="sendCode_02_notice" style="display: none;">
+                                                <span class="notice"></span>秒
+                                            </span>
+                                        </div>
+
+                                    </dt>
+                                </dl>
+
+                            </div>
+
+                            <div class="cquestion-btn">
+                                <button>下一步</button>
+                            </div>
+                    </div>
+                    </form>
+                </div>
+
+                <div class="step-3" {if $step neq 3} style='display: none;' {/if} >
+                    <div class="cquestion-main">
+                        <div class="cquestion-success">
+                            <p class="cquestion-success-blue">Success！</p>
+                            <h4>已更新邮箱</h4>
+                            <span class="corder-ccc"><span class="time-step-3">5</span>秒后自动跳转回商城首页</span>
+                        </div>
+                    </div>
+                    <div class="cquestion-return">
+                        <button>
+                            <a href="index.php">返回商城首页重新登录</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- #BeginLibraryItem "/library/form.lbi" --><!-- #EndLibraryItem -->
+<script>
+    $(document).ready(function () {
+
+        {if $step eq 3}
+            var i = 5;
+            var ele = $(".step-3 .time-step-3");
+            var handle = setInterval(function () {
+                i --;
+                ele.html(i);
+                if (i == 0) {
+                    window.location.href = 'index.php';
+                    clearInterval(handle);
+                }
+            }, 1000);
+        {/if}
+
+        $(".cquestion-text-blue").mouseenter(function(){
+            $(".corder-manager1").show();
+        }).mouseleave(function(){
+            $(".corder-manager1").hide();
+        });
+        $(".corder-manager1 li").click(function() {
+            var index = $(this).index();
+            if (index > 0) {
+                $(".mobile_grid").hide();
+                $(".question_grid").show();
+                return;
+            }
+            $(".mobile_grid").show();
+            $(".question_grid").hide();
+        });
+        $(".step-1 .cquestion-btn").click(function () {
+
+
+        });
+
+        var checkMobile = function(value){
+            return new RegExp(/^[\d]{11}$/).test(value)
+        }
+        var checkEmail = function(value){
+            return new RegExp(/^[\d.\w@]+@[\d.\w@]+$/).test(value)
+        }
+        var checkPassword = function(value){
+            return new RegExp(/^[\da-zA-Z]{8,16}$/).test(value) && new RegExp(/[\d]+/).test(value) && new RegExp(/[a-zA-Z]+/).test(value)
+        }
+        var confirmPassword = function (){
+            return $('input[name=password_02]').val() == $("input[name='password_02_repeat']").val();
+        }
+
+        jQuery.validator.addMethod("checkMobile", function(value, element) {
+            console.log(value)
+            console.log(element)
+            return checkMobile(value);
+        }, "请输入正确的手机号");
+        jQuery.validator.addMethod("checkEmail", function(value, element) {
+
+            return checkEmail(value);
+        }, "请输入正确的邮箱");
+        jQuery.validator.addMethod('checkPassword', function (value, element) {
+
+            return checkPassword(value)
+        }, "密码格式不正确(8~16位数,同时包含数字和字母)")
+        jQuery.validator.addMethod('confirmPassword', function (value, element) {
+
+            return confirmPassword()
+        }, "两次输入的密码不一致")
+
+
+        $(".ajax-form_01").validate({
+            errorPlacement : function(error, element) {
+                element.after(error);
+            },
+            rules : {
+                password : {
+                    checkPassword :true,
+                },
+                email : {
+                    checkEmail :true,
+                    remote : {
+                        type : 'get',
+                        url : "user.php?act=is_email_right",
+                        data : {
+                            mobile : function(){
+                                return $('.ajax-form_01').find('input[name=email]').val();
+                            }
+                        }
+                    }
+                },
+                user_name : {
+
+                    remote : {
+                        type : 'get',
+                        url : "user.php?act=is_username_right",
+                        data : {
+                            mobile : function(){
+                                return $('.ajax-form_01').find('input[name=user_name]').val();
+                            }
+                        }
+                    }
+                },
+                password_01_repeat : {
+                    confirmPassword : true
+                }
+            },
+            messages : {
+                email : {
+                    remote : "原邮箱地址不正确"
+                },
+                user_name : {
+                    remote : "用户名不正确"
+                }
+            },
+            //updateUserMobile
+            submitHandler: function(form) {
+                //var loading = Dialog.loading();
+
+                $(form).ajaxSubmit({
+                    success: function(data) {
+                        if (typeof data != 'object') {
+                            data = JSON.parse(data);
+                        }
+                        //loading.close();
+                        if (data.code == 0) {
+                            window.location.href = 'user.php?act=edit_email&step=2'
+
+                        } else {
+                            Dialog.tip(data.msg)
+                        }
+                    }
+                });
+                return false;
+            }
+        })
+
+
+        $(".ajax-form_02").validate({
+            errorPlacement : function(error, element) {
+                element.after(error);
+            },
+            rules : {
+                password_02 : {
+                    checkPassword :true,
+                },
+                user_name_02 : {
+
+                    remote : {
+                        type : 'get',
+                        url : "user.php?act=is_username_right",
+                        data : {
+                            user_name : function(){
+                                return $('.ajax-form_02').find('input[name=user_name_02]').val();
+                            }
+                        }
+                    }
+                },
+                email_02 : {
+                    checkEmail :true,
+//                    remote : {
+//                        type : 'get',
+//                        url : "user.php?act=is_email_right",
+//                        data : {
+//                            mobile : function(){
+//                                return $('.ajax-form_02').find('input[name=email]').val();
+//                            }
+//                        }
+//                    }
+                }
+            },
+            messages : {
+                user_name_02 : {
+                    remote : "用户名不正确"
+                }
+            },
+            //updateUserMobile
+            submitHandler: function(form) {
+                //var loading = Dialog.loading();
+
+                $(form).ajaxSubmit({
+                    success: function(data) {
+                        if (typeof data != 'object') {
+                            data = JSON.parse(data);
+                        }
+                        //loading.close();
+                        if (data.code == 0) {
+                            window.location.href = 'user.php?act=edit_email&step=3'
+
+                        } else {
+                            Dialog.tip(data.msg)
+                        }
+                    }
+                });
+                return false;
+            }
+        });
+        $(".step-2 .cquestion-btn").click(function () {
+
+
+
+//            $(".step-2").hide();
+//            $(".step-3").show();
+//            autoRedirct();
+        });
+        var autoRedirct = function() {
+            var i = 5;
+            var ele = $(".step-3 .corder-ccc");
+            var handle = setInterval(function () { 
+                i --;
+                ele.text(i + '秒后自动跳转回之前的商城首页');
+                if (i == 0) {
+                    window.location.href = 'index.php';
+                    clearInterval(handle);
+                }
+            }, 1000);
+        }
+
+
+        var time_01 = 60;
+        var refreshTime_01 = function() {
+            time_01 --;
+            if (time_01 < 1) {
+                $(".sendCode_01").val('重新发送验证码').removeClass('disable');
+                $('.sendCode_01_notice').hide()
+                $('.sendCode_01_notice').prev('span').show()
+                return;
+            }
+            $(".sendCode_01_notice").show();
+            $(".sendCode_01_notice").prev('span').hide();
+            $(".sendCode_01_notice .notice").html(time_01);
+            setTimeout(refreshTime_01, 1000);
+        };
+        $(".sendCode_01").click(function() {
+            var $this = $(this);
+            if ($this.hasClass('disable')) {
+                return;
+            }
+            var email = $('input[name=email]').val();
+            if ($('input[name=email]').next('label').length > 0 && ($('input[name=email]').html() != "") ) {
+                Dialog.tip('原邮箱地址不正确');
+                return;
+            }
+            $.post('user.php?act=send_email_code', {
+                email: email,
+                //check_mobile_exist : true
+            }, function(data) {
+                if (data.code == 0) {
+                    Dialog.tip(data.data);
+                    console.log(data.data)
+                    $this.addClass('disable');
+                    time_01 = 50;
+                    refreshTime_01();
+                    return;
+                }
+                Dialog.tip(data.msg);
+            }, 'json');
+        });
+
+
+
+        var time_02 = 60;
+        var refreshTime_02 = function() {
+            time_02 --;
+            if (time_02 < 1) {
+                $(".sendCode_02").val('重新发送验证码').removeClass('disable');
+                $('.sendCode_02_notice').hide()
+                $('.sendCode_02_notice').prev('span').show()
+                return;
+            }
+            $(".sendCode_02_notice").show();
+            $(".sendCode_02_notice").prev('span').hide();
+            $(".sendCode_02_notice .notice").html(time_02);
+            setTimeout(refreshTime_02, 1000);
+        };
+        $(".sendCode_02").click(function() {
+            var $this = $(this);
+            if ($this.hasClass('disable')) {
+                return;
+            }
+            var email = $('input[name=email_02]').val();
+            if ($('input[name=email]').next('label').length > 0 && ($('input[name=email]').html() != "") ) {
+                Dialog.tip('原邮箱地址不正确');
+                return;
+            }
+            $.post('user.php?act=send_new_email_code', {
+                email: email,
+                //check_mobile_exist : true
+            }, function(data) {
+                if (data.code == 0) {
+                    Dialog.tip(data.data);
+                    console.log(data.data)
+                    $this.addClass('disable');
+                    time_02 = 50;
+                    refreshTime_02();
+                    return;
+                }
+                Dialog.tip(data.msg);
+            }, 'json');
+        });
+    });
+</script>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->

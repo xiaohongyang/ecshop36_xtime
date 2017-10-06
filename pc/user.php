@@ -667,6 +667,16 @@ class User extends \zd\Controller {
         $userInfo = $this->userInfo();
         exit($userInfo['mobile_phone'] == $mobile ? 'true' : 'false');
     }
+    public function isEmailRightAction(){
+        $email = $this->get('email');
+        $userInfo = $this->userInfo();
+        exit($userInfo['email'] == $email ? 'true' : 'false');
+    }
+    public function isUsernameRightAction(){
+        $user_name = $this->get('user_name');
+        $userInfo = $this->userInfo();
+        exit($userInfo['user_name'] == $user_name ? 'true' : 'false');
+    }
     public function updateUserMobileActionPost(){
 
         $mobile = $this->get('mobile_02');
@@ -675,7 +685,7 @@ class User extends \zd\Controller {
 
         $userInfo = $this->userInfo();
 
-        if($code != $_SESSION["sms_mobile_code"]){
+        if(is_null($code) || $code != $_SESSION["sms_mobile_code"]){
             //验证验证码是否正确
             Helper::failure('验证码不正确');
         }
@@ -690,8 +700,111 @@ class User extends \zd\Controller {
         Helper::success();
     }
 
+    public function editEmailAction(){
+
+        $page_title = '修改绑定邮箱';
+
+        $send_code = $this->random(6,1);
+
+        //开启SESSION
+        //session_start();
+
+        $_SESSION['send_email_code'] = $send_code;
+
+
+        $this->assign('send_code', $send_code);
+        $this->assign('step', $this->get('step', 1));
+
+        $this->show(compact('page_title'));
+
+    }
+    public function editEmailActionPost(){
+
+
+        if($this->get('step') == 1 ) {
+            $code= $this->get('email_code');
+            $userInfo = $this->userInfo();
+            $password= $this->get('password');
+            if (!$this->user->check_user($userInfo['user_name'], $password)){
+                //验证密码
+                Helper::failure('密码错误');
+            } else if($_SESSION['email_code'] != $code)
+                Helper::failure('验证码错误');
+            else
+                Helper::success('ok');
+        } else {
+            $code= $this->get('email_code_02');
+            $email= $this->get('email_02');
+            if ($_SESSION['email_code'] != $code) {
+                Helper::failure('验证码错误');
+            } else if($_SESSION['new_email'] != $email) {
+                Helper::failure('邮箱错误(不是最近接收验证码的邮箱)');
+            }
+
+            Sql::update('users', [
+                'email' => $email,
+            ], [
+                'user_id' => $this->userId()
+            ]);
+            Helper::success();
+        }
+    }
+
+    public function sendEmailCodeActionPost(){
+        include_once(ROOT_PATH . 'includes/lib_passport.php');
+
+        /* 初始化会员用户名和邮件地址 */
+        $email     = !empty($_POST['email'])     ? trim($_POST['email'])     : '';
+
+        //用户名和邮件地址是否匹配
+        $user_info = $this->userInfo();
+
+        if ($user_info && $user_info['email'] == $email)
+        {
+            //生成code
+            //$code = md5($user_info[0] . $user_info[1]);
+            $code = $this->random(6, 1);
+            $_SESSION['email_code'] = $code;
+            $rs = send_mail($user_info['user_name'], $user_info['email'], '修改绑定邮箱', "您正在修改绑定邮箱，验证码为:{$code}" );
+            if($rs){
+                Helper::success('发送成功');
+            } else {
+                Helper::failure('发送失败');
+            }
+        }
+        else
+        {
+            //用户名与邮件地址不匹配
+            Helper::failure('邮箱错误');
+        }
+    }
+
+    public function sendNewEmailCodeActionPost(){
+        include_once(ROOT_PATH . 'includes/lib_passport.php');
+
+        /* 初始化会员用户名和邮件地址 */
+        $email     = !empty($_POST['email'])     ? trim($_POST['email'])     : '';
+
+        //用户名和邮件地址是否匹配
+        $user_info = $this->userInfo();
+
+
+        //生成code
+        //$code = md5($user_info[0] . $user_info[1]);
+        $code = $this->random(6, 1);
+        $_SESSION['email_code'] = $code;
+        $_SESSION['new_email'] = $email;
+        $rs = send_mail($user_info['user_name'], $email, '修改绑定邮箱', "您正在修改绑定邮箱，验证码为:{$code}" );
+        if($rs){
+            Helper::success('发送成功');
+        } else {
+            Helper::failure('发送失败');
+        }
+    }
+
+
     public function getPasswordAction(){
-        $page_title = '找加密码';
+        $page_title = '找回密码';
 
         $this->show('user_password.dwt', compact('page_title'));
     }

@@ -93,7 +93,7 @@
                         <span>真实姓名:</span>{$user_info.real_name}<a href="javascript:;" class="cinfo-edit">修改</a>
                     </p>
                     <p>
-                        <span>绑定邮箱:</span>{$user_info.email}<a href="javascript:;" class="cinfo-edit-x1" targetModal=".cinfo-modal-x1">修改绑定</a>
+                        <span>绑定邮箱:</span>{$user_info.email}<a href="user.php?act=edit_email" class="cinfo-edit-x1"  >修改绑定</a>
                     </p>
                     <p>
                         <span>微信绑定:</span><img src="/pc/themes/default/img/39.png">{$user_info.wechat}<a href="javascript:;" class="cinfo-edit-x2" targetModal=".cinfo-modal-x2">修改绑定</a>

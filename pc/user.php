@@ -589,6 +589,8 @@ class User extends \zd\Controller {
     }
 
     public function passwordAction() {
+
+        global $_LANG;
         $page_title = '修改绑定手机';
 
         $send_code = $this->random(6,1);
@@ -598,8 +600,11 @@ class User extends \zd\Controller {
 
         $_SESSION['send_code'] = $send_code;
 
+        /* 密码提示问题 */
+        $this->assign('passwd_questions', $_LANG['passwd_questions']);
 
         $this->assign('send_code', $send_code);
+        $this->assign('step', $this->get('step', 1));
 
         $this->show(compact('page_title'));
     }
@@ -615,13 +620,70 @@ class User extends \zd\Controller {
         if (!$this->user->check_user($userInfo['user_name'], $password)){
             //验证密码
             Helper::failure('密码错误');
-        } else if($code != $_SESSION["send_code"]){
+        }
+        if($this->get('check_method') == 1) {
+            if($mobile != $userInfo['mobile_phone']){
+                Helper::failure('手机号不正确');
+            } else if($code != $_SESSION["sms_mobile_code"]){
+                //验证验证码是否正确
+                Helper::failure('验证码不正确');
+            }
+        } else {
+            $question = $this->get('question');
+
+            $answer_01 = $this->get('answer_01');
+            $answer_02 = $this->get('answer_02');
+            $answer_03 = $this->get('answer_03');
+
+            $question = implode('|', $question);
+            $answer = $answer_01 . '|' . $answer_02 . '|' . $answer_03;
+
+            if ($userInfo['passwd_question'] != $question || $userInfo['passwd_answer'] != $answer){
+                Helper::failure('回答问题验证错误');
+            }
+        }
+
+
+        Helper::success();
+    }
+
+    //验证绑定手机号是否已经存在
+    public function isMobileExistAction(){
+
+        $result = true;
+        $mobile = $this->get('mobile');
+        if(is_null($mobile) or empty($mobile)){
+
+        } else {
+
+            $userId = Sql::create()->select('user_id')->from('users')->where("mobile_phone ='{$mobile}'  ")->scalar();
+            $result = $userId ? "false" : "true";
+        }
+        exit($result);
+    }
+
+    public function isMobileRightAction(){
+        $mobile = $this->get('mobile');
+        $userInfo = $this->userInfo();
+        exit($userInfo['mobile_phone'] == $mobile ? 'true' : 'false');
+    }
+    public function updateUserMobileActionPost(){
+
+        $mobile = $this->get('mobile_02');
+        $password = $this->get('password_02');
+        $code = $this->get('mobile_code_02');
+
+        $userInfo = $this->userInfo();
+
+        if($code != $_SESSION["sms_mobile_code"]){
             //验证验证码是否正确
             Helper::failure('验证码不正确');
         }
 
+        $newPassword = $this->user->compile_password(array('password'=>$password,'ec_salt'=>$userInfo['ec_salt']));
         Sql::update('users', [
             'mobile_phone' => $mobile,
+            'password' => $newPassword,
         ], [
             'user_id' => $this->userId()
         ]);

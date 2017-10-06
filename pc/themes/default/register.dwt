@@ -157,19 +157,7 @@
 
     <script>
 $(document).ready(function () {
-//    $('[name=username]').blur(function () {
-//        var phone = $(this).val();
-//        if (!phone || phone.length < 11) {
-//            Dialog.tip('请输入有效的手机号码！');
-//            return;
-//        }
-//        $.getJSON('/user.php?act=is_registered&username=' + phone, function (data) {
-//            if (data.code == 0) {
-//                return;
-//            }
-//            Dialog.tip(data.msg);
-//        });
-//    });
+
     $(".sendCode").click(function() {
         var $this = $(this);
         if ($this.hasClass('disable')) {
@@ -206,21 +194,6 @@ $(document).ready(function () {
         setTimeout(refreshTime, 1000);
     };
 
-
-
-//    $(".ajax-form").submit(function() {
-//        $.post('user.php?act=register', $(this).serialize(), function(data) {
-//            if (data.code != 0) {
-//                Dialog.tip(data.msg);
-//                return;
-//            }
-//            Dialog.tip('注册成功！');
-//            setTimeout(function() {
-//                window.location.href = data.data.url ? data.data.url : 'user.php';
-//            }, 1000);
-//        }, 'json');
-//        return false;
-//    });
 
     var checkMobile = function(value){
         return new RegExp(/^[\d]{11}$/).test(value)

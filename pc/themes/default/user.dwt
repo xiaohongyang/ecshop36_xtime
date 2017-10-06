@@ -178,7 +178,7 @@
                         <span>登录密码:</span><a href="javascript:;" class="cinfo-edit-x3" targetModal=".cinfo-modal-x3">修改密码</a>
                     </p>
                     <p>
-                        <span>注册手机:</span>{$user_info.mobile_phone}<a href="javascript:;" class="cinfo-edit-x4" targetModal=".cinfo-modal-x4">修改绑定</a>
+                        <span>注册手机:</span>{$user_info.mobile_phone}<a href="user.php?act=password" class="cinfo-edit-x4" >修改绑定</a>
                     </p>
                 </div>
                 <div class="clear"></div>

@@ -13,7 +13,7 @@
                     <div class="corder-left corder-pad corder-offerp">
                         <p>商品名称：{$goods.goods_name}</p>
                         <p>当前叫价：{$auction.last_bid.formated_bid_price}</p>
-                        <p>最低加价幅度：{$auction.amplitude}</p>
+                        <p>最低加价幅度：{$auction.formated_amplitude}</p>
                     </div>
                 </div>
                 <div class="coffer-all-sr corder-clear">
@@ -23,7 +23,7 @@
                 </div>
                 <p class="corder-clear corder-clp">
                     <span>上回叫价：{$last_price|price}</span>
-                    <span>当前余额：{$user.user_money}</span>
+                    <span>当前余额：{$user_info.formated_user_money}</span>
                 </p>
             </div>
         </div>

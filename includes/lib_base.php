@@ -1304,6 +1304,9 @@ function picsrc($str)
     if(is_null($str) || empty($str))
         return "/images/no_picture.gif";
 
+    if(strpos($str,'http') !== false){
+        return $str;
+    }
     if(strpos($str,'/')===0){
 
     } else if(strlen($str)){

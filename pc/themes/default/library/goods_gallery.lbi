@@ -4,19 +4,110 @@
     <div id="preview">
         <div class="jqzoom" id="spec-n1">
 
-            {if $pictures}
-            <!--{foreach from=$pictures item=picture key=index}-->
-            <img class = "cloudzoom pic-index-{$index}" {if $index==0}{else}style='display:none'{/if} src = "/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}"
-                 width="450"
-                 height="450"
-                 data-cloudzoom = "zoomImage: '/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}'" />
-            <!--{/foreach}-->
-            {else}
-            <img class = "cloudzoom pic-index-0" src = "{$afd|picsrc}"
-                 width="450"
-                 height="450"
-                 data-cloudzoom = "zoomImage: '{$afd|picsrc}'" />
-            {/if}
+            <style type="text/css">
+                *{margin:0;padding:0}
+                .con-FangDa{width:500px;height:550px;background-color:none;}
+                .con-fangDaIMg{width:500px;height:500px;position:relative;background-color:#eee}
+                .con-fangDaIMg > img{width:100%;height:100%}
+                .magnifyingBegin{width:100px;height:100px;left:0;top:0;background-color:#ddd;opacity:0.5;position:absolute;cursor:move;display:none}
+                .magnifyingShow{width:400px;height:400px;display:none;position:absolute;right:-400px;top:0;overflow:hidden;background-color:#eee}
+                .magnifyingShow > img{width:2000px;height:2000px;margin-left:0;margin-top:0}
+                .con-FangDa-ImgList{list-style:none}
+                .con-FangDa-ImgList > li{width:50px;height:50px;float:left;margin:4px 0 0 4px;cursor:pointer;border:2px solid #eee;background-color:#eee}
+                .con-FangDa-ImgList > li:first-child{margin-left:0}
+                .con-FangDa-ImgList > li > img{width:100%;height:100%}
+                .con-FangDa-ImgList > .active{border-color:red}
+            </style>
+
+            <div class="con-FangDa" id="fangdajing">
+                {if $pictures}
+                <!--{foreach from=$pictures item=picture key=index}-->
+                    {if $index==0}
+                        <div class="con-fangDaIMg" style="margin-left: 10px;">
+                            <img src="/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}"><!-- 正常现实的图片 -->
+                            <div class="magnifyingBegin"></div><!-- 滑块 -->
+                            <div class="magnifyingShow"><!-- 放大镜显示的图片 -->
+                                <img src="/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}">
+                            </div>
+                        </div>
+                    {/if}
+                <!--{/foreach}-->
+                {else}
+
+                    <div class="con-fangDaIMg" style="margin-left: 10px;">
+                        <img src="{$afd|picsrc}"><!-- 正常现实的图片 -->
+                        <div class="magnifyingBegin"></div><!-- 滑块 -->
+                        <div class="magnifyingShow"><!-- 放大镜显示的图片 -->
+                            <img src="{$afd|picsrc}">
+                        </div>
+                    </div>
+                {/if}
+
+            </div>
+
+
+
+
+            <script type="text/javascript">
+
+                $(function(){
+                    $.fn.magnifying = function(){
+                        var that = $(this),
+                            $imgCon = that.find('.con-fangDaIMg'),//正常图片容器
+                            $Img = $imgCon.find('img'),//正常图片，还有放大图片集合
+                            $Drag = that.find('.magnifyingBegin'),//拖动滑动容器
+                            $show = that.find('.magnifyingShow'),//放大镜显示区域
+                            $showIMg = $show.find('img'),//放大镜图片
+                            $ImgList = that.find('.con-FangDa-ImgList > li >img'),
+
+                            multiple = $show.width()/$Drag.width();//倍数
+
+                        $imgCon.mousemove(function(e){
+                            $Drag.css('display','block');
+                            $show.css('display','block');
+                            //获取坐标的两种方法
+                            // var iX = e.clientX - this.offsetLeft - $Drag.width()/2,
+                            //  iY = e.clientY - this.offsetTop - $Drag.height()/2,
+                            var iX = e.pageX - $(this).offset().left - $Drag.width()/2,
+                                iY = e.pageY - $(this).offset().top - $Drag.height()/2,
+                                MaxX = $imgCon.width()-$Drag.width(),
+                                MaxY = $imgCon.height()-$Drag.height();
+                            /*这一部分可代替下面部分，判断最大最小值
+                             var DX = iX < MaxX ? iX > 0 ? iX : 0 : MaxX,
+                             DY = iY < MaxY ? iY > 0 ? iY : 0 : MaxY;
+                             $Drag.css({left:DX+'px',top:DY+'px'});
+                             $showIMg.css({marginLeft:-3*DX+'px',marginTop:-3*DY+'px'});*/
+
+                            iX = iX > 0 ? iX : 0;
+                            iX = iX < MaxX ? iX : MaxX;
+                            iY = iY > 0 ? iY : 0;
+                            iY = iY < MaxY ? iY : MaxY;
+                            $Drag.css({left:iX+'px',top:iY+'px'});
+                            $showIMg.css({marginLeft:-multiple*iX+'px',marginTop:-multiple*iY+'px'});
+                            //return false;
+                        });
+                        $imgCon.mouseout(function(){
+                            $Drag.css('display','none');
+                            $show.css('display','none');
+                            //return false;
+                        });
+
+                        $ImgList.click(function(){
+                            var NowSrc = $(this).attr('src');
+                            $Img.attr('src',NowSrc);
+                            $(this).parent().addClass('active').siblings().removeClass('active');
+                        });
+
+                        $('body').on('click','.list-h a',function(){
+
+                            var NowSrc = $(this).find('img').attr('src');
+                            $Img.attr('src',NowSrc);
+                            //$(this).parent().addClass('active').siblings().removeClass('active');
+                        })
+                    }
+                    $("#fangdajing").magnifying();
+                });
+            </script>
 
         </div>
         <div id=spec-n5>
@@ -29,7 +120,7 @@
                        <!-- {foreach from=$pictures item=picture key=index}-->
                        <li><a href="javascript:void(0);"
                               data-class="pic-index-{$index}">
-                           <img src="/{if $picture.img_original}{$picture.img_original}{else}{$picture.img_url}{/if}" width="100%" alt=""></a></li>
+                           <img src="{if $picture.img_original}{$picture.img_original|picsrc}{else}{$picture.img_url|picsrc}{/if}" width="100%" alt=""></a></li>
                        <!--{/foreach}-->
                     {else}
                         <li><a href="javascript:void(0);"
@@ -80,17 +171,17 @@ $.fn.toRight = function(){
 
 $(function(){
 
-    $('body').on('click','.list-h a',function(){
-        var src= $(this).attr('data-src');
-
-        //data-cloudzoom = "zoomImage: '/{$goods.goods_img}'"
-
-        $('#spec-n1 img').css('display','none')
-
-        var objClass = $(this).attr('data-class')
-        $('.' + objClass).show()
-
-    })
+//    $('body').on('click','.list-h a',function(){
+//        var src= $(this).attr('data-src');
+//
+//        //data-cloudzoom = "zoomImage: '/{$goods.goods_img}'"
+//
+//        $('#spec-n1 img').css('display','none')
+//
+//        var objClass = $(this).attr('data-class')
+//        $('.' + objClass).show()
+//
+//    })
 
     //移动
 

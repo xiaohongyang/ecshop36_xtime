@@ -30,7 +30,7 @@ if (!defined('IN_ECS'))
  */
 function get_collection_goods($user_id, $num = 10, $start = 0)
 {
-    $sql = 'SELECT g.goods_id, g.goods_name,g.goods_thumb, g.market_price, g.shop_price AS org_price, '.
+    $sql = 'SELECT g.goods_id, g.user_rank, g.goods_name,g.goods_thumb, g.market_price, g.shop_price AS org_price, '.
                 "IFNULL(mp.user_price, g.shop_price * '$_SESSION[discount]') AS shop_price, ".
                 'g.promote_price, g.promote_start_date,g.promote_end_date, c.rec_id, c.is_attention' .
             ' FROM ' . $GLOBALS['ecs']->table('collect_goods') . ' AS c' .
@@ -40,6 +40,9 @@ function get_collection_goods($user_id, $num = 10, $start = 0)
                 "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' ".
             " WHERE c.user_id = '$user_id' and c.goods_id > 0 ORDER BY c.rec_id DESC";
     $res = $GLOBALS['db'] -> selectLimit($sql, $num, $start);
+
+    require_once(dirname(__FILE__) . '/../admin/includes/lib_goods.php');
+    $rankTmpList = get_user_rank_list();
 
     $goods_list = array();
     while ($row = $GLOBALS['db']->fetchRow($res))
@@ -60,8 +63,28 @@ function get_collection_goods($user_id, $num = 10, $start = 0)
         $goods_list[$row['goods_id']]['goods_name']    = $row['goods_name'];
         $goods_list[$row['goods_id']]['market_price']  = price_format($row['market_price']);
         $goods_list[$row['goods_id']]['shop_price']    = price_format($row['shop_price']);
-        $goods_list[$row['goods_id']]['promote_price'] = ($promote_price > 0) ? price_format($promote_price) : '';
         $goods_list[$row['goods_id']]['url']           = build_uri('goods', array('gid'=>$row['goods_id']), $row['goods_name']);
+        $goods_list[$row['goods_id']]['promote_price'] = ($promote_price > 0) ? price_format($promote_price) : '';
+        $goods_list[$row['goods_id']]['user_rank']      = $row['user_rank'];
+
+
+        $rank_list = [];
+        foreach ($rankTmpList as $rank) {
+            $rank_list[$rank['rank_id']] = $rank;
+        }
+
+        $rank = [];
+        $tmpRank = $goods_list[$row['goods_id']]['user_rank'];
+        $tmpRank = trim($tmpRank, ',');
+        $tmpRank = explode(',', $tmpRank);
+        $goods_list[$row['goods_id']]['user_rank'] = [];
+        if(count($tmpRank)) {
+            foreach ($tmpRank as $rankId) {
+                if($rankId)
+                    $rank[] = $rank_list[$rankId];
+            }
+            $goods_list[$row['goods_id']]['user_rank'] = $rank;
+        }
     }
 
     return $goods_list;

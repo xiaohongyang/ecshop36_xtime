@@ -655,6 +655,9 @@ class cls_template
                     case 'picsrc':
                         $p = 'picsrc(' . $p . ")";
                         break;
+                    case 'get_category_url':
+                        $p = 'get_category_url(' . $p . ")";
+                        break;
                     case 'get_give_integral_by_goods_id':
 //                        $s[2] = count($s) > 2 ? $s[2] : 1;
 

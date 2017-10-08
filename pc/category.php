@@ -37,6 +37,22 @@ class Category extends \zd\Controller {
         $goods_list = $this->_getGoodsList($children, $this->get('sort', 'shop_price'),
             $this->get('order', 'desc'),
             intval($this->get('page', 1)), intval($this->get('size', 16)));
+
+
+        if($cat['cat_name'] == '主题周边'){
+            $category_01 = true;
+        } else if($cat['cat_name'] == '音像作品'){
+            $category_02 = true;
+        } else if($cat['cat_name'] == '演出票务'){
+            $category_03 = true;
+        } else if($cat['cat_name'] == '积分商城'){
+            $category_04 = true;
+        }
+
+        $this->assign('category_01', $category_01);
+        $this->assign('category_02', $category_02);
+        $this->assign('category_03', $category_03);
+        $this->assign('category_04', $category_04);
         $this->show(compact('page_title', 'helps', 'categories', 'goods_list', 'total'));
     }
 

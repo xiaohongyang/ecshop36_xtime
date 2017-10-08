@@ -15,6 +15,16 @@
                 {foreach from=$goods_list item=goods}
                     <div class="favourite-list-img">
                     <div class="favorite-details">
+
+                        {foreach from=$goods.user_rank item=rank}
+                        <span class="{if $rank.rank_id == 1}ssr{/if}
+                                                {if $rank.rank_id == 2}new{/if}
+                                                {if $rank.rank_id == 3}ur{/if}
+                                                {if $rank.rank_id == 4}sr{/if}
+                                                {if $rank.rank_id == 5}r{/if} rank{$rank.rank_name}">{$rank.rank_name}</span>
+                        {/foreach}
+
+
                         <a href="goods.php?id={$goods.goods_id}" target="_blank">
                         <div class="favourite-img">
                             <img src="{$goods.goods_thumb|picsrc}" alt="">

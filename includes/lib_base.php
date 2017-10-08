@@ -1388,6 +1388,17 @@ function get_rec_give_integral($recId) {
 }
 
 
+function get_category_url($categoryName, $parent_id = 0) {
+
+    $result = 'javascript:void(0)';
+    $recSql = "select cat_id from {$GLOBALS['ecs']->table('category')} where cat_name='{$categoryName}'";
+    $recData = $GLOBALS['db']->getRow($recSql);
+    if($recData) {
+        $result = 'category.php?id=' . $recData['cat_id'];
+    }
+
+    return $result;
+}
 
 
 ?>

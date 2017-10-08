@@ -39,6 +39,10 @@ class Cart {
             $arr[$key]['formated_goods_price']  = price_format($value['goods_price'], false);
             $arr[$key]['formated_subtotal']     = price_format($value['subtotal'], false);
 
+            if($value['product_id']) {
+                $arr[$key]['goods_number'] = get_product_number($value);
+            }
+
             if ($value['extension_code'] == 'package_buy') {
                 $arr[$key]['package_goods_list'] = get_package_goods($value['goods_id']);
             }

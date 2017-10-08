@@ -140,6 +140,11 @@ class Auction extends \zd\Controller {
     }
 
     public function bidAction() {
+
+        if(!$_SESSION['user_id'])
+            Helper::redirect('user.php');
+
+        include_once ROOT_PATH.'includes/lib_order.php';
         $id = intval($this->get('id'));
         if ($id <= 0) {
             Helper::redirect('index.php');

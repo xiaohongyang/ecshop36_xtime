@@ -46,9 +46,30 @@ $(document).ready(function() {
             'goods_number['+rec_id+']=' + number, function (data) {
                 if (data.code == 0) {
                     callback(data);
-                    showCart();
+
                 } else if(data.msg){
                     Dialog.tip(data.msg)
+                    $('.number-input').each(function(){
+                        var max = $(this).attr('max')
+                        max = max > 0 ? max : 1
+                        max = max > 99 ? 99 : max
+
+                        console.log('max:', max)
+                        console.log('val:', $(this).val())
+                        if(parseInt($(this).val()) > parseInt(max)) {
+
+                            $(this).val(max)
+                            var t = $(this)
+                            setTimeout(function(){
+                                t.trigger('keyup')
+                            })
+
+                        }
+                    })
+                    // if(data.msg.indexOf('多购买数量不能超过99')!= -1){
+                    //     console.log(rec_id)
+                    //     $("input[data-rec="+rec_id+"]").val(99)
+                    // }
                 }
             }, 'json');
     }, dropGoods = function (rect_id, callback) {
@@ -83,11 +104,15 @@ $(document).ready(function() {
 
             goods.find('.amount').html(amount)
             goods.find('.amount').next('p').html(giveIntegerAmount)
+
+            if(goods.closest('.shopcar').length == 0)
+                showCart();
+
         });
     };
 
     var uploadCartTarget = function (obj){
-        var $this = obj.closest('div').find('.number-input');
+        var $this = obj.closest('.goods-item').find('.number-input');
         var minusEle = $this.parents('.number').find('.number-minus');
         var num = Math.max(1, parseInt($this.val()));
         var max = $this.attr('data-max');
@@ -102,7 +127,6 @@ $(document).ready(function() {
         }
         var goods = $this.parents('.goods-item');
         if(!$this.hasClass('number')) {
-
             uploadCart(goods, num);
         }
     }
@@ -120,7 +144,7 @@ $(document).ready(function() {
             $.fn.uploadCartTarget($this)
         } else {
             $this = $(this)
-            var numberEle = $this.parents('.number-box').find('.number-input');
+            var numberEle = $this.closest('.goods-item').find('.number-input');
             var num = parseInt(numberEle.val());
             if(isNaN(num))
                 num=1
@@ -129,7 +153,7 @@ $(document).ready(function() {
                 num = 1;
             }
             numberEle.val(num);
-            $.fn.uploadCartTarget($(this))
+            $.fn.uploadCartTarget(numberEle)
         }
     })
 
@@ -192,7 +216,7 @@ $(document).ready(function() {
         var checkMax = true;
         wrap.find('.number-input').each(function(){
             var goodsName = $(this).closest('.goods-item').attr('goods-name')
-            if($(this).val() > $(this).attr('max')){
+            if(parseInt($(this).val()) > parseInt($(this).attr('max'))){
                 Dialog.tip(goodsName + '库存不够,不能超过' + $(this).attr('max'))
                 checkMax = false;
             }
@@ -486,7 +510,7 @@ $(document).ready(function () {
         if ($this.hasClass('disable')) {
             return;
         }
-        var numberEle = $this.parents('.number-box').find('.number-input');
+        var numberEle = $this.closest('.goods-item').find('.number-input');
         var num = parseInt(numberEle.val()) - 1;
         if (num < 1) {
             Dialog.tip('不能少于1');
@@ -498,7 +522,7 @@ $(document).ready(function () {
 
     $('body').on('click', ".number-box .number-plus", function () {
         var $this = $(this);
-            var numberEle = $this.parents('.number-box').find('.number-input');
+            var numberEle = $this.closest('.goods-item').find('.number-input');
         var num = parseInt(numberEle.val()) + 1
         var max = numberEle.attr('max');
         if (max) {
@@ -518,7 +542,7 @@ $(document).ready(function () {
 
         num = num == 0 ? 1 : num;
         numberEle.val(num);
-        $.fn.uploadCartTarget($(this))
+        numberEle.trigger('keyup')
     });
     $('body').on("change", ".number-box .number-input", function () {
         var $this = $(this);

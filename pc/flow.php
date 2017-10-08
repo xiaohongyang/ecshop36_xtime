@@ -151,6 +151,7 @@ class Flow extends \zd\Controller {
             $total_give_integral += $goods['give_integral'];
 
         }
+
         $this->show(compact('goods_list', 'total', 'total_give_integral'));
     }
 

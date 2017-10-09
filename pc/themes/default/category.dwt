@@ -33,7 +33,13 @@
 <div class="box box1">
 <div class="content">
     <div class="contents">
-        <h1 class="title"><img src="themes/default/img/9.png" /></h1>
+
+        <h1 class="title">
+            {if $category_01} <img src="themes/default/img/9.png" /> {/if}
+            {if $category_02} <img src="themes/default/img/cate_imgs_6.png" /> {/if}
+            {if $category_04} <img src="themes/default/img/cate_imgs_7.png" /> {/if}
+
+        </h1>
         <div class="screen">
             <div class="sort-btn 
             {if $sort eq 'price' && $order eq 'asc'} sort-asc {/if}

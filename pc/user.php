@@ -30,7 +30,7 @@ class User extends \zd\Controller {
      * 不需要登录的action
      * @var array
      */
-    protected $notLogin = ['login', 'register', 'find_password','getPassword','account_add'];
+    protected $notLogin = ['login', 'register', 'find_password','getPassword','account_add', 'registerActionPost', 'registerAction','register'];
 
     public function loginAction() {
         $this->renderHelper();
@@ -97,6 +97,7 @@ class User extends \zd\Controller {
         $other['qq'] = $this->get('extend_field2');
         $other['office_phone'] = $this->get('extend_field3');
         $other['home_phone'] = $this->get('extend_field4');
+        $other['sex'] = $this->get('sex');
         $other['mobile_phone'] = $username;//isset($_POST['extend_field5']) ? $_POST['extend_field5'] : '';
 
 
@@ -119,18 +120,15 @@ class User extends \zd\Controller {
 
         if (empty($username)) {
             Helper::failure('手机号码不可为空');
-        }
-        if (empty($mobile_code)) {
+        } else if (empty($mobile_code)) {
             Helper::failure('手机验证码不可为空');
-        }
-        if($username != $_SESSION["sms_mobile"]){
+        } else if($username != $_SESSION["sms_mobile"]){
             Helper::failure('请填写发送短信时的手机号码');
-        }
-        if ($_POST['mobile_code'] != $_SESSION["sms_mobile_code"]) {
+        } else if ($_POST['mobile_code'] != $_SESSION["sms_mobile_code"]) {
             Helper::failure('手机验证码输入错误');
         }
-        $_SESSION["sms_mobile_code"] = '';
-        $_SESSION["sms_mobile"] = '';
+//        $_SESSION["sms_mobile_code"] = '';
+//        $_SESSION["sms_mobile"] = '';
 
 
         $back_act = $this->get('back_act');

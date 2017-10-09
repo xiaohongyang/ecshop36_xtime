@@ -120,8 +120,8 @@
                 </div>
                 <div>
                     <span>性别:</span>
-                    <a style="float:left;padding-top:10px">男</a><input checked="checked" type="radio" name="sex" value="=" style="width:34px; vertical-align: middle">
-                    <a style="float:left;padding-top:10px">女</a><input type="radio" name="sex" style="width:34px; vertical-align: middle">
+                    <a style="float:left;padding-top:10px">男</a><input checked="checked" type="radio" name="sex" value="1" style="width:34px; vertical-align: middle">
+                    <a style="float:left;padding-top:10px">女</a><input type="radio" name="sex" value=2 style="width:34px; vertical-align: middle">
                     <div class="clear"></div>
                 </div>
 
@@ -279,6 +279,7 @@ $(document).ready(function () {
                         }, 1000);
                     } else {
                         //refreshCaptcha();
+                        Dialog.tip(data.msg)
                     }
                 }
             });

@@ -38,9 +38,10 @@
                             <div class="corder-left"></div>
                             <div class="corder-confirm-addlist corder-undefind">
                                 <div class="corder-left corder-address-dede">
-                                    <span class="caddress-circle {if $address.address_id eq $user_info.address_id}caddress-active{/if}" data-id='{$address.address_id}' ></span>
+                                    <span class="caddress-circle {if $address.address_id eq $user_info.address_id}caddress-active{/if}" data-id='{$address.address_id}' data-info=" <p>配送地址：{$address.region} {$address.address}</p>
+                                <p>收件人：{$address.consignee} 电话：{$address.tel}</p>"></span>
                                 </div>
-                                <div class="corder-left corder-padr">
+                                <div class="corder-left corder-padr" >
                                     <p>
                                         <span>收件人：{$address.consignee}</span>
                                         <span>电话：{$address.tel}</span>
@@ -163,7 +164,11 @@
                                     </td>
                                     <td class="confirm-tdblock">
                                         <span>{$goods.formated_goods_price}</span>
-                                        <span class="hong">UR专享</span>
+                                        {foreach from=$goods.rank_list item=rank_item key=spec_key}
+                                            <span class="{if $spec_key==0}hong{/if} {if $spec_key==1}huang{/if} {if $spec_key==2}hui{/if} {if $spec_key==3}lv{/if} {if $spec_key==4}lan{/if}
+                                                                                "
+                                            >{$rank_item.rank_name}</span>
+                                        {/foreach}
                                     </td>
                                     <td>{$goods.goods_number}</td>
                                     <td>{$goods.formated_subtotal}</td>
@@ -179,8 +184,8 @@
                             </div>
                             <div class="right">
                                 <p>总计|TOTAL   <span>{$total.amount_formated}</span></p>
-                                <p>(含运费{$total.shipping_fee_formated})</p>
-                                <p><span>+{$order.integral}</span></p>
+                                <p><span><b>(含运费{$shipping_fee_string})</b></span></p>
+                                <p><span>+{$order.integral}积分</span></p>
                             </div>
                             <div class="clear"></div>
                         </div>
@@ -209,6 +214,8 @@
         $(this).addClass('caddress-active');
 
         $('input[name=address_id]').val($('.caddress-active').attr('data-id'))
+
+        $('.corder-bot .left').html($(this).attr('data-info'))
     })
 </script>
 

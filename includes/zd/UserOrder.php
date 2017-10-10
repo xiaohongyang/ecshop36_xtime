@@ -144,7 +144,7 @@ class UserOrder {
         foreach ($data as $key=>$goods) {
 
             if(strlen($goods['user_rank']) > 0) {
-                $userRank = trim($goods['user_rank'], '');
+                $userRank = trim($goods['user_rank'], ',');
                 $rankArray = explode(',', $userRank);
                 $arr = [];
 

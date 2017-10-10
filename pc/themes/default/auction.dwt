@@ -70,17 +70,8 @@
                             <dd class="four corder-paddt"><span class="produce-purple">*</span>截止时间：<span class="produce-purple">{$goods.formated_end_time}</span></dd>
                             <dd class="five corder-paddt">当前叫价：<span class="produce-purple prdouce-weight"><em class="produce-big">{$goods.current_price}</em></span>星辉币</dd>
                             <dd class="auction-deji">
-                            {if $goods.user_rank==''}
+                            {if $goods.user_rank neq ''}
 
-                                {foreach from=$user_rank_list item=rank}
-                                    <span class="{if $rank.rank_id == 1}ssr{/if}
-                                                {if $rank.rank_id == 2}new{/if}
-                                                {if $rank.rank_id == 3}ur{/if}
-                                                {if $rank.rank_id == 4}sr{/if}
-                                                {if $rank.rank_id == 5}r{/if} rank{$rank.rank_name}">{$rank.rank_name}</span>
-                                {/foreach}
-
-                            {else}
                                 {foreach from=$goods.rank_list item=rank}
                                     <span class="{if $rank.rank_id == 1}ssr{/if}
                                                 {if $rank.rank_id == 2}new{/if}

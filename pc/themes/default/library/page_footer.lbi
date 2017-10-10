@@ -94,8 +94,21 @@
        var showCart = function() {
            $.get('flow.php?step=info', function(html) {
                $("#cat-info").html(html);
+
+                updateTotalGoodsNumber();
+
            });
        };
+
+       var updateTotalGoodsNumber = function(){
+           setTimeout(function(){
+               var num = 0;
+               $('.shopcar .number-input').each(function(){
+                   num += parseInt($(this).val())
+               })
+               $('.total_goods_number').html('购物车 '+num+' 件');
+           },300);
+       }
    </script>
 </body>
 </html>

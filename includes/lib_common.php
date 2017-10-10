@@ -916,6 +916,11 @@ function order_action($order_sn, $order_status, $shipping_status, $pay_status, $
     $GLOBALS['db']->query($sql);
 }
 
+function price_format_x($price){
+    $price = number_format($price, 2, '.', '').'';
+    return $price;
+}
+
 /**
  * 格式化商品价格
  *

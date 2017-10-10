@@ -184,6 +184,9 @@ class Flow extends \zd\Controller {
         $default_address = UserAddress::getDefaultId();
         $address_list = UserAddress::all();
         $goods_list = Cart::getSelected($flow_type);
+        if(!count($goods_list)) {
+            Helper::failure("购物车不能为空");
+        }
 
         /*
          * 取得订单信息
@@ -211,9 +214,11 @@ class Flow extends \zd\Controller {
 
 
         $page_title = '确认订单';
+        $shipping_fee_string = price_format_x($total['shipping_fee']);
+        $shipping_fee_string .= '星辉币';
 
         $this->show(compact('page_title', 'address_list',
-            'goods_list', 'total', 'order', 'consignee', 'default_address'));
+            'goods_list', 'total', 'order', 'consignee', 'default_address', 'shipping_fee_string'));
     }
 
     public function payAction() {

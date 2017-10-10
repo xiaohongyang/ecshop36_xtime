@@ -39,7 +39,7 @@ $(document).ready(function() {
             goods_number ++;
         });
         $(".total").text(total);
-        $(".checkout").text('结算('+goods_number+')').attr('href', 'flow.php?step=checkout&cart_value=' + flow_cart);
+        $(".checkout").text('结算('+goods_number+')').attr('href', 'javascript:void(0)').attr('onclick','if($(".top-table .goods-item").length < 1){ Dialog.tip("购物商品不能为空"); return false;} window.location.href="flow.php?step=checkout&cart_value=' + flow_cart + '"');
         //$(".cart-count").text($(".goods-item").length);
     }, changeGoods = function (rec_id, number, callback) {
         $.post('flow.php?step=update_cart',

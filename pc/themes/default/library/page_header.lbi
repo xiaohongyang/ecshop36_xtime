@@ -56,7 +56,7 @@
                 <div class="shopping">
                     <div class="shops">
                          <a href="flow.php" class="shopa"><img src="themes/default/img/16.png" /></a>
-                        <span>购物车 {insert name="cart_info"} 件</span>
+                        <span class="total_goods_number">购物车 {insert name="cart_info"} 件</span>
                     </div>
                     <div class="shopcar" id="cat-info">
                         

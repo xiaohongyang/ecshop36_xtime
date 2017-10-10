@@ -28,6 +28,7 @@ class Goods extends \zd\Controller {
         $id = intval($this->id);
         $this->hasCache($id . '-' . $_SESSION['user_rank']);
         $goods = get_goods_info($id);
+        $goods['rank_price'] = price_format_x($goods['rank_price']). '星辉币';
         if ($goods === false) {
             Helper::redirect('index.php');
         }

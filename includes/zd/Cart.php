@@ -92,7 +92,7 @@ class Cart {
                 c.user_id, c.goods_id, c.goods_name, c.goods_sn, 
                 c.goods_number,c.market_price, c.goods_price, c.goods_attr, 
                 c.is_real, g.goods_thumb, c.extension_code, c.parent_id, c.is_gift, 
-                c.is_shipping, c.goods_price * c.goods_number AS subtotal')
+                c.is_shipping, c.goods_price * c.goods_number AS subtotal, g.user_rank')
             ->from('cart c')
             ->left('goods g', 'c.goods_id = g.goods_id')
             ->where('c.session_id =')->addValue(SESS_ID)
@@ -103,6 +103,16 @@ class Cart {
 
         $arr = $query->all();
 
+
+
+        require_once(ROOT_PATH . '/admin/includes/lib_goods.php');
+        $user_rank_list = get_user_rank_list();
+        $rank_list = [];
+        foreach ($user_rank_list as $rank) {
+            $rank_list[$rank['rank_id']] = $rank;
+        }
+
+
         /* 格式化价格及礼包商品 */
         foreach ($arr as $key => $value) {
             $arr[$key]['formated_market_price'] = price_format($value['market_price'], false);
@@ -112,6 +122,19 @@ class Cart {
             if ($value['extension_code'] == 'package_buy')
             {
                 $arr[$key]['package_goods_list'] = get_package_goods($value['goods_id']);
+            }
+
+            if(strlen($value['user_rank']) > 0) {
+                $userRank = trim($value['user_rank'], ',');
+                $rankArray = explode(',', $userRank);
+                $tmp = [];
+
+                foreach ($rankArray as $rankId) {
+                    $tmp[$rankId] = $rank_list[$rankId];
+                }
+                $arr[$key]['rank_list'] = $tmp;
+            } else {
+                $arr[$key]['rank_list'] = [];
             }
         }
         return $arr;
@@ -635,6 +658,9 @@ class Cart {
             }
             else //购物车没有此物品，则插入
             {
+                if($num > 99) {
+                    Helper::failure(sprintf($GLOBALS['_LANG']['cart_limit_99']));
+                }
                 $goods_price = get_final_price($goods_id, $num, true, $spec);
                 $parent['goods_price']  = max($goods_price, 0);
                 $parent['goods_number'] = $num;

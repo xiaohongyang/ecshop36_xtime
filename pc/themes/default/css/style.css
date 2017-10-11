@@ -37,7 +37,9 @@ li {
     margin-top: 15px;
     margin: 0 auto
 }
-
+i{
+    font-style: normal;
+}
 .header .head {
     width: 1200px;
     margin: 0 auto;
@@ -146,7 +148,8 @@ li {
 .nav dl {
     width: 20%;
     float: left;
-    text-align: center
+    text-align: center;
+    position:relative;
 }
 
 
@@ -260,8 +263,8 @@ div.flicking_con a.on {
 }
 
 .main_visual .posi h3 {
-    height: 60px;
-    line-height: 60px;
+    height: 55px;
+    line-height: 55px;
     background-color: #61C1BF;
     color: #fff;
     padding-left: 17px
@@ -1453,7 +1456,8 @@ em {
 
 .product .pro-nav div .xing {
     float: right;
-    width: 80px
+    width: 80px;
+    cursor:pointer;
 }
 
 .product .pro-nav div .xing img {
@@ -2066,6 +2070,7 @@ em {
 .righttab {
     height: 50px;
     position: relative;
+    cursor:pointer;
 }
 
 .rightmember1 {
@@ -2687,7 +2692,7 @@ button:focus {
 .onload form div label.error{
     float: left;
     line-height: 30px;
-    color: #f00;
+    color: #EF7B92;
     padding-left: 10px;
     font-size:12px;
 }
@@ -2902,12 +2907,20 @@ form .register div .jiao span {
     width: 270px;
     float: left;
     border: 1px solid #EDF1F6;
-    height: 15px;
+    height: 26px;
     line-height: 26px;
     border-radius: 25px;
     margin: 10px 0
 }
-
+.registerr div input[type="radio"],.registerr div input[type="checkbox"]{
+    width: 270px;
+    float: left;
+    border: 1px solid #EDF1F6;
+    height: 15px;
+    line-height: 26px;
+    border-radius: 25px;
+    margin: 15px 0;
+}
 .registerr div .fang {
     width: 270px;
     float: left;
@@ -2964,18 +2977,17 @@ form .register div .jiao span {
     font-size: 12px
 }
 
-.registerr div.dis p span {
+.registerr div.dis p.lvgr a {
     background-color: #1F4244;
     color: #fff;
-    padding: 0 5px;
+    padding: 3px 10px;
     border: 1px solid #1F4244;
     border-radius: 15px;
     margin-left: 5px;
+    display: inline;
 }
 
-.registerr div.dis p span a {
-    color: #fff;
-}
+
 
 
 /*****************个人信息修改********************/
@@ -4845,7 +4857,7 @@ table.jiaoyi tr td.active {
 }
 
 .register-back{
-   background: url(../img/login-bg.png) no-repeat 20px 9px;
+   background: url(../img/login-bg.png) no-repeat 20px;
 }
 
 .pro-nav{overflow: hidden;}
@@ -4909,4 +4921,103 @@ table.jiaoyi tr td.active {
     text-align: center;
     display: inline-block;
     line-height: 25px;
+}
+.date-year dd{
+    width: 130px;
+    float: left;
+    text-align: right;
+    height: 24px;
+    line-height: 24px;
+    padding-right: 5px;
+    margin: 10px 0;
+    color: #BABECD;
+    letter-spacing: 5px;
+    font-size: 12px;
+}
+.date-year dt{
+    float: left;
+    width: 100px;
+    line-height: 20px;
+}
+.date-year dt select{
+    display: inline-block;
+    float: left;
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+.date-year dt span{
+    float: left;
+    display: inline-block;
+    padding-left:10px;
+    line-height:49px;
+}
+.nav dl.active dd a{
+    border-bottom: 2px solid #61C2BE;
+    padding-bottom: 5px;
+    width: 40%;
+    display: inline-block;
+}
+
+div.member-level{
+    position: absolute;
+    left: 22px;
+    top: 5px;
+    width: 46px;
+    height: auto;
+}
+.member-level  span.rankN {
+    width: 46px;
+    height: 22px;
+    background-color: #68CBD1;
+    border: 1px solid #68CBD1;
+    border-radius: 3px;
+    line-height: 22px;
+    display: inline-block;
+    color: #fff;
+    margin-bottom: 5px;
+}
+.member-level  span.rankR {
+    width: 46px;
+    height: 22px;
+    background-color: #008375;
+    border: 1px solid #008375;
+    border-radius: 3px;
+    line-height: 22px;
+    color: #fff;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.member-level  span.rankSR {
+    width: 46px;
+    height: 22px;
+    background-color: #A0A0A0;
+    border: 1px solid #A0A0A0;
+    border-radius: 3px;
+    line-height: 22px;
+    display: inline-block;
+    color: #fff;
+    margin-bottom: 5px;
+}
+.member-level  span.rankSSR{
+    width: 46px;
+    height: 22px;
+    background-color: #FFCD68;
+    border: 1px solid #FFCD68;
+    border-radius: 3px;
+    line-height: 22px;
+    color: #fff;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.wait-open{
+    position: absolute;
+    right: -31px;
+    z-index: 999;
+    border: 1px solid #5FC0BC;
+    border-radius: 10px;
+    padding: 10px;
+    background: #fff;
+    color: #5FC0BC;
 }

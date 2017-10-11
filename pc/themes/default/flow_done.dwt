@@ -50,7 +50,7 @@
                                 {/if}
                            </p>
                            <p>
-                                <span style="display: inline-block; width: 20px;">&nbsp;</span>
+                                <span class="caddress-circle caddress-active"></span>
                                 <img src="/pc/themes/default/img/cimage45.png" alt="" class="corder-pad">
                                 <span>我的积分余额：{$user_info.pay_points}</span>
                                 {if $user_info.pay_points < $order.integral}

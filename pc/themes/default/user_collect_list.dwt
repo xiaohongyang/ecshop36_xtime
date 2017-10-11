@@ -14,8 +14,26 @@
 
                 {foreach from=$goods_list item=goods}
                     <div class="favourite-list-img">
-                    <div class="favorite-details">
+                        <div class="favorite-details">
+                            
+                            <a href="goods.php?id={$goods.goods_id}" target="_blank">
+                            <div class="favourite-img">
+                                <img src="{$goods.goods_thumb|picsrc}" alt="">
+                            </div>
+                            <p>{$goods.goods_name}</p>
+                            <p>
+                                <img src="/pc/themes/default/img/24.png" alt="">
+                                <span class="ornageji">{$goods.shop_price}</span>
+                            </p>
+                            </a>
 
+                            <span class="collection-right del" data-id='{$goods.rec_id}' style='display:inline:block; float:right;margin-top: -32px;'>
+                                    <img src="/themes/default/img/29.png" alt="" style="cursor:pointer">
+                            </span>
+                    </div>
+                    <div class="member-level">
+                            
+                      
                         {foreach from=$goods.user_rank item=rank}
                         <span class="{if $rank.rank_id == 1}ssr{/if}
                                                 {if $rank.rank_id == 2}new{/if}
@@ -24,22 +42,7 @@
                                                 {if $rank.rank_id == 5}r{/if} rank{$rank.rank_name}">{$rank.rank_name}</span>
                         {/foreach}
 
-
-                        <a href="goods.php?id={$goods.goods_id}" target="_blank">
-                        <div class="favourite-img">
-                            <img src="{$goods.goods_thumb|picsrc}" alt="">
-                        </div>
-                        <p>{$goods.goods_name}</p>
-                        <p>
-                            <img src="/pc/themes/default/img/24.png" alt="">
-                            <span class="ornageji">{$goods.shop_price}</span>
-                        </p>
-                        </a>
-
-                        <span class="collection-right del" data-id='{$goods.rec_id}' style='display:inline:block; float:right;margin-top: -32px;'>
-                                <img src="/themes/default/img/29.png" alt="">
-                        </span>
-                </div>
+                          </div>
                 </div>
                 {/foreach}
 

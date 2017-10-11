@@ -78,7 +78,7 @@
                     <div class="clear"></div>
                 </div>
         </div>
-        <div class="register" style="margin-top: 50px;">
+        <div class="registerr" style="margin-top: 50px;">
             <h3>设置验证问题</h3>
             <p class="green">*提示:请选择别人不太了解的问题以保证个人信息安全</p>
 
@@ -120,11 +120,27 @@
                 </div>
                 <div>
                     <span>性别:</span>
-                    <a style="float:left;padding-top:10px">男</a><input checked="checked" type="radio" name="sex" value="1" style="width:34px; vertical-align: middle">
-                    <a style="float:left;padding-top:10px">女</a><input type="radio" name="sex" value=2 style="width:34px; vertical-align: middle">
+                    <a style="float:left;padding-top:13px">男</a><input checked="checked" type="radio" name="sex" value="1" style="width:34px; vertical-align: middle">
+                    <a style="float:left;padding-top:13px">女</a><input type="radio" name="sex" value=2 style="width:34px; vertical-align: middle">
                     <div class="clear"></div>
                 </div>
-
+               <div>
+                   <dl class="date-year">
+                       <dd>出生年月:</dd>
+                       <dt>
+                           <select name="" id=""></select>
+                           <span>年</span>
+                       </dt>
+                         <dt>
+                           <select name="" id=""></select>
+                           <span>月</span>
+                       </dt>
+                         <dt>
+                           <select name="" id=""></select>
+                           <span>日</span>
+                       </dt>
+                   </dl>
+               </div>
                 <!-- {foreach from=$extend_info_list item=field} -->
 
                         <div class="hide">
@@ -136,13 +152,12 @@
                 <!-- {/foreach} -->
 
                 <div class="dis" style="margin-bottom: 250px;">
-                    <input type="checkbox" class="check" style="width:70px;" name="agreement"  value="1" checked=checked>
+                    <input type="checkbox" class="check" name="agreement"  value="1" checked=checked>
                     <a>已经阅读并且同意《星辉俱乐部注册协议》</a>
                     <br/>
                     <input type="submit" value="立即注册" class="onloadin">
                     <br/>
-                    <br/>
-                    <br/>
+                  
                     <p class="lvgr">已有账号？请<a href="/pc/user.php">登录</a></p>
 
                 </div>

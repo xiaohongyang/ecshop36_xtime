@@ -11,10 +11,10 @@
         <dt><a href="category.php?id=6"><img src="themes/default/img/5.png" /></a></dt>
         <dd><a href="category.php?id=6">音像作品</a></dd>
     </dl>
-    <dl {if $category_03} class='active' {/if}>
-        <dt><a href="category.php?id=3" ><img src="themes/default/img/6.png" /></a></dt>
-        <dd><a href="category.php?id=3">演出票务</a></dd>
-        <dd class="wait-open">暂未开放，敬请期待</dd>
+    <dl class="ycpw" {if $category_03} class='active' {/if}>
+        <dt><a href="javascript:void(0)" ><img src="themes/default/img/6.png" /></a></dt>
+        <dd ><a href="javascript:void(0)"  >演出票务</a></dd>
+        <dd class="wait-open hide">暂未开放，敬请期待</dd>
     </dl>
     <dl {if $category_04} class='active' {/if}>
         <dt><a href="category.php?id=7"><img src="themes/default/img/7.png" /></a></dt>
@@ -22,3 +22,20 @@
     </dl>
 <div class="clear"></div>
 </div><!--nav-->
+
+
+<script type="text/javascript">
+    $('.ycpw').mouseenter(function(){
+
+        $(this).find('.wait-open').hide().fadeIn();
+    })/*.mouseout(function(){
+
+        if ($(this).find('.wait-open').css('display') == 'block' ){
+
+            var t = $(this)
+            setTimeout(function(){
+                t.find('.wait-open').fadeOut();
+            }, 1000)
+        }
+    })*/
+</script>

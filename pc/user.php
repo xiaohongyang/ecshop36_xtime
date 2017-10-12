@@ -99,7 +99,7 @@ class User extends \zd\Controller {
         $other['home_phone'] = $this->get('extend_field4');
         $other['sex'] = $this->get('sex');
         $other['mobile_phone'] = $username;//isset($_POST['extend_field5']) ? $_POST['extend_field5'] : '';
-
+        $other['birthday'] = $this->get('year') . '-' . $this->get('month').'-'. $this->get('day');
 
         $question = $this->get('question');
 

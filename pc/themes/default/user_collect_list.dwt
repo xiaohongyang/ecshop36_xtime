@@ -72,7 +72,7 @@
                 success : function(json){
                     console.log(json)
                     $.fn.myAlert('删除成功')
-                    t.closest('.favorite-details').remove()
+                    t.closest('.favourite-list-img').remove()
                 }
             })
         })

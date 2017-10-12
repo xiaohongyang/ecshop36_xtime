@@ -128,15 +128,15 @@
                    <dl class="date-year">
                        <dd>出生年月:</dd>
                        <dt>
-                           <select name="" id=""></select>
+                           <select name="year" id=""></select>
                            <span>年</span>
                        </dt>
                          <dt>
-                           <select name="" id=""></select>
+                           <select name="month" id=""></select>
                            <span>月</span>
                        </dt>
                          <dt>
-                           <select name="" id=""></select>
+                           <select name="day" id=""></select>
                            <span>日</span>
                        </dt>
                    </dl>
@@ -172,6 +172,40 @@
 
     <script>
 $(document).ready(function () {
+
+    var fillDateTimeSelect = function(){
+        var i=new Date().getFullYear()
+        var j = 1;
+        var t = 1;
+        for(i; i>1899; i-- ) {
+            var opt = "<option value='"+ i +"'>"+ i +"</option>"
+            $('select[name=year]').html($('select[name=year]').html() + opt)
+        }
+        for(j; j<=12; j++ ) {
+            var opt = "<option value='"+ j +"'>"+ j +"</option>"
+            $('select[name=month]').html($('select[name=month]').html() + opt)
+        }for(t; t<=31; t++ ) {
+            var opt = "<option value='"+ t +"'>"+ t +"</option>"
+            $('select[name=day]').html($('select[name=day]').html() + opt)
+        }
+    }
+    var updateDaySelect = function(){
+        var year = $('select[name=year]').val()
+        var month = $('select[name=month]').val()
+        var tEnd = new Date($('select[name=year]').val(), $('select[name=month]').val(),0).getDate();
+
+        console.log(tEnd)
+        var t = 1
+        $('select[name=day]').html('')
+        for(t; t<=tEnd; t++ ) {
+            var opt = "<option value='"+ t +"'>"+ t +"</option>"
+            $('select[name=day]').html($('select[name=day]').html() + opt)
+        }
+    }
+    fillDateTimeSelect()
+    $('body').on('change', 'select[name=year],select[name=month]', function(){
+        updateDaySelect()
+    })
 
     $(".sendCode").click(function() {
         var $this = $(this);

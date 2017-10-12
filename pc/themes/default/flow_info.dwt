@@ -61,7 +61,7 @@ var cartFlush = function(obj){
     var checkMax = true;
     wrap.find('.number-input').each(function(){
         var goodsName = $(this).closest('.goods-item').attr('goods-name')
-        if($(this).val() > $(this).attr('max')){
+        if(parseInt($(this).val()) > parseInt($(this).attr('max'))){
             Dialog.tip(goodsName + '库存不够,不能超过' + $(this).attr('max'))
             checkMax = false;
         }

@@ -42,9 +42,10 @@
 
             <div class="huibg">
                 <p class="hui">原价:<span>{$goods.market_price|price}</span></p>
-                <p class="hei">会员折扣价:<span class='price'>
-                    {$goods.rank_price}
-                </span></p>
+                <p class="hei">会员折扣价:
+
+                <span><span class="cgoods-money">{$goods.rank_price}</span></span>
+                </p>
             </div>
             <!-- {* 开始循环所有可选属性 *} -->
             <!-- {foreach from=$specification item=spec key=spec_key} -->

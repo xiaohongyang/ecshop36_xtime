@@ -45,7 +45,7 @@ class Tool extends \zd\Controller {
     }
 
     function smsAction() {
-        //session_start();
+        session_start();
         $send_code = Helper::post('send_code');
         $check_mobile_exist = Helper::post('check_mobile_exist');
         //防用户恶意请求

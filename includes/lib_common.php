@@ -916,8 +916,15 @@ function order_action($order_sn, $order_status, $shipping_status, $pay_status, $
     $GLOBALS['db']->query($sql);
 }
 
-function price_format_x($price){
+function price_format_x($price, $withHtml=false){
     $price = number_format($price, 2, '.', '').'';
+    if($withHtml){
+        $arr = explode('.', $price);
+        $price = "<b><em class=\"cfont-big\">{$arr[0]}</em>.{$arr[1]}</b> 星辉币";
+    } else {
+        $price .=  '星辉币';
+    }
+
     return $price;
 }
 

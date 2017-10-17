@@ -1,3 +1,10 @@
+<style type="text/css">
+
+    .corder-details .corder-top .you p.cu{
+        margin-top: 10px !important;
+    }
+
+</style>
 <!-- #BeginLibraryItem "/library/page_header.lbi" --><!-- #EndLibraryItem -->
     <!-- #BeginLibraryItem "/library/user_header.lbi" --><!-- #EndLibraryItem -->
         </div>
@@ -27,17 +34,17 @@
                     <span class="corder-status-releative">交易状态 <img src="themes/default/img/cimage6.png" alt="">
                             <div class="corder-status">
                                 <ul>
-                                    <li {if $status==1}class='active'{/if}><a href="user.php?act=order_list&status=1">待付款</a></li>
-                                    <li {if $status==2}class='active'{/if}><a href="user.php?act=order_list&status=2">待发货</a></li>
-                                    <li {if $status==3}class='active'{/if}><a href="user.php?act=order_list&status=3">待收货</a></li>
-                                    <li {if $status==4}class='active'{/if}><a href="user.php?act=order_list&status=4">交易完成</a></li>
-                                    <li {if $status==5}class='active'{/if}><a href="user.php?act=order_list&status=5">交易取消</a></li>
-                                    <li {if $status==6}class='active'{/if}><a href="user.php?act=order_list&status=6">退货订单</a></li>
+                                    <li {if $status==1}class='active' style='background:#ccc' {/if}><a href="user.php?act=order_list&status=1">待付款</a></li>
+                                    <li {if $status==2}class='active' style='background:#ccc' {/if}><a href="user.php?act=order_list&status=2">待发货</a></li>
+                                    <li {if $status==3}class='active' style='background:#ccc' {/if}><a href="user.php?act=order_list&status=3">待收货</a></li>
+                                    <li {if $status==4}class='active' style='background:#ccc' {/if}><a href="user.php?act=order_list&status=4">交易完成</a></li>
+                                    <li {if $status==5}class='active' style='background:#ccc' {/if}><a href="user.php?act=order_list&status=5">交易取消</a></li>
+                                    <li {if $status==6}class='active' style='background:#ccc' {/if}><a href="user.php?act=order_list&status=6">退货订单</a></li>
                                 </ul>
                             </div>
                         </span>
                 </div>
-                
+
                 {foreach from=$order_list item=order}
                 <div class="dd-details">
                     <p class="corder-overflow corder-pagg">
@@ -50,7 +57,7 @@
                                 <a href="javascript:void(0)" class="remove-order" data-order-id ='{$order.order_id}'>
                                     <img src="themes/default/img/cimage7.png" alt="">
                                 </a>
-                            </span> 
+                            </span>
                         {/if}
 
                     </p>
@@ -102,13 +109,15 @@
                             </table>
                             <div class="you">
                                 {if $order.status eq 1}
-                                 <p class="cu huang">待发货</p>
-                                    <p class="again" href="user.php?act=cancel_order&id={$order.order_id}" onclick="if(!confirm('确认取消订单?')) {return false;}">取消订单</p>
+                                 <p class="cu huang" >待发货</p>
+                                    <p class="again" style="cursor: pointer;" href="user.php?act=cancel_order&id={$order.order_id}"
+                                       onclick="if(!confirm('确认取消订单?')) {return false;} else {window.location.href='user.php?act=cancel_order&id={$order.order_id}'}">取消订单</p>
                                 {/if}
                                 {if $order.status eq 0}
                                 <p class="cu hong">待发货</p>
                                 <p class="buy"><a href="flow.php?step=pay&id={$order.order_id}">前去支付</a></p>
-                                <p class="again" href="user.php?act=cancel_order&id={$order.order_id}" onclick="if(!confirm('确认取消订单?')) {return false;}">取消订单</p>
+                                <p class="again "  href="user.php?act=cancel_order&id={$order.order_id}"
+                                   onclick="if(!confirm('确认取消订单?')) {return false;} else {window.location.href='user.php?act=cancel_order&id={$order.order_id}'}">取消订单</p>
                                 {/if}
                                 {if $order.status eq 3}
                                 <p class="cu">交易完成</p>
@@ -130,8 +139,8 @@
                                 <p>收件人：{$order.consignee} 电话：{$order.tel}</p>
                             </div>
                             <div class="right">
-                                <p>总计|TOTAL   <span>{$order.total}</span></p>
-                                <p>(含运费：{$order.shipping_fee})<span>{$order.integral}积分</p>
+                                <p>总计|TOTAL   <span>{$order.goods_amount_format}</span></p>
+                                <p>(含运费：{$order.shipping_fee_format})<span>{$order.integral}积分</p>
                             </div>
                             <div class="clear"></div>
                         </div>

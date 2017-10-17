@@ -83,7 +83,6 @@ class Category extends \zd\Controller {
             "ON mp.goods_id = g.goods_id AND mp.user_rank = '$_SESSION[user_rank]' " .
             "WHERE $where ORDER BY $sort $order";
         $res = $GLOBALS['db']->selectLimit($sql, $size, ($page - 1) * $size);
-
         $arr = array();
         while ($row = $GLOBALS['db']->fetchRow($res)) {
             if ($row['promote_price'] > 0) {

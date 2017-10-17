@@ -10,7 +10,7 @@
                 .con-fangDaIMg{width:500px;height:500px;position:relative;background-color:#eee}
                 .con-fangDaIMg > img{width:100%;height:100%}
                 .magnifyingBegin{width:100px;height:100px;left:0;top:0;background-color:#ddd;opacity:0.5;position:absolute;cursor:move;display:none}
-                .magnifyingShow{width:400px;height:400px;display:none;position:absolute;right:-400px;top:0;overflow:hidden;background-color:#eee}
+                .magnifyingShow{width:400px;height:400px;display:none;position:absolute;right:-430px;top:0;overflow:hidden;background-color:#eee}
                 .magnifyingShow > img{width:2000px;height:2000px;margin-left:0;margin-top:0}
                 .con-FangDa-ImgList{list-style:none}
                 .con-FangDa-ImgList > li{width:50px;height:50px;float:left;margin:4px 0 0 4px;cursor:pointer;border:2px solid #eee;background-color:#eee}
@@ -91,7 +91,10 @@
                             $show.css('display','none');
                             //return false;
                         });
-
+                        $('.magnifyingShow').mouseover(function(){
+                            $Drag.css('display','none');
+                            $show.css('display','none');
+                        })
                         $ImgList.click(function(){
                             var NowSrc = $(this).attr('src');
                             $Img.attr('src',NowSrc);

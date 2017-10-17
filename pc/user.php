@@ -42,6 +42,7 @@ class User extends \zd\Controller {
         global $_LANG;
         $username = $this->get('username');
         $password = $this->get('password');
+
         $back_act = $this->get('back_act');
         $code = $this->get('code');
         if (!(new Captcha)->verify($code)) {
@@ -51,6 +52,11 @@ class User extends \zd\Controller {
             update_user_info();
             recalculate_price();
             //$ucdata = isset($this->user->ucdata)? $this->user->ucdata : '';
+
+            if(strpos($back_act, 'act=register')){
+                $back_act = '';
+            }
+
             Helper::success([
                 'url' => empty($back_act) ? 'user.php' : $back_act
             ]);

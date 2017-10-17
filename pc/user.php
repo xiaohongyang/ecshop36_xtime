@@ -386,7 +386,6 @@ class User extends \zd\Controller {
             $order_list[$key]['goods_amount_format'] = price_format($order['goods_amount']);
             $order_list[$key]['shipping_fee_format'] = price_format($order['shipping_fee']);
         }
-        print_r($order_list);
         $this->show(compact('page_title', 'helps', 'order_list', 'total', 'search', 'status', 'user_rank_list'));
     }
 

@@ -679,6 +679,9 @@ class Flow extends \zd\Controller {
             show_message($_LANG['no_goods_in_cart'], '', '', 'warning');
         }
 
+        $goods_list = Cart::getSelected($flow_type);
+        $integral = $this->getCartIntegral($goods_list);
+
         /* 检查商品库存 */
         /* 如果使用库存，且下订单时减库存，则减少库存 */
         if ($_CFG['use_storage'] == '1' && $_CFG['stock_dec_time'] == SDT_PLACE) {
@@ -727,7 +730,7 @@ class Flow extends \zd\Controller {
             'card_id'         => isset($_POST['card']) ? intval($_POST['card']) : 0,
             'card_message'    => trim($_POST['card_message']),
             'surplus'         => isset($_POST['surplus']) ? floatval($_POST['surplus']) : 0.00,
-            'integral'        => isset($_POST['integral']) ? intval($_POST['integral']) : 0,
+            'integral'        => isset($_POST['integral']) ? intval($_POST['integral']) : $integral,
             'bonus_id'        => isset($_POST['bonus']) ? intval($_POST['bonus']) : 0,
             'need_inv'        => empty($_POST['need_inv']) ? 0 : 1,
             'inv_type'        => $_POST['inv_type'],
@@ -936,7 +939,7 @@ class Flow extends \zd\Controller {
         }
 
         $order['integral_money']   = $total['integral_money'];
-        $order['integral']         = $total['integral'];
+        $order['integral']         = $integral;
 
         if ($order['extension_code'] == 'exchange_goods')
         {

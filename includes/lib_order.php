@@ -1697,7 +1697,7 @@ function get_cart_goods($rec_type = CART_GENERAL_GOODS)
  */
 function get_consignee($user_id)
 {
-    if (isset($_SESSION['flow_consignee']))
+    if (isset($_SESSION['flow_consignee']) && $_SESSION['flow_consignee'])
     {
         /* 如果存在session，则直接返回session中的收货人信息 */
 

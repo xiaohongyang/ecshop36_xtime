@@ -390,6 +390,8 @@ $(document).ready(function () {
         addCart(param, function (data) {
             if (data.code == 0) {
                 window.location.href = "flow.php?step=checkout&cart_value=" + data.data + "&flow_type=buy_now";
+
+                return false;
             }
             if(typeof data.msg != undefined && data.msg && data.msg.indexOf('99')!=-1){
                 //$('.number-box .number').val(99)

@@ -5,7 +5,7 @@
     <div class="content" >
         <!-- #BeginLibraryItem "/library/page_title.lbi" --><!-- #EndLibraryItem -->
         <dl class="memberindex avatarUpload">
-            <dt><img src="{$profile.avatar}" width="100%" class="avatar"/></dt>
+            <dt><img src="{$profile.avatar|picsrc}" width="100%" class="avatar"/></dt>
             <dd><img src="/themes/default/img/12.png" width="12px"></dd>
         </dl>
         <ul class="memberindexul">

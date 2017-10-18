@@ -486,6 +486,14 @@ class User extends \zd\Controller {
     public function updateInfoAction() {
         $nick_name = $this->get('nick_name');
         $sex = intval($this->get('sex'));
+
+
+        if(empty($nick_name)){
+            Helper::failure("昵称不能为空");
+        } else if (mb_strlen($nick_name) > 12) {
+            Helper::failure('昵称不能多于12个字符');
+        }
+
         $birthday = sprintf('%s-%s-%s', intval($this->get('year')),
             intval($this->get('month')), intval($this->get('day')));
         Sql::update('users', [

@@ -56,11 +56,13 @@ function checkSubmit() {
 
     if(!reg.test(password) || regNumber.test(password) || regWord.test(password)) {
         Dialog.tip("密码必须为8-16位的数字和字母") 
-        result = false
+        return false;
     } else if(password != confirm_password) {
         Dialog.tip("两次输入的密码不一致") 
-        result = false
+        return false;
     }
+
+
 
     var mobile_code = $('input[name=mobile_code]').val();
     var url = 'index.php?act=get_code'
@@ -75,6 +77,7 @@ function checkSubmit() {
                 Dialog.tip("验证码不正确")
         }
     })
+
 
     return result;
 }

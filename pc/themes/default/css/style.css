@@ -2517,6 +2517,7 @@ button:focus {
     line-height: 40px;
     background: #fff;
     font-size: 16px;
+    cursor:pointer;
 }
 
 .cquestion-fspan {
@@ -4464,6 +4465,7 @@ td.confirm-tdblock span {
 .cmy-error {
     padding-left: 80px;
     color: #FFA960;
+    display: none;
 }
 
 .cmy-btn {
@@ -5020,4 +5022,53 @@ div.member-level{
     padding: 10px;
     background: #fff;
     color: #5FC0BC;
+}
+
+.pro-detais p.corder-overflow a.new {
+    width: 46px;
+    height: 22px;
+    background-color: #68CBD1;
+    border: 1px solid #68CBD1;
+    border-radius: 3px;
+    line-height: 22px;
+    display: inline-block;
+    color: #fff;
+    margin-bottom: 5px;
+    text-align:center;
+}
+.pro-detais p.corder-overflow a.ur {
+    width: 46px;
+    height: 22px;
+    background-color: #008375;
+    border: 1px solid #008375;
+    border-radius: 3px;
+    line-height: 22px;
+    display: inline-block;
+    color: #fff;
+    margin-bottom: 5px;
+    text-align:center;
+}
+.pro-detais p.corder-overflow a.sr {
+    width: 46px;
+    height: 22px;
+    background-color: #A0A0A0;
+    border: 1px solid #A0A0A0;
+    border-radius: 3px;
+    line-height: 22px;
+    display: inline-block;
+    color: #fff;
+    margin-bottom: 5px;
+    text-align:center;
+}
+.pro-detais p.corder-overflow a.r {
+    width: 46px;
+    height: 22px;
+    background-color: #FFCD68;
+    border: 1px solid #FFCD68;
+    border-radius: 3px;
+    line-height: 22px;
+    display: inline-block;
+    color: #fff;
+    margin-bottom: 5px;
+    text-align:center;
 }

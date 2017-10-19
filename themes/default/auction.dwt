@@ -26,7 +26,7 @@
                     <span class="x-shopuser">当前叫价：{if $auction.last_bid.formated_bid_price }{$auction.last_bid.formated_bid_price} {else} 暂无报价 {/if}</span>
                 </div>
                 <div class="x-right">
-                    <a href="/auction.php?act=log&id={$auction.act_id}"><span class="x-rightspan">{$auction.bid_user_count}人叫价<img src="/themes/default/img/jiantou1.png" style='display:none;' alt=""></span></a>
+                    <a href="/auction.php?act=log&id={$auction.act_id}"><span class="x-rightspan">{$auction.bid_user_count}人叫价<img src="/themes/default/img/jiantou1.png"  alt=""></span></a>
                 </div>
 
             </div>

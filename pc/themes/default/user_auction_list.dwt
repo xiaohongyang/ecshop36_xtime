@@ -12,10 +12,14 @@
                     <img src="/pc/themes/default/img/cimage59.png" alt="">
                 </div>
                 <div class="corder-right corder-search-group">
-                    <input type="text" class="corder-search" value="Search">
-                    <span class="corder-search-icon">
-                            <img src="/pc/themes/default/img/cimage5.png" alt="">
+                    <form name="form-order-search" action="user.php?act=auction_list" method="post">
+                        <div class="corder-right corder-search-group">
+                            <input type="text" class="corder-search" name="search" value="{$search}">
+                            <span class="corder-search-icon" onclick="$('form[name=form-order-search]').trigger('submit')">
+                            <img src="themes/default/img/cimage5.png" alt="">
                         </span>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="corder-main-mainmain">
@@ -26,13 +30,8 @@
                     <span class="corder-status-releative">竞拍状态 <img src="/pc/themes/default/img/cimage6.png" alt="">
                             <div class="corder-status">
                                 <ul>
-                                    <li><a href="javascript:;">竞拍中</a></li>
-                                    <li><a href="javascript:;">结算中</a></li>
-                                    <li><a href="javascript:;">确认收货</a></li>
-                                    <li><a href="javascript:;">竞拍失败</a></li>
-                                    <li><a href="javascript:;">竞拍成功</a></li>
-                                    <li><a href="javascript:;">交易完成</a></li>
-                                    <li><a href="javascript:;">交易关闭</a></li>
+                                    <li><a href="user.php?act=auction_list&status=0">进行中</a></li>
+                                    <li><a href="user.php?act=auction_list&status=1">已结束</a></li>
                                 </ul>
                             </div>
                         </span>
@@ -53,7 +52,7 @@
                                     <tr>
                                         <td>
                                             <div class="dlkuan">
-                                                <h1><img src="{$auction.godos_thumb}"></h1>
+                                                <h1><img src="{$auction.goods_thumb|picsrc}"></h1>
                                                 <div class="ddkuan ddkuan1">
                                                     <p>{$auction.goods_name}</p>
                                                 </div>
@@ -68,8 +67,8 @@
                                         </td>
                                         <td>{$auction.bid_price|price}</td>
                                         <td class="corder-blockspan">
-                                            <span><img src="/pc/themes/default/img/cimage61.png" alt=""> <em>00:00:09</em></span>
-                                            <span class="corder-red1">竞拍中</span>
+                                            <span><img src="/pc/themes/default/img/cimage61.png" alt=""> <em>{$auction.time}</em></span>
+                                            <span class="corder-red1">{if $auction.is_finished}已结束{else}竞拍中{/if}</span>
                                         </td>
 
                                     </tr>
@@ -78,14 +77,19 @@
                             <div class="clear"></div>
                         </div>
                         <!--corder-top-->
+                        {if $auction.address}
                         <div class="corder-bot">
                             <div class="left">
-                                <p>快递信息: </p>
+
+                                <p>快递信息: {if $auction.address}顺丰速运{/if}</p>
                                 <p>配送地址：{$auction.region} {$auction.address}</p>
                                 <p>收件人：{$auction.consignee} 电话：{$auction.tel}</p>
+
                             </div>
                             <div class="clear"></div>
                         </div>
+                        {else}
+                        {/if}
                     </div>
                 </div>
                 <!--dd-details-->

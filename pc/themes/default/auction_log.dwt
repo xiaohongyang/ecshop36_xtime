@@ -1,7 +1,7 @@
 {if $auction_log}
 {foreach from=$auction_log item=log}
 <dl class="corder-pre {if $log.user_id eq $user_info.user_id}active{/if}">
-    <dt><img src="{$log.avatar}"></dt>
+    <dt><img src="{$log.avatar|picsrc}"></dt>
     <dd>
         <span >出价人：{$log.user_name}</span>
         <span>出价时间：{$log.bid_time}</span>

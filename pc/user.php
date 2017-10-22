@@ -383,6 +383,34 @@ class User extends \zd\Controller {
         $page_title = '我的订单';
         $search = $this->get('search');
         $status = $this->get('status');
+        switch ($search) {
+            case '待付款':
+                $search = '';
+                $status = 1;
+                break;
+            case '待发货':
+                $search = '';
+                $status = 2;
+                break;
+            case '待收货':
+                $search = '';
+                $status = 3;
+                break;
+            case '交易完成':
+                $search = '';
+                $status = 4;
+                break;
+            case '交易取消':
+                $search = '';
+                $status = 5;
+                break;
+            case '退货订单':
+                $search = '';
+                $status = 6;
+                break;
+            default:
+                break;
+        }
         $helps = get_shop_help();       // 网店帮助
         $pager = UserOrder::getPage($_SESSION['user_id'], $search, $status);
         $order_list = $pager->getPage();
@@ -392,6 +420,8 @@ class User extends \zd\Controller {
             $order_list[$key]['goods_amount_format'] = price_format($order['goods_amount']);
             $order_list[$key]['shipping_fee_format'] = price_format($order['shipping_fee']);
         }
+
+        $search = $this->get('search');
         $this->show(compact('page_title', 'helps', 'order_list', 'total', 'search', 'status', 'user_rank_list'));
     }
 
@@ -827,7 +857,9 @@ class User extends \zd\Controller {
 
     public function auctionListAction() {
         $page_title = '我的竞拍';
-        list($total, $auction_list) = Auction::getUserList();
+        $search = $this->get('search');
+        $status = $this->get('status');
+        list($total, $auction_list) = Auction::getUserList($search, $status);
         $this->renderHelper();
         $this->show(compact('page_title', 'total', 'auction_list'));
     }

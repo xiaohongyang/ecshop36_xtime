@@ -26,7 +26,148 @@ class Auction extends \zd\Controller {
         $auction_list = Auc::getList($search, $sort, $order);
         $auction_name='auction';
         $user_rank_list = \zd\UserOrder::get_user_rank_list();
+
+
+
+        $sort = \zd\Helper::get('sort', 'total');
+        $defaultOrder = 'desc';
+        $defaultOrder = $sort == 'price' ? 'asc' : $defaultOrder;
+
+        $order = \zd\Helper::get('order', $defaultOrder);
+
+        $page = $this->get('page', 1);
+        $auction_list = $this->auction_list(20, $page, $sort, $order);
+
+
         $this->show(compact('page_title', 'helps', 'categories','auction_name', 'total', 'auction_list', 'user_rank_list', 'sort', 'order'));
+    }
+
+
+    public function auction_list($size=10, $page=1, $sort=null, $order=null)
+    {
+
+        $sort = is_null($sort) ? 'total' : $sort;
+        $order = is_null($order) ? 'desc' : $order;
+
+        //$orderByString = "ORDER BY a.act_id DESC";
+
+        $deOrder = $order == 'desc' ? 'asc' : 'desc';
+
+        switch ($sort) {
+            case 'process' :
+                $orderByString = " ORDER BY a.is_finished {$order} , a.end_time {$order} ";
+                break;
+            case 'sales' :
+
+                $orderByString = " ORDER BY al.bid_price  {$order}";
+                break;
+
+            case 'add_time' :
+
+                $orderByString = " ORDER BY a.act_id  {$order}";
+                break;
+
+            default :
+                $orderByString = " ORDER BY al_count.count  {$order} , 
+                                al.bid_price  {$deOrder},
+                                a.act_id  {$order} ";
+                breakk;
+
+        }
+
+        $auction_list = array();
+//    $auction_list['finished'] = $auction_list['finished'] = array();
+
+        $now = gmtime();
+        $sql = "SELECT IFNULL(al_count.count, 0)total_bid_count,  IFNULL(al.bid_price,0) bid_price, a.*, IFNULL(g.goods_thumb, '') AS goods_thumb, g.user_rank " .
+            "FROM " . $GLOBALS['ecs']->table('goods_activity') . " AS a " .
+            "LEFT JOIN ( ".
+            "select ".
+            "a.act_id, max(l.bid_price) as bid_price ".
+            "from ecs_goods_activity a ".
+            "join ecs_auction_log l on a.act_id=l.act_id ".
+            "group by act_id ".
+            ")  ".
+            "AS al ON a.act_id = al.act_id " ;
+
+        $sql .= <<<STD
+        LEFT JOIN ( 
+                select 
+                        a.act_id, count(l.act_id) as count
+                from ecs_goods_activity a
+                join ecs_auction_log l on a.act_id=l.act_id
+                group by l.act_id
+         )  
+        AS al_count ON a.act_id = al_count.act_id 
+STD;
+
+
+
+
+        $sql =  $sql . " LEFT JOIN " . $GLOBALS['ecs']->table('goods') . " AS g ON a.goods_id = g.goods_id " .
+            "WHERE a.act_type = '" . GAT_AUCTION . "' " .
+            " AND a.is_finished < 2  {$orderByString} ";
+
+
+        $res = \zd\Sql::create($sql)->query();
+        while ($row = $GLOBALS['db']->fetchRow($res))
+        {
+            $ext_info = unserialize($row['ext_info']);
+            $auction = array_merge($row, $ext_info);
+            $auction['status_no'] = auction_status($auction);
+            $auction['current_price'] = \zd\Sql::create()->select('Max(bid_price) as price')
+                ->from('auction_log')
+                ->where('act_id = '.$auction['act_id'])->scalar();
+            $auction['user_count'] = \zd\Sql::create()->select('count(bid_user) as count')
+                ->from('auction_log')
+                ->where('act_id = '.$auction['act_id'])
+                ->group('bid_user')->scalar();
+
+            $auction['formated_start_time'] = local_date($GLOBALS['_CFG']['time_format'], $auction['start_time']);
+            $auction['formated_end_time']   = local_date($GLOBALS['_CFG']['time_format'], $auction['end_time']);
+            $auction['formated_start_price'] = price_format($auction['start_price']);
+            $auction['formated_end_price'] = price_format($auction['end_price']);
+            $auction['formated_deposit'] = price_format($auction['deposit']);
+            $auction['goods_thumb'] = get_image_path($row['goods_id'], $row['goods_thumb'], true);
+            $auction['url'] = build_uri('auction', array('auid'=>$auction['act_id']));
+
+            /*if($auction['status_no'] < 2)
+            {
+                $auction_list['under_way'][] = $auction;
+            }
+            else
+            {
+                $auction_list['finished'][] = $auction;
+            }*/
+
+            $auction_list[] = $auction;
+        }
+
+//    $auction_list = @array_merge($auction_list['under_way'], $auction_list['finished']);
+
+        require_once(ROOT_PATH. '/admin/includes/lib_goods.php');
+        $rankTmpList = get_user_rank_list();
+        $rank_list = [];
+        foreach ($rankTmpList as $rank) {
+            $rank_list[$rank['rank_id']] = $rank;
+        }
+        if(is_array($auction_list) && count($auction_list)) {
+            foreach ($auction_list as $key=>$auction) {
+                $rank = [];
+                $tmpRank = $auction['user_rank'];
+                $tmpRank = trim($tmpRank, ',');
+                $tmpRank = explode(',', $tmpRank);
+                if(count($tmpRank)) {
+                    foreach ($tmpRank as $rankId) {
+                        $rank[] = $rank_list[$rankId];
+                    }
+                    $auction_list[$key]['user_rank'] = $rank;
+                } else {
+                    $auction_list[$key]['user_rank'] = [];
+                }
+            }
+        }
+        return $auction_list;
     }
 
     public function viewAction() {

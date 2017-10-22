@@ -171,6 +171,7 @@
 
         $(".page-previous").click(function() {
             var num = $(".page-input").val();
+            num = parseInt(num)
             if (num < 2) {
                 return;
             }
@@ -178,6 +179,7 @@
         });
         $(".page-next").click(function() {
             var num = $(".page-input").val();
+            num = parseInt(num)
             getLog(num + 1);
         });
         $(".caution-go").click(function() {

@@ -25,6 +25,8 @@
             </div>
             <!--screen-->
             <div class="pro">
+                {if $goods_list}
+
                 {foreach from=$goods_list item=goods}
                 <div>
                     <dl>
@@ -40,6 +42,16 @@
                     </dl>
                 </div>
                 {/foreach}
+                {else}
+
+                <div style="width: 100%">
+                    <dl style="width: 100%;">
+                        <dd class="one" style="width: 100%;"><a href="{$goods.url}"> 无搜索结果</a></dd>
+
+                        <p class="clear"></p>
+                    </dl>
+                </div>
+                {/if}
                 <p class="clear"></p>
             </div>
             <!--pro-->

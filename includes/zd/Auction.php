@@ -130,7 +130,7 @@ class Auction {
         return $log;
     }
 
-    public static function getUserList() {
+    public static function getUserList($search=null, $status=null) {
         $total = Sql::create()
             ->selectCount()
             ->from('auction_log')
@@ -140,7 +140,7 @@ class Auction {
         if ($page[0] > $total) {
             return [$total, []];
         }
-        $data = Sql::create()
+        /*$data = Sql::create()
             ->select('al.*, a.end_time, a.is_finished, a.ext_info, g.goods_id, g.goods_name, g.goods_thumb, ua.*', 'concat(IFNULL(p.region_name, \'\'), \'  \', IFNULL(t.region_name, \'\'), \'  \', IFNULL(d.region_name, \'\')) AS region')
             ->from('auction_log al')
             ->left('goods_activity a', 'a.act_id = a.act_id')
@@ -153,8 +153,48 @@ class Auction {
             ->group('al.log_id')
             ->order('al.log_id desc')
             ->limit($page)
-            ->all();
+            ->all();*/
+        $statusWhere = !is_null($status )? " and a.is_finished = '{$status}' " : '';
+        $searchWhere = !is_null($search) ? " and g.goods_name like '%{$search}%' || ua.consignee like '%{$search}%'  || ua.address like '%{$search}%'  || p.region_name like '%{$search}%'  " : "";
+        $sql = <<<STD
+            SELECT
+                al.*, a.end_time,
+                a.is_finished,
+                a.ext_info,
+                g.goods_id,
+                g.goods_name,
+                g.goods_thumb,
+                ua.*, concat(
+                    IFNULL(p.region_name, ''),
+                    '  ',
+                    IFNULL(t.region_name, ''),
+                    '  ',
+                    IFNULL(d.region_name, '')
+                ) AS region
+            FROM
+                ecs_goods_activity a
+            join (
+                select * from ecs_auction_log group by act_id order by bid_time desc 
+            ) al  ON a.act_id = al.act_id
+            LEFT JOIN ecs_goods g ON a.goods_id = g.goods_id
+            LEFT JOIN ecs_user_address ua ON al.address_id = ua.address_id
+            LEFT JOIN ecs_region p ON ua.province = p.region_id
+            LEFT JOIN ecs_region t ON ua.city = t.region_id
+            LEFT JOIN ecs_region d ON ua.district = d.region_id
+            WHERE
+                al.bid_user = '{$_SESSION['user_id']}'
+                {$statusWhere}
+                {$searchWhere}
+            GROUP BY
+                al.log_id
+            ORDER BY
+                al.log_id DESC
+            LIMIT 0,
+             10
+STD;
+        $data =  $result = $GLOBALS['db']->getAll($sql);
         foreach ($data as &$item) {
+            $item['time'] = date('Y-m-d H:i', $item['bid_time']);
             $item['ext_info'] = unserialize($item['ext_info']);
             $item['status_no'] = auction_status($item);
             $item['max_price'] = Sql::create()
@@ -163,7 +203,6 @@ class Auction {
                 ->where('act_id', $item['act_id'])
                 ->scalar();
         }
-
         return [$total, $data];
     }
 }

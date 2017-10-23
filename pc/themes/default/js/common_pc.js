@@ -5,7 +5,7 @@ $.fn.myAlert = function(msg){
 
 $(function(){
 
-    $('.index-nav').hide()
+  
     var navClass='.index-nav'
     var nav = $(navClass)
     nav.find('li:gt(7)').hide()
@@ -25,7 +25,7 @@ $(function(){
     var hideIndexNav = function(){
         var navClass='.index-nav'
         var nav = $(navClass)
-        nav.hide();
+        // nav.hide();
         nav.find('.btn-see-all').closest('li').nextAll('li').hide()
         nav.find('.btn-see-all').closest('li').show()
     }

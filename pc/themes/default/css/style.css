@@ -87,11 +87,11 @@ i{
     border-right: 0px;
     border-radius: 5px 0 0 5px;
     height: 48px;
-    ;
     line-height: 48px;
     padding-left: 15px;
     color: #5FC0BC;
-    float: left
+    float: left;
+    box-sizing:border-box;
 }
 
 .header .head .search span {
@@ -105,6 +105,10 @@ i{
     border: 1px solid #5FC0BC;
     border-radius: 0 5px 5px 0;
     cursor: pointer;
+    box-sizing:border-box;
+}
+.header .head .search span img{
+    padding-top:6px;
 }
 
 .header .head .shopping {
@@ -125,7 +129,10 @@ i{
     float: left;
     border-right: 1px solid #56AFAB
 }
-
+.header .head .shopping a.shopa img{
+    padding-top: 7px;
+    padding-left: 8px;
+}
 .header .head .shopping .shops span {
     width: 220px;
     display: block;
@@ -775,6 +782,7 @@ button.user-dealDone-close {width: 16px; height: 16px;border: 1px solid #aeaeae;
     height: 30px;
     border: 1px solid #E3E7F0;
     border-radius: 15px;
+    position:relative;
 }
 
 .corder-search {
@@ -782,7 +790,8 @@ button.user-dealDone-close {width: 16px; height: 16px;border: 1px solid #aeaeae;
     width: 275px;
     border: none;
     margin-left: 13px;
-    color: #E3E7F0
+    color: #E3E7F0;
+    
 }
 
 input:focus {
@@ -797,11 +806,15 @@ input:focus {
     border-radius: 50%;
     text-align: center;
     line-height: 21px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
 }
 
 .corder-search-icon img {
     vertical-align: middle;
     cursor: pointer;
+    padding-top: 7px;
 }
 
 .corder-main-mainmain {
@@ -1004,7 +1017,8 @@ em {
     bottom: 0;
     right: 0;
     border: 1px solid #F4F4F4;
-    width: 139px
+    width: 139px;
+    line-height: 78px;
 }
 
 .corder-details .corder-top .you p.cu {
@@ -1577,6 +1591,7 @@ em {
     text-align: center;
     display: block;
     float: left;
+    cursor:pointer;
 }
 
 .product .pro-detais .yunfei .shang div .num input {
@@ -1601,7 +1616,8 @@ em {
     margin-right: 20px;
     color: #fff;
     border-radius: 25px;
-    text-align: center
+    text-align: center;
+    cursor:pointer;
 }
 
 .product .pro-detais .yunfei .xia span img {
@@ -2012,7 +2028,8 @@ em {
     width: 60px;
     margin-top: 10px;
     border: 0;
-    text-align: center
+    text-align: center;
+    cursor:pointer;
 }
 
 .shopcar .yunfei {
@@ -3708,6 +3725,7 @@ td.confirm-tdblock span {
     text-align: center;
     border: 1px solid #66cccc;
     border-radius: 5px;
+    cursor:pointer;
 }
 
 .corder-confirm-addresslist {
@@ -3784,6 +3802,7 @@ td.confirm-tdblock span {
     line-height: 30px;
     font-size: 14px;
     text-align: center;
+    cursor:pointer;
 }
 
 .cpayment-order-footer {
@@ -3815,6 +3834,7 @@ td.confirm-tdblock span {
     line-height: 30px;
     font-size: 14px;
     text-align: center;
+    cursor:pointer;
 }
 
 

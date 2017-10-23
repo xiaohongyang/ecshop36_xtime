@@ -26,16 +26,8 @@
 
 <script type="text/javascript">
     $('.ycpw').mouseenter(function(){
-
-        $(this).find('.wait-open').hide().fadeIn();
-    })/*.mouseout(function(){
-
-        if ($(this).find('.wait-open').css('display') == 'block' ){
-
-            var t = $(this)
-            setTimeout(function(){
-                t.find('.wait-open').fadeOut();
-            }, 1000)
-        }
-    })*/
+        $(this).find('.wait-open').show();
+    }).mouseleave(function(){
+        $(this).find('.wait-open').hide();
+    })
 </script>
